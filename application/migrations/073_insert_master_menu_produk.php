@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author   Natan Felles <natanfelles@gmail.com>
+ */
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Class Migration_create_table_api_limits
+ *
+ * @property CI_DB_forge         $dbforge
+ * @property CI_DB_query_builder $db
+ */
+class Migration_insert_master_menu_produk extends CI_Migration {
+
+
+	public function up()
+	{ 
+		 
+            $data_menu =  array('id'=>33,'module_id'=>1, 'name'=>'Master Produk', 'url'=>'produk', 'parent_id'=>11, 'icon'=>" ", 'sequence'=>10) ;
+            $insert = $this->db->insert('menu', $data_menu);  
+            for($i=1;$i<=5;$i++){
+                  $data_menu_function = array(
+                          'menu_id' => $insert, 
+                          'function_id' => $i, 
+                      );
+                      $this->db->insert('menu_function', $data_menu_function);
+                  }
+      	} 
+
+	public function down()
+	{
+		
+	}
+
+}

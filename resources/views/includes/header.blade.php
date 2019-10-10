@@ -1,4 +1,5 @@
 <!-- BEGIN: Header-->
+    {{ csrf_field() }}
     <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-hide-on-scroll navbar-border navbar-shadow navbar-brand-center">
         <div class="navbar-wrapper">
             <div class="navbar-header">

@@ -25,10 +25,8 @@ Route::get('/logins', 'LoginController@showLoginForm')->name('login.user');
 
 Route::group(['middleware' => 'auth:user'], function(){
 
-	Route::get('home', function () {
-	    return view('content.home.index');
-	});
-
+	Route::get('home', 'HomeController@index');
+	Route::post('detaillogin', 'HomeController@detaillogin')->name('DetailLogins');
 
 	Route::get('typeptc', 'typePTCController@index');
 	Route::get('typeptc/getdata', 'typePTCController@GetData')->name('gettypeptc');

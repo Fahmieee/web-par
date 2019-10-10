@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="media d-flex">
                         <div class="media-body text-left">
-                            <h3 class="info">33 Item</h3>
+                            <h3 class="info">{{ $check }} Kali</h3>
                             <h6>Pre Trip Check</h6>
                         </div>
                         <div>
@@ -48,7 +48,7 @@
                 <div class="card-body">
                     <div class="media d-flex">
                         <div class="media-body text-left">
-                            <h3 class="success">45</h3>
+                            <h3 class="success">{{ $suara }}</h3>
                             <h6>Keluhan</h6>
                         </div>
                         <div>
@@ -85,31 +85,64 @@
 </div>
 <!--/ eCommerce statistic -->
 
-<!-- Products sell and New Orders -->
-<div class="row match-height">
-    <div class="col-12" id="ecommerceChartView">
-        <div class="card card-shadow">
-            <div class="card-header card-header-transparent py-20">
-                <div class="btn-group dropdown">
-                    <a href="#" class="text-body blue-grey-700">DATA MOCKUP</a>
-                </div>
-                <ul class="nav nav-pills nav-pills-rounded chart-action float-right btn-group" role="group">
-                    <li class="nav-item"><a class="active nav-link" data-toggle="tab" href="#scoreLineToDay">Day</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#scoreLineToWeek">Week</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#scoreLineToMonth">Month</a></li>
-                </ul>
+<!-- Recent Transactions -->
+<div class="row">
+    <div id="recent-transactions" class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Login Hari Ini</h4>
+                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
             </div>
-            <div class="widget-content tab-content bg-white p-20">
-                <div class="ct-chart tab-pane active scoreLineShadow" id="scoreLineToDay"></div>
-                <div class="ct-chart tab-pane scoreLineShadow" id="scoreLineToWeek"></div>
-                <div class="ct-chart tab-pane scoreLineShadow" id="scoreLineToMonth"></div>
+            <div class="card-content">
+                <div class="table-responsive">
+                    <table id="recent-orders" class="table table-hover table-xl mb-0">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">Nama Driver</th>
+                                <th class="border-top-0">Unit Kerja</th>
+                                <th class="border-top-0">Wilayah</th>
+                                <th class="border-top-0">Tanggal</th>
+                                <th class="border-top-0">Banyaknya Login</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach($activities as $activity)
+
+                            @php
+
+                            $date = date('Y-m-d');
+
+                            $actlogin = DB::table('activity_login')
+                            ->where([
+                                ['user_id', '=', $activity->user_id],
+                                ['date', '=', $date],
+                            ])
+                            ->count();
+
+                            @endphp
+                            <tr>
+                                <td class="text-truncate">
+                                    <span class="avatar avatar-xs">
+                                        <img class="box-shadow-2" src="assets/content/images/portrait/small/avatar-s-3.png" alt="avatar">
+                                    </span>
+                                    <span>{{ $activity->first_name }}</span>
+                                </td>
+                                <td class="text-truncate">{{ $activity->unitkerja_name }}</td>
+                                <td class="text-truncate">{{ $activity->wilayah_name }}</td>
+                                <td class="text-truncate">{{ date('d M Y', strtotime($date)) }}</td>
+                                <td class="text-truncate"><button type="button" onclick="DetailLogin({{ $activity->user_id }})" class="btn btn-sm btn-outline-primary round" data-toggle="modal" data-backdrop="false" data-target="#detailogin_modal">{{ $actlogin }} Kali</button></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!--/ Products sell and New Orders -->
-
-
-
+<!--/ Recent Transactions -->
+@include('content.home.model')
 @include('includes.footer')
+@include('scripts.home')
 @stop

@@ -131,7 +131,7 @@ session_start();
                         setTimeout(function(){ window.location.href='home'; }, 1500);
                    
 
-                    } else if (data.status == 'error'){
+                    } else {
 
                         swal("Username or Password Wrong!", {
                             icon: "error",

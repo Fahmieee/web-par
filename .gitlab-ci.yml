@@ -1,0 +1,12 @@
+before_script:
+  - apt-get update -qq && apt-get install -y -qq ssh && apt-get install -y -qq sshpass
+  - mkdir ~/.ssh
+  - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+  - export SSHPASS=$USER_PASS 
+
+update_doni:
+  stage: test
+  script:
+  - sshpass -e ssh root@web-par.ndt-dev.com "cd /var/www/html/web-par/; git checkout -f HEAD; git pull gitlab doni;"
+  only:
+  - doni

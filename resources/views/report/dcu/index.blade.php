@@ -47,69 +47,133 @@
                             </div>
                         </div>
                         <hr>
-                        
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-12">
-                                <div class="card bg-gradient-directional-danger">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="media d-flex">
-                                                <div class="media-body text-white text-left">
-                                                    <div class="ball-pulse-sync loader-white loaderz" style="display: none;">
-                                                        <div></div>
-                                                        <div></div>
-                                                        <div></div>
-                                                    </div>
-                                                    <h3 style="display: block;" class="text-white isi" id="sakit">3</h3>
-                                                    <span>DCU Kondisi Sakit</span>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <i class="icon-cup text-white font-large-2 float-right"></i>
-                                                </div>
-                                            </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card pull-up">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <div class="media-body text-left">
+                                            <h6 class="warning">Dari : 04 Des 2019 - 05 Des 2019 | MOR III - Tanjung Priuk</h6>
+                                            <h1 style="font-size: 40px;">Total Presentase</h1>
                                         </div>
                                     </div>
+                                    <div>
+                                        <h1 class="success" style="font-size: 60px;" align="right">95%</h1>   
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                                    <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-12">
-                                <div class="card bg-gradient-directional-success">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="media d-flex">
-                                                <div class="media-body text-white text-left">
-                                                    <div class="ball-pulse-sync loader-white loaderz" style="display: none;">
-                                                        <div></div>
-                                                        <div></div>
-                                                        <div></div>
-                                                    </div>
-                                                    <h3 style="display: block;" class="text-white isi" id="sehat">9</h3>
-                                                    <span>DCU Kondisi Sehat</span>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <i class="icon-like text-white font-large-2 float-right"></i>
-                                                </div>
-                                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card pull-up">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <div class="media-body text-left">
+                                            <h6 class="warning">7 Orang / 15 Orang</h6>
+                                            <h4>BELUM Daily Checkup (DCU)</h4>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <h1 class="danger" style="font-size: 40px;" align="right">5%</h1>   
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                                    <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card pull-up">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <div class="media-body text-left">
+                                            <h6 class="warning">7 Orang / 15 Orang</h6>
+                                            <h4>SUDAH Daily Checkup (DCU)</h4>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h1 class="primary" style="font-size: 40px;" align="right">95%</h1>   
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                                    <div class="progress-bar bg-gradient-x-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card bg-gradient-directional-success">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-white text-left">
+                                        <h2 style="display: block;" class="text-white isi" id="total">12</h2>
+                                        <span>Kondisi Sehat</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-like text-white font-large-2 float-right"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-content" id="loadercontent" style="display: none;">
-                            <div class="card-body text-center">
-                                <div class="loader-wrapper">
-                                    <div class="loader-container">
-                                        <div class="ball-pulse-rise loader-success">
-                                            <div></div>
-                                            <div></div>
-                                            <div></div>
-                                            <div></div>
-                                            <div></div>
-                                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card bg-gradient-directional-warning">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-white text-left">
+                                        <h2 style="display: block;" class="text-white isi" id="total">12</h2>
+                                        <span>Kondisi Hati-Hati</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-fire text-white font-large-2 float-right"></i>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card bg-gradient-directional-danger">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-white text-left">
+                                        <h2 style="display: block;" class="text-white isi" id="total">12</h2>
+                                        <span>Kondisi Sakit</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-ghost text-white font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            </div>
+            <!--/ eCommerce statistic -->        
+                       
                         {{ csrf_field() }}
                         <div class="row tabelisi" id="contents" style="display: block;">
                         <div class="col-12">

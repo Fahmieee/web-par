@@ -22,7 +22,7 @@ class HomeController extends Controller
     	->join("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
     	->where('date',$date)
     	->groupBy('first_name','wilayah_name','unitkerja_name','activity_login.user_id')
-    	->limit(20)
+    	->limit(75)
     	->get();
 
     	$check = Pretrip_Check::count();

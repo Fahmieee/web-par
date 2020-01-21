@@ -4868,17 +4868,17 @@
     },
     {
         "name": "yajra/laravel-datatables-oracle",
-        "version": "v9.7.0",
-        "version_normalized": "9.7.0.0",
+        "version": "v9.8.0",
+        "version_normalized": "9.8.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yajra/laravel-datatables.git",
-            "reference": "bb6ff7b76bd6253396cb7a5a7b6c51c5ab14b1a8"
+            "reference": "9797a5f1b962b9ebf6bb087c88314dd724b3d5c0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/bb6ff7b76bd6253396cb7a5a7b6c51c5ab14b1a8",
-            "reference": "bb6ff7b76bd6253396cb7a5a7b6c51c5ab14b1a8",
+            "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/9797a5f1b962b9ebf6bb087c88314dd724b3d5c0",
+            "reference": "9797a5f1b962b9ebf6bb087c88314dd724b3d5c0",
             "shasum": ""
         },
         "require": {
@@ -4898,7 +4898,7 @@
             "yajra/laravel-datatables-fractal": "Plugin for server-side response using Fractal.",
             "yajra/laravel-datatables-html": "Plugin for server-side HTML builder of dataTables."
         },
-        "time": "2019-10-02T05:58:48+00:00",
+        "time": "2019-12-17T03:30:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

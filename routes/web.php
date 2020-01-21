@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('reportdcu', 'ReportController@dcu');
 
 	Route::get('reportclockinout', 'ReportController@clockinout');
+	Route::get('reportclockinout/getdata', 'ReportController@getclockinout')->name('getclockinout');
 
 	Route::get('maps', 'MapsController@index');
 

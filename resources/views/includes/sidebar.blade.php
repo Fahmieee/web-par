@@ -1,7 +1,7 @@
 <div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item open"><a href="home"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
+            <li class="nav-item"><a href="home"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-car"></i><span class="menu-title" data-i18n="nav.templates.main">Master Data</span></a>
                 <ul class="menu-content">
@@ -83,7 +83,7 @@
             </li>
             <li class="nav-item"><a href="maps"><i class="la la-map-marker"></i><span class="menu-title" data-i18n="nav.dash.main">Maps Activity</span></a>
             </li>
-            <li class="nav-item"><a href="#"><i class="la la-file-text"></i><span class="menu-title" data-i18n="nav.templates.main">Report</span></a>
+            <li class="nav-item open"><a href="#"><i class="la la-file-text"></i><span class="menu-title" data-i18n="nav.templates.main">Report</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="reportptc"><i></i><span data-i18n="nav.templates.vert.main">Report PTC</span></a>
                     </li>

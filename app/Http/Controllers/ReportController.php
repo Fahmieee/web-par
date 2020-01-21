@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\TypePTC;
 use App\DetailPTC;
+use App\Clocks;
 use Mapper;
+use DataTables;
+use DB;
 
 class ReportController extends Controller
 {
@@ -38,6 +41,23 @@ class ReportController extends Controller
     	$date = date('Y-m-d');
 
     	return view('report.clockinout.index', compact('date'));
+
+    }
+
+    public function getclockinout()
+    {
+
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+
+        $clocks = Clocks::select('clocks.*', 'users.first_name', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+        ->leftJoin("users", "clocks.user_id", "=", "users.id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->get();
+
+        return Datatables::of($clocks)->make(true);
+
 
     }
 

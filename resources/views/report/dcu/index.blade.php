@@ -64,11 +64,18 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h1 class="success" style="font-size: 60px;" align="right">95%</h1>   
+                                        <div class="ball-pulse-sync loader-success loaderz" style="display: none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <div class="isi" style="display: block;">
+                                            <h1 class="success" style="font-size: 60px;" align="right">87%</h1>   
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                    <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 87%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -81,17 +88,22 @@
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
                                         <div class="media-body text-left">
-                                            <h6 class="warning">7 Orang / 15 Orang</h6>
+                                            <h6 class="warning">2 Pengemudi / 15 Pengemudi</h6>
                                             <h4>BELUM Daily Checkup (DCU)</h4>
                                         </div>
                                     </div>
                                     <div>
-                                        <h1 class="danger" style="font-size: 40px;" align="right">5%</h1>   
+                                        <div class="ball-pulse-sync loader-red loaderz" style="display: none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <h1 class="danger isi" style="font-size: 40px;" align="right">2</h1>   
                                     </div>
                                 </div>
-                                <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                    <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                <!-- <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                                    <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -103,17 +115,22 @@
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
                                         <div class="media-body text-left">
-                                            <h6 class="warning">7 Orang / 15 Orang</h6>
+                                            <h6 class="warning">13 Pengemudi / 15 Pengemudi</h6>
                                             <h4>SUDAH Daily Checkup (DCU)</h4>
                                         </div>
                                     </div>
                                     <div>
-                                        <h1 class="primary" style="font-size: 40px;" align="right">95%</h1>   
+                                        <div class="ball-pulse-sync loader-primary loaderz" style="display: none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <h1 class="primary isi" style="font-size: 40px;" align="right">13</h1>   
                                     </div>
                                 </div>
-                                <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                    <div class="progress-bar bg-gradient-x-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                <!-- <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                                    <div class="progress-bar bg-gradient-x-primary" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -124,7 +141,12 @@
                             <div class="card-body">
                                 <div class="media d-flex">
                                     <div class="media-body text-white text-left">
-                                        <h2 style="display: block;" class="text-white isi" id="total">12</h2>
+                                        <div class="ball-pulse-sync loader-white loaderz" style="display: none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <h2 style="display: block;" class="text-white isi" id="total">7</h2>
                                         <span>Kondisi Sehat</span>
                                     </div>
                                     <div class="align-self-center">
@@ -141,7 +163,12 @@
                             <div class="card-body">
                                 <div class="media d-flex">
                                     <div class="media-body text-white text-left">
-                                        <h2 style="display: block;" class="text-white isi" id="total">12</h2>
+                                        <div class="ball-pulse-sync loader-white loaderz" style="display: none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <h2 style="display: block;" class="text-white isi" id="total">8</h2>
                                         <span>Kondisi Hati-Hati</span>
                                     </div>
                                     <div class="align-self-center">
@@ -158,7 +185,12 @@
                             <div class="card-body">
                                 <div class="media d-flex">
                                     <div class="media-body text-white text-left">
-                                        <h2 style="display: block;" class="text-white isi" id="total">12</h2>
+                                        <div class="ball-pulse-sync loader-white loaderz" style="display: none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <h2 style="display: block;" class="text-white isi" id="total">4</h2>
                                         <span>Kondisi Sakit</span>
                                     </div>
                                     <div class="align-self-center">

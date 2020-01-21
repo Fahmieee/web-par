@@ -9,6 +9,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-wrapper">
+            
             <div class="content-header row mb-1">
                 <div class="content-header-left col-md-6 col-12 mb-2">
                     <h3 class="content-header-title">Type Pretrip Checks</h3>
@@ -24,8 +25,7 @@
                             </ol>
                         </div>
                     </div>
-                </div>
-                
+                </div>   
             </div>
 
             <!-- BEGIN: Main Menu-->

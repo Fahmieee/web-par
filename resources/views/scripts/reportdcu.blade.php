@@ -54,7 +54,6 @@
 
         $('.loaderz').attr('style','display: none;');
         $('.isi').attr('style','display: block;');
-        $('.isi').html('0');
 
     }
 

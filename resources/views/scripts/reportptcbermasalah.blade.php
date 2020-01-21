@@ -6,9 +6,9 @@
             pageLength: 20,
             processing: true,
             serverSide: true,
-            order: [[ 2, 'asc' ]],
+            order: [[ 1, 'desc' ]],
             ajax:{
-                 url: "{{ route('getclockinout') }}",
+                 url: "{{ route('getptcbermasalah') }}",
                  dataType: "json",
                  type: "POST",  
                  headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
@@ -16,18 +16,25 @@
                     d.awal = $('#dari').val(),
                     d.akhir = $('#sampai').val(),
                     d.unitkerja = $('#unitkerja').val();
+                    d.type = $('#type').val();
                     
                 },
             },
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'first_name', name: 'first_name' },
-                { data: 'dates', name: 'dates' },
-                { data: 'clockin_time', name: 'clockin_time' },
-                { data: 'clockout_time', name: 'clockout_time' },
-                { data: 'clockin_km', name: 'clockin_km' },
-                { data: 'clockout_km', name: 'clockout_km' },
+                { data: 'no_police', name: 'no_police' },
+                { 
+                    render: function ( data, type, row ) {
+                        return row.dates+' '+row.time+'';
+                    }
+                },
                 { data: 'unitkerja_name', name: 'unitkerja_name' },
+                { data: 'type_name', name: 'type_name' },
+                { data: 'detail_name', name: 'detail_name' },
+                { data: 'parameter', name: 'parameter' },
+                { data: 'level', name: 'level' },
+    
             ]
         });
 
@@ -48,7 +55,6 @@
         $('#showdate').html('Tanggal : '+tanggaldari+ ' '+bulanIndo[Math.abs(bulandari)]+' '+tahundari+' - '+tanggalsampai+ ' '+bulanIndo[Math.abs(bulansampai)]+' '+tahunsampai);
 
     }
-
 
     $('#dari').on('change', function () {
 
@@ -73,6 +79,12 @@
     });
 
     $('#unitkerja').on('change', function () {
+
+        table.ajax.reload();
+
+    });
+
+    $('#type').on('change', function () {
 
         table.ajax.reload();
 

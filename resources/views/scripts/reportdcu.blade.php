@@ -1,257 +1,79 @@
 <script type="text/javascript">
 
-    $('#unitkerja').on('change', function () {
-
-        var unitkerja = $(this).val();
-
-        var content = "";
-
-        if (unitkerja == 'mori'){
-
-            content += "<option>All</option>";
-            content += "<option>Medan</option>";
-            content += "<option>Batam</option>";
-
-        } else if (unitkerja == 'morii'){
-
-            content += "<option>All</option>";
-            content += "<option>Pelamebang</option>";
-            content += "<option>Bengkulu</option>";
-
-        } else if (unitkerja == 'moriii'){
-
-            content += "<option>All</option>";
-            content += "<option>Kramat Raya</option>";
-            content += "<option>Plumpang</option>";
-
-        } else {
-
-            content += "<option>All</option>";
-
-        }
-
-        $('#wilayah').html(content);
+   var table = "";
+    $(function() {
+        table = $('.datatables').DataTable({
+            pageLength: 20,
+            processing: true,
+            serverSide: true,
+            order: [[ 2, 'asc' ]],
+            ajax:{
+                 url: "{{ route('getdcu') }}",
+                 dataType: "json",
+                 type: "POST",  
+                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                 data: function (d) {
+                    d.awal = $('#dari').val(),
+                    d.akhir = $('#sampai').val(),
+                    d.unitkerja = $('#unitkerja').val();
+                    
+                },
+            },
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'first_name', name: 'first_name' },
+                { data: 'dates', name: 'dates' },
+                { data: 'time', name: 'time' },
+                { data: 'suhu', name: 'suhu' },
+                { data: 'darah', name: 'darah' },
+                { data: 'unitkerja_name', name: 'unitkerja_name' },
+            ]
+        });
 
     });
 
+    function convertDateDBtoIndo(string,string2){
 
-    function ReloadContent(){
+        bulanIndo = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September' , 'Oktober', 'November', 'Desember'];
 
-        $('#loadercontent').attr('style','display: none;');
-        $('#contents').attr('style','display: block;');
+        tanggaldari = string.split("-")[2];
+        bulandari = string.split("-")[1];
+        tahundari = string.split("-")[0];
 
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
-        $('#sehat').html('9');
-        $('#sakit').html('3');
+        tanggalsampai= string2.split("-")[2];
+        bulansampai = string2.split("-")[1];
+        tahunsampai = string2.split("-")[0];
 
-    }
-
-    function ReloadKosong(){
-
-        $('#loadercontent').attr('style','display: none;');
-        $('#contentkosong').attr('style','display: block;');
-
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
+        $('#showdate').html('Tanggal : '+tanggaldari+ ' '+bulanIndo[Math.abs(bulandari)]+' '+tahundari+' - '+tanggalsampai+ ' '+bulanIndo[Math.abs(bulansampai)]+' '+tahunsampai);
 
     }
-
-    function ReloadMor3(){
-
-        $('#loadercontent').attr('style','display: none;');
-        $('#unitkerjamori').attr('style','display: block;');
-
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
-        $('#sehat').html('4');
-        $('#sakit').html('0');
-
-    }
-
-    function ReloadPlumpang(){
-
-        $('#loadercontent').attr('style','display: none;');
-        $('#plumpang').attr('style','display: block;');
-
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
-        $('#sehat').html('3');
-        $('#sakit').html('0');
-
-    }
-
-    function ReloadKramat(){
-
-        $('#loadercontent').attr('style','display: none;');
-        $('#kramat').attr('style','display: block;');
-
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
-        $('#sehat').html('1');
-        $('#sakit').html('0');
-
-    }
-
-    function ReloadMor2(){
-
-        $('#loadercontent').attr('style','display: none;');
-        $('#morii').attr('style','display: block;');
-
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
-        $('#sehat').html('1');
-        $('#sakit').html('2');
-
-    }
-
-    function ReloadMor1(){
-
-        $('#loadercontent').attr('style','display: none;');
-        $('#mori').attr('style','display: block;');
-
-        $('.loaderz').attr('style','display: none;');
-        $('.isi').attr('style','display: block;');
-        $('#sehat').html('4');
-        $('#sakit').html('1');
-
-    }
-
-
 
     $('#dari').on('change', function () {
 
+        table.ajax.reload();
+
+        var dari = $('#dari').val();
         var sampai = $('#sampai').val();
-        var ini = $(this).val();
-        var potong = ini.substr(5,2);
 
-        // alert(potong+' | '+sampai);
-
-        if (sampai != ''){
-
-            $('#loadercontent').attr('style','display: block;');
-            $('.tabelisi').attr('style','display: none;');
-
-            $('.loaderz').attr('style','display: block;');
-            $('.isi').attr('style','display: none;');
-
-            if (potong == '09'){
-                setTimeout(ReloadContent, 2500);
-            } else {
-                setTimeout(ReloadKosong, 2500);
-            }
-        } 
+        convertDateDBtoIndo(dari,sampai);
 
     });
 
     $('#sampai').on('change', function () {
 
+        table.ajax.reload();
+
         var dari = $('#dari').val();
-        var potong = dari.substr(5,2);
+        var sampai = $('#sampai').val();
 
-        if (dari != ''){
+        convertDateDBtoIndo(dari,sampai);
 
-            $('#loadercontent').attr('style','display: block;');
-            $('.tabelisi').attr('style','display: none;');
-
-            $('.loaderz').attr('style','display: block;');
-            $('.isi').attr('style','display: none;');
-
-            if (potong == '09'){
-                setTimeout(ReloadContent, 2500);
-            } else {
-                setTimeout(ReloadKosong, 2500);
-            }
-        } 
     });
 
     $('#unitkerja').on('change', function () {
 
-        var dari = $('#dari').val();
-        var sampai = $('#sampai').val();
-        var potongdari = dari.substr(5,2);
-
-        $('#wilayah').val('All');
-
-        var ini = $(this).val();
-
-        $('#loadercontent').attr('style','display: block;');
-        $('.tabelisi').attr('style','display: none;');
-
-        $('.loaderz').attr('style','display: block;');
-        $('.isi').attr('style','display: none;');
-
-        if (potongdari == '09' || dari == '' || sampai == ''){
-
-            if (ini == 'moriii'){
-
-            setTimeout(ReloadMor3, 2500);
-
-            } else if (ini == 'All'){
-
-                setTimeout(ReloadContent, 2500);
-
-            } else if (ini == 'morii'){
-
-                setTimeout(ReloadMor2, 2500);
-
-            } else if (ini == 'mori'){
-
-                setTimeout(ReloadMor1, 2500);
-
-            } else {
-
-                setTimeout(ReloadKosong, 2500);
-
-            }
-
-        } else {
-
-            setTimeout(ReloadKosong, 2500);
-
-        }
-
-        
+        table.ajax.reload();
 
     });
-
-    $('#wilayah').on('change', function () {
-
-        var ini = $(this).val();
-        var unitkerja = $('#unitkerja').val();
-
-        $('#loadercontent').attr('style','display: block;');
-        $('.tabelisi').attr('style','display: none;');
-
-        $('.loaderz').attr('style','display: block;');
-        $('.isi').attr('style','display: none;');
-
-        if (ini == 'Plumpang'){
-
-            setTimeout(ReloadPlumpang, 2500);
-
-        } else if (ini == 'Kramat Raya'){
-
-            setTimeout(ReloadKramat, 2500);
-
-        } else if(ini == 'All'){
-
-            if(unitkerja == 'moriii'){
-                setTimeout(ReloadMor3, 2500);
-            } else {
-
-                setTimeout(ReloadKosong, 2500);
-
-            }
-            
-        } else{
-
-            setTimeout(ReloadKosong, 2500);
-        }
-
-    });
-
-    
-
 
 </script>

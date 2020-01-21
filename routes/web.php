@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:user'], function(){
 
 	Route::get('home', 'HomeController@index');
 	Route::post('detaillogin', 'HomeController@detaillogin')->name('DetailLogins');
+	Route::post('home/getclockin', 'HomeController@getclockin')->name('getclockin');
 
 	Route::get('typeptc', 'typePTCController@index');
 	Route::get('typeptc/getdata', 'typePTCController@GetData')->name('gettypeptc');
@@ -54,11 +55,16 @@ Route::group(['middleware' => 'auth:user'], function(){
 
 	Route::get('reportptc', 'ReportController@ptc');
 	Route::post('reportptc/detailptc', 'ReportController@viewdetailptc')->name('ViewDetailPTC');
+	Route::post('reportptc/getdata', 'ReportController@getptc')->name('getptc');
+
+	Route::get('reportptcbermasalah', 'ReportController@ptcbermasalah');
+	Route::post('reportptcbermasalah/getdata', 'ReportController@getptcbermasalah')->name('getptcbermasalah');
 
 	Route::get('reportdcu', 'ReportController@dcu');
+	Route::post('reportdcu/getdata', 'ReportController@getdcu')->name('getdcu');
 
 	Route::get('reportclockinout', 'ReportController@clockinout');
-	Route::get('reportclockinout/getdata', 'ReportController@getclockinout')->name('getclockinout');
+	Route::post('reportclockinout/getdata', 'ReportController@getclockinout')->name('getclockinout');
 
 	Route::get('maps', 'MapsController@index');
 

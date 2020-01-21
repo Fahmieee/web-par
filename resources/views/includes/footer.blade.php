@@ -1,8 +1,6 @@
 		</div>
     </div>
 </div>
-<div class="sidenav-overlay"></div>
-<div class="drag-target"></div>
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light navbar-border">
@@ -26,9 +24,5 @@
 
 <!-- -- Datatables -- -->
 <script src="/assets/content/vendors/js/tables/datatable/datatables.min.js"></script>
-<script src="/assets/content/js/scripts/tables/datatables/datatable-basic.js"></script>
-<script src="/assets/content/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
-<script src="/assets/content/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
-<script src="/assets/content/js/scripts/tables/datatables-extensions/datatable-button/datatable-html5.js"></script>
 
 <!-- END: Page JS-->

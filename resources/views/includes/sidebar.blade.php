@@ -87,19 +87,13 @@
                 <ul class="menu-content">
                     <li><a class="menu-item" href="reportptc"><i></i><span data-i18n="nav.templates.vert.main">Report PTC</span></a>
                     </li>
+                    <li><a class="menu-item" href="reportptcbermasalah"><i></i><span data-i18n="nav.templates.horz.main">Report PTC Bermasalah</span></a>
+                    </li>
                     <li><a class="menu-item" href="reportdcu"><i></i><span data-i18n="nav.templates.horz.main">Report DCU</span></a>
                     </li>
                     <li><a class="menu-item" href="reportclockinout"><i></i><span data-i18n="nav.templates.horz.main">Report Clock In-out</span></a>
                     </li>
-                    <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Report Perjalanan Dinas</span></a>
-                    </li>
                 </ul>
-            </li>
-
-            
-            <li class="navigation-header"><span data-i18n="nav.category.support">Support</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Support"></i>
-            </li>
-            <li class="nav-item"><a href="#"><i class="la la-text-height"></i><span class="menu-title" data-i18n="nav.support_documentation.main">Documentation</span></a>
             </li>
         </ul>
     </div>

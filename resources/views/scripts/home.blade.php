@@ -38,4 +38,41 @@
         });
 	}
 
+    var table = "";
+    $(function() {
+        table = $('.datatables').DataTable({
+            pageLength: 20,
+            processing: true,
+            serverSide: true,
+            order: [[ 2, 'asc' ]],
+            ajax:{
+                 url: "{{ route('getclockin') }}",
+                 dataType: "json",
+                 type: "POST", 
+                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                 data: function (d) {
+                    d.unitkerja = $('#unitkerja').val();
+                    
+                },  
+                 
+            },
+            columns: [
+                { data: 'first_name', name: 'first_name' },
+                { data: 'unitkerja_name', name: 'unitkerja_name' },
+                { data: 'clockin_time', name: 'clockin_time' },
+                { data: 'clockin_km', name: 'clockin_km' },
+                { data: 'clockout_time', name: 'clockout_time' },
+                { data: 'clockout_km', name: 'clockout_km' },
+                
+            ]
+        });
+
+    });
+
+    $('#unitkerja').on('change', function () {
+
+        table.ajax.reload();
+
+    });
+
 </script>

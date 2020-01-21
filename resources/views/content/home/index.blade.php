@@ -28,8 +28,8 @@
                 <div class="card-body">
                     <div class="media d-flex">
                         <div class="media-body text-left">
-                            <h3 class="warning">60 Jam</h3>
-                            <h6>Lembur Driver</h6>
+                            <h3 class="warning">{{ $users }}</h3>
+                            <h6>Total Driver</h6>
                         </div>
                         <div>
                             <i class="icon-cup warning font-large-2 float-right"></i>
@@ -48,7 +48,7 @@
                 <div class="card-body">
                     <div class="media d-flex">
                         <div class="media-body text-left">
-                            <h3 class="success">{{ $suara }}</h3>
+                            <h3 class="success">{{ $suara }} Kali</h3>
                             <h6>Keluhan</h6>
                         </div>
                         <div>
@@ -68,7 +68,7 @@
                 <div class="card-body">
                     <div class="media d-flex">
                         <div class="media-body text-left">
-                            <h3 class="danger">98 %</h3>
+                            <h3 class="danger">{{ $dcu }} Kali</h3>
                             <h6>Daily Checkup</h6>
                         </div>
                         <div>
@@ -90,50 +90,30 @@
     <div id="recent-transactions" class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Login Hari Ini</h4>
-                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-            </div>
-            <div class="card-content">
+                <h2>Clockin Kemarin</h2>
+                <div style="font-size: 14px;font-family: 'Quicksand', Georgia, 'Times New Roman', Times, serif; color: #00BCD4;" id="showdate">Tanggal : {{ date('d F Y', strtotime($date)) }}</div>
+                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a><br>
+                <select class="form-control" id="unitkerja">
+                   <option value="">Pilih Unit Kerja</option>
+                   @foreach($unitkerjas as $unitkerja)
+                   <option value="{{ $unitkerja->id }}">{{ $unitkerja->unitkerja_name }}</option>
+                   @endforeach
+                </select>
+
+                <hr>
                 <div class="table-responsive">
-                    <table id="recent-orders" class="table table-hover table-xl mb-0">
+                    <table width="100%" class="table table-striped table-bordered datatables">
                         <thead>
                             <tr>
-                                <th class="border-top-0">Nama Driver</th>
-                                <th class="border-top-0">Unit Kerja</th>
-                                <th class="border-top-0">Wilayah</th>
-                                <th class="border-top-0">Tanggal</th>
-                                <th class="border-top-0">Banyaknya Login</th>
+                                <th>Pengemudi</th>
+                                <th>U.Kerja</th>
+                                <th>Clockin</th>
+                                <th>Km in</th>
+                                <th>Clockout</th>
+                                <th>Km Out</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            @foreach($activities as $activity)
-
-                            @php
-
-                            $date = date('Y-m-d');
-
-                            $actlogin = DB::table('activity_login')
-                            ->where([
-                                ['user_id', '=', $activity->user_id],
-                                ['date', '=', $date],
-                            ])
-                            ->count();
-
-                            @endphp
-                            <tr>
-                                <td class="text-truncate">
-                                    <span class="avatar avatar-xs">
-                                        <img class="box-shadow-2" src="assets/content/images/portrait/small/avatar-s-3.png" alt="avatar">
-                                    </span>
-                                    <span>{{ $activity->first_name }}</span>
-                                </td>
-                                <td class="text-truncate">{{ $activity->unitkerja_name }}</td>
-                                <td class="text-truncate">{{ $activity->wilayah_name }}</td>
-                                <td class="text-truncate">{{ date('d M Y', strtotime($date)) }}</td>
-                                <td class="text-truncate"><button type="button" onclick="DetailLogin({{ $activity->user_id }})" class="btn btn-sm btn-outline-primary round" data-toggle="modal" data-backdrop="false" data-target="#detailogin_modal">{{ $actlogin }} Kali</button></td>
-                            </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>

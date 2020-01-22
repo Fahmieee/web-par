@@ -58,11 +58,7 @@
             },
             columns: [
                 { data: 'nik', name: 'nik' },
-                { 
-                    render: function ( data, type, row ) {
-                        return row.first_name+' '+row.last_name+'';
-                    }
-                },
+                { data: 'first_name', name: 'first_name' },
                 { data: 'unitkerja_name', name: 'unitkerja_name' },
                 { data: 'clockin_time', name: 'clockin_time' },
                 { data: 'clockin_km', name: 'clockin_km' },

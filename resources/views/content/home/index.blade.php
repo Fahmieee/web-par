@@ -105,6 +105,7 @@
                     <table width="100%" class="table table-striped table-bordered datatables">
                         <thead>
                             <tr>
+                                <th>Nopeg</th>
                                 <th>Pengemudi</th>
                                 <th>U.Kerja</th>
                                 <th>Clockin</th>

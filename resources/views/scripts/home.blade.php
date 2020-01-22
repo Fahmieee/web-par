@@ -57,7 +57,7 @@
                  
             },
             columns: [
-                { data: 'nopeg', name: 'nopeg' },
+                { data: 'nik', name: 'nik' },
                 { 
                     render: function ( data, type, row ) {
                         return row.first_name+' '+row.last_name+'';

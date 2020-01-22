@@ -44,7 +44,7 @@ class HomeController extends Controller
 
          if($request->unitkerja == ''){
 
-            $clocks = Clocks::select('clocks.*', 'users.first_name', 'unit_kerja.unitkerja_name','users.last_name','users.nopeg')
+            $clocks = Clocks::select('clocks.*', 'users.first_name', 'unit_kerja.unitkerja_name','users.last_name','users.nik')
             ->leftJoin("users", "clocks.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -53,7 +53,7 @@ class HomeController extends Controller
 
         } else {
 
-            $clocks = Clocks::select('clocks.*', 'users.first_name', 'unit_kerja.unitkerja_name','users.last_name','users.nopeg')
+            $clocks = Clocks::select('clocks.*', 'users.first_name', 'unit_kerja.unitkerja_name','users.last_name','users.nik')
             ->leftJoin("users", "clocks.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")

@@ -90,7 +90,7 @@
     <div id="recent-transactions" class="col-12">
         <div class="card">
             <div class="card-header">
-                <h2>Clockin Kemarin</h2>
+                <h2>Clockin Hari ini</h2>
                 <div style="font-size: 14px;font-family: 'Quicksand', Georgia, 'Times New Roman', Times, serif; color: #00BCD4;" id="showdate">Tanggal : {{ date('d F Y', strtotime($date)) }}</div>
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a><br>
                 <select class="form-control" id="unitkerja">

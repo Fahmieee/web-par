@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index()
     {
     	date_default_timezone_set('Asia/Jakarta');
-    	$date = date('Y-m-d', strtotime("-1 day", strtotime(date("Y-m-d"))));
+    	$date = date('Y-m-d');
 
         $unitkerjas = UnitKerja::all();
 
@@ -40,7 +40,7 @@ class HomeController extends Controller
     {
 
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d', strtotime("-1 day", strtotime(date("Y-m-d"))));
+        $date = date('Y-m-d');
 
          if($request->unitkerja == ''){
 

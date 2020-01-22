@@ -7,6 +7,6 @@ before_script:
 update_doni:
   stage: test
   script:
-  - sshpass -e ssh root@web-par.ndt-dev.com "cd /var/www/html/web-par/; git checkout -f HEAD; git checkout -f doni; git pull gitlab doni;"
+  - sshpass -e ssh root@web-par.ndt-dev.com "cd /var/www/html/web-par/; git checkout -f HEAD; git checkout -f master; git checkout -f doni; git pull gitlab doni;"
   only:
   - doni

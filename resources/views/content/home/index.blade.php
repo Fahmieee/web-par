@@ -85,6 +85,81 @@
 </div>
 <!--/ eCommerce statistic -->
 
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Aktif Clockin-out Bulan {{ date('F') }}</h4>
+                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements">
+                    <ul class="list-inline mb-0">
+                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                    </ul>
+                </div>
+                @php
+                    $Date1 = $awal; 
+                    $Date2 = $akhir; 
+                      
+                    $Variable1 = strtotime($Date1); 
+                    $Variable2 = strtotime($Date2); 
+
+                    $banyak = ''; 
+                    $kps = '';
+                    $mor3s = '';
+                      
+                    for ($currentDate = $Variable1; $currentDate <= $Variable2;  
+                                                    $currentDate += (86400)) { 
+                                                          
+                    $Store = date('d.m', $currentDate); 
+
+                    $tanggal = date('Y-m-d', $currentDate); 
+
+                    $kp = DB::table('clocks')
+                    ->leftJoin('users', 'clocks.user_id', '=', 'users.id')
+                    ->leftJoin('wilayah', 'users.wilayah_id', '=', 'wilayah.id')
+                    ->leftJoin('unit_kerja', 'wilayah.unitkerja_id', '=', 'unit_kerja.id')
+                    ->where([
+                        ['clockin_date', '=', $tanggal],
+                        ['unit_kerja.id', '=', '21'],
+                    ])
+                    ->count();
+
+                    $mor3 = DB::table('clocks')
+                    ->leftJoin('users', 'clocks.user_id', '=', 'users.id')
+                    ->leftJoin('wilayah', 'users.wilayah_id', '=', 'wilayah.id')
+                    ->leftJoin('unit_kerja', 'wilayah.unitkerja_id', '=', 'unit_kerja.id')
+                    ->where([
+                        ['clockin_date', '=', $tanggal],
+                        ['unit_kerja.id', '=', '3'],
+                    ])
+                    ->count();
+
+                    $banyak .= $Store.',';
+                    $kps .= $kp.',';
+                    $mor3s .= $mor3.',';
+                    
+                    }
+
+                    $hasil = substr($banyak,0,-1);
+                    $hasilkp = substr($kps,0,-1);
+                    $hasilmor3 = substr($mor3s,0,-1);
+                @endphp
+                <input type="hidden" value="{{ $hasil }}" id="periode">
+                <input type="hidden" value="{{ $hasilkp }}" id="kp">
+                <input type="hidden" value="{{ $hasilmor3 }}" id="mor3">
+
+            </div>
+            <div class="card-content collapse show">
+                <div class="card-body chartjs">
+                    <canvas id="line-chart" height="500"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Recent Transactions -->
 <div class="row">
     <div id="recent-transactions" class="col-12">
@@ -126,4 +201,6 @@
 @include('content.home.model')
 @include('includes.footer')
 @include('scripts.home')
+<script src="/assets/content/vendors/js/charts/chart.min.js"></script>
+<script src="/assets/content/js/scripts/charts/chartjs/line/line.js"></script>
 @stop

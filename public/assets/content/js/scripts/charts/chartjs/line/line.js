@@ -15,6 +15,14 @@ $(window).on("load", function(){
     //Get the context of the Chart canvas element we want to select
     var ctx = $("#line-chart");
 
+    var periode = $('#periode').val();
+    var kp = $('#kp').val();
+    var mor3 = $('#mor3').val();
+
+    var arrayperiode = periode.split(",");
+    var arraykp = kp.split(",");
+    var arraymor3 = mor3.split(",");
+
     // Chart Options
     var chartOptions = {
         responsive: true,
@@ -34,7 +42,7 @@ $(window).on("load", function(){
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Month'
+                    labelString: 'Tanggal'
                 }
             }],
             yAxes: [{
@@ -51,18 +59,18 @@ $(window).on("load", function(){
         },
         title: {
             display: true,
-            text: 'Chart.js Line Chart - Legend'
+            text: 'Actif Clockin-Out'
         }
     };
 
     // Chart Data
     var chartData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: arrayperiode,
         datasets: [{
-            label: "My First dataset",
-            data: [65, 59, 80, 81, 56, 55, 40],
+            label: "KP",
+            data: arraykp,
+            lineTension: 0,
             fill: false,
-            borderDash: [5, 5],
             borderColor: "#9C27B0",
             pointBorderColor: "#9C27B0",
             pointBackgroundColor: "#FFF",
@@ -70,19 +78,8 @@ $(window).on("load", function(){
             pointHoverBorderWidth: 2,
             pointRadius: 4,
         }, {
-            label: "My Second dataset",
-            data: [28, 48, 40, 19, 86, 27, 90],
-            fill: false,
-            borderDash: [5, 5],
-            borderColor: "#00A5A8",
-            pointBorderColor: "#00A5A8",
-            pointBackgroundColor: "#FFF",
-            pointBorderWidth: 2,
-            pointHoverBorderWidth: 2,
-            pointRadius: 4,
-        }, {
-            label: "My Third dataset - No bezier",
-            data: [45, 25, 16, 36, 67, 18, 76],
+            label: "MOR 3",
+            data: arraymor3,
             lineTension: 0,
             fill: false,
             borderColor: "#FF7D4D",

@@ -18,7 +18,10 @@ class HomeController extends Controller
     public function index()
     {
     	date_default_timezone_set('Asia/Jakarta');
-    	$date = date('Y-m-d');
+        $date = date('Y-m-d');
+
+        $awal = date('Y-m-01', strtotime($date));
+        $akhir = date('Y-m-t', strtotime($date));
 
         $unitkerjas = UnitKerja::all();
 
@@ -32,7 +35,7 @@ class HomeController extends Controller
         ->where('role_id','2')
         ->count();
 
-    	return view('content.home.index', compact('activities','check','suara','unitkerjas','date','users','dcu'));
+    	return view('content.home.index', compact('activities','check','suara','unitkerjas','date','users','dcu','awal','akhir'));
 
     }
 

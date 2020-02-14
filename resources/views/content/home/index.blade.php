@@ -108,7 +108,7 @@
                     $banyak = ''; 
                     $kps = '';
                     $mor3s = '';
-                    $phkt = '';
+                    $phkts = '';
                       
                     for ($currentDate = $Variable1; $currentDate <= $Variable2;  
                                                     $currentDate += (86400)) { 

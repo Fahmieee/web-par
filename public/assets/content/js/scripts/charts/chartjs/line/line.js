@@ -18,10 +18,12 @@ $(window).on("load", function(){
     var periode = $('#periode').val();
     var kp = $('#kp').val();
     var mor3 = $('#mor3').val();
+    var phkt = $('#phkt').val();
 
     var arrayperiode = periode.split(",");
     var arraykp = kp.split(",");
     var arraymor3 = mor3.split(",");
+    var arrayphkt = phkt.split(",");
 
     // Chart Options
     var chartOptions = {
@@ -84,6 +86,17 @@ $(window).on("load", function(){
             fill: false,
             borderColor: "#FF7D4D",
             pointBorderColor: "#FF7D4D",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+        }, {
+            label: "PHKT",
+            data: arrayphkt,
+            lineTension: 0,
+            fill: false,
+            borderColor: "#d9534f",
+            pointBorderColor: "#d9534f",
             pointBackgroundColor: "#FFF",
             pointBorderWidth: 2,
             pointHoverBorderWidth: 2,

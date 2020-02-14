@@ -108,6 +108,7 @@
                     $banyak = ''; 
                     $kps = '';
                     $mor3s = '';
+                    $phkt = '';
                       
                     for ($currentDate = $Variable1; $currentDate <= $Variable2;  
                                                     $currentDate += (86400)) { 
@@ -136,19 +137,32 @@
                     ])
                     ->count();
 
+                    $phkt = DB::table('clocks')
+                    ->leftJoin('users', 'clocks.user_id', '=', 'users.id')
+                    ->leftJoin('wilayah', 'users.wilayah_id', '=', 'wilayah.id')
+                    ->leftJoin('unit_kerja', 'wilayah.unitkerja_id', '=', 'unit_kerja.id')
+                    ->where([
+                        ['clockin_date', '=', $tanggal],
+                        ['unit_kerja.id', '=', '18'],
+                    ])
+                    ->count();
+
                     $banyak .= $Store.',';
                     $kps .= $kp.',';
                     $mor3s .= $mor3.',';
+                    $phkts .= $phkt.',';
                     
                     }
 
                     $hasil = substr($banyak,0,-1);
                     $hasilkp = substr($kps,0,-1);
                     $hasilmor3 = substr($mor3s,0,-1);
+                    $hasilphkt = substr($phkts,0,-1);
                 @endphp
                 <input type="hidden" value="{{ $hasil }}" id="periode">
                 <input type="hidden" value="{{ $hasilkp }}" id="kp">
                 <input type="hidden" value="{{ $hasilmor3 }}" id="mor3">
+                <input type="hidden" value="{{ $hasilphkt }}" id="phkt">
 
             </div>
             <div class="card-content collapse show">

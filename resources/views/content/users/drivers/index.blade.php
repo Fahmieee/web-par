@@ -22,7 +22,7 @@
                             <table class="table table-striped table-bordered datatables" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th style="display: none;">ID</th>
                                         <th>Username</th>
                                         <th>Nama Driver</th>
                                         <th>Type Driver</th>
@@ -169,7 +169,6 @@ function ResetNow(){
 
 function TambahDriver(){
 
-    $('#modal_tambah').modal({backdrop: 'static', keyboard: false})
     $('#modal_tambah').modal('show');
 
 }
@@ -181,6 +180,12 @@ $(function() {
         processing: true,
         serverSide: true,
         order: [[ 0, 'desc' ]],
+        columnDefs: [
+            {
+                "targets": [ 0 ],
+                "visible": false
+            }
+        ],
         ajax: "{{ route('getdrivers') }}",
         columns: [
             { data: 'id', name: 'id' },
@@ -205,7 +210,7 @@ $(function() {
             { 
                 render: function ( data, type, row ) {
 
-                   return '<button class="btn btn-sm btn-success" type="button"><i class="la la-edit"></i></button> <button class="btn btn-sm btn-primary" type="button"><i class="la la-eye"></i></button> <button class="btn btn-sm btn-info" onclick="Reset('+row.id+')" type="button"><i class="la la-key"></i></button>';
+                   return '<button class="btn btn-sm btn-success" onclick="EditDriver('+row.id+')" type="button"><i class="la la-edit"></i></button> <button class="btn btn-sm btn-danger" onclick="Delete('+row.id+')" type="button"><i class="la la-trash"></i></button> <button class="btn btn-sm btn-info" onclick="Reset('+row.id+')" type="button"><i class="la la-key"></i></button>';
                 }
             },
         ]
@@ -252,6 +257,8 @@ $.ajax({
         var no = -1;
         var content_data ="";
 
+        content_data += "<option value=''>Pilih Unit Kendaraan</option>";
+
         $.each(data, function() {
 
             no++;
@@ -270,6 +277,54 @@ $.ajax({
 
 });
 
+$('#unit').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('docunit') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).val(),
+        },
+        success:function(data) {
+
+            $('.datedocunit').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#docunit_'+doc_id).val(dates);
+
+            });
+
+        }
+
+    });
+
+});
+
+$('#type').on('change', function () {
+
+    if($(this).val() == '1'){
+
+        $('#tab-user').attr("style", "display:block;");
+        $('#tab-unit').attr("style", "display:block;");
+
+    } else {
+
+        $('#tab-user').attr("style", "display:none;");
+        $('#tab-unit').attr("style", "display:none;");
+
+    }
+
+});
+
 function BuatUnitBaru(){
 
     $('#modal_unit_baru').modal({backdrop: 'static', keyboard: false})
@@ -279,6 +334,243 @@ function BuatUnitBaru(){
     $('#modal_tambah').modal('hide');
 
 }
+
+function Simpan(){
+
+    var empty = false;
+    $('input.mandatory').each(function() {
+        if ($(this).val() == '') {
+            empty = true;
+        }
+    });
+    if (empty) {
+
+        swal({
+            title: "Warning!!",
+            text: "Harap isi Isian yang Wajib diisi!",
+            icon: "error",
+            buttons: false,
+            timer: 2000,
+        });
+
+    } else {
+
+        var typedocdriver = [];
+        var datedocdriver = [];
+        var typedocunit = [];
+        var datedocunit = [];
+        var typetraining = [];
+        var datetraining = [];
+
+        $('.typedocdriver').each(function(){
+            typedocdriver.push($(this).val());
+        });
+
+        $('.datedocdriver').each(function(){
+            datedocdriver.push($(this).val());
+        });
+
+        $('.typedocunit').each(function(){
+            typedocunit.push($(this).val());
+        });
+
+        $('.datedocunit').each(function(){
+            datedocunit.push($(this).val());
+        });
+
+        $('.typetraining').each(function(){
+            typetraining.push($(this).val());
+        });
+
+        $('.datetraining').each(function(){
+            datetraining.push($(this).val());
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('simpandriver') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'nama': $('#nama').val(),
+                'email': $('#email').val(),
+                'phone': $('#phone').val(),
+                'nik': $('#nik').val(),
+                'unitkerja': $('#unitkerja').val(),
+                'wilayah': $('#wilayah').val(),
+                'type': $('#type').val(),
+                'korlap': $('#korlap').val(),
+                'alamat': $('#alamat').val(),
+                'namaclient': $('#namaclient').val(),
+                'emailclient': $('#emailclient').val(),
+                'jabatan': $('#jabatan').val(),
+                'phoneclient': $('#phoneclient').val(),
+                'typedocdriver': typedocdriver,
+                'datedocdriver': datedocdriver,
+                'unit': $('#unit').val(),
+                'typedocunit': typedocunit,
+                'datedocunit': datedocunit,
+                'typetraining': typetraining,
+                'datetraining': datetraining,
+               },
+            success: function(data) {
+
+                if(data == '0'){
+
+                    swal({
+                        title: "Berhasil!!",
+                        text: "Driver Berhasil Tersimpan!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 2000,
+                    });
+
+                    $('#tambahunits').modal('hide');
+
+                    setTimeout(function(){ window.location.reload() }, 1500);
+
+                } else {
+
+                    swal({
+                        title: "Warning!!",
+                        text: "Data Sudah ada di Sistem kami!",
+                        icon: "warning",
+                        buttons: false,
+                        timer: 2000,
+                    });
+
+                }
+                
+
+            }
+
+        });
+
+    }
+
+}
+
+function Delete(id){
+
+        $('#id').val(id);
+        $('#deleteuser').modal('show');
+
+    }
+
+function YakinHapusDriver(){
+
+    $.ajax({
+       type: 'POST',
+       url: "{{ route('deleteusers') }}",
+       data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $('#id').val()
+        },
+       success: function(data) {
+
+            swal("Data berhasil Terhapus!", {
+               icon: "success",
+               buttons: false,
+               timer: 2000,
+            });
+            setTimeout(function(){ window.location.reload() }, 1500);
+       }
+   });
+}
+
+function EditDriver(id){
+
+    $.ajax({
+       type: 'POST',
+       url: "{{ route('editdriver') }}",
+       data: {
+            '_token': $('input[name=_token]').val(),
+            'id': id
+        },
+       success: function(data) {
+
+            if(data.driver_type == '1'){
+                $('#tab-useredit').attr("style","display:block;");
+                $('#tab-unitedit').attr("style","display:block;");
+            } else {
+                $('#tab-useredit').attr("style","display:none;");
+                $('#tab-unitedit').attr("style","display:none;");
+            }
+
+            $('#namaedit').val(data.first_name);
+            $('#emailedit').val(data.email);
+            $('#phoneedit').val(data.phone);
+            $('#nikedit').val(data.username);
+            $('#unitkerjaedit').val(data.unitkerja_id);
+            $('#wilayahedit').val(data.wilayah_id);
+            $('#typeedit').val(data.driver_type);
+            $('#alamatedit').val(data.address);
+            $('#korlapedit').val(data.korlap_id);
+            $('#ids').val(id);
+
+
+       }
+   });
+
+    $.ajax({
+        url: "{{ route('docdriver') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': id,
+        },
+        success:function(data) {
+
+            $('.datedocdriveredit').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#iddocdriveredit_'+doc_id).val(dates);
+
+            });
+
+        }
+
+    });
+
+    $.ajax({
+        url: "{{ route('trainingdriver') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': id,
+        },
+        success:function(data) {
+
+            $('.datetrainingedit').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var training_id = data[no]['training_id'];
+                var dates = data[no]['date'];
+
+                $('#idtrainingedit_'+training_id).val(dates);
+
+            });
+
+        }
+
+    });
+
+    $('#editdriver').modal('show');
+
+}
+
 
 </script>
 @stop

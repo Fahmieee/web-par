@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Users extends Model
 {
@@ -11,4 +12,7 @@ class Users extends Model
     protected $primaryKey = 'id';
 
     protected $hidden = ['password',  'remember_token'];
+
+    use SoftDeletes;
+    protected $dates =['deleted_at'];
 }

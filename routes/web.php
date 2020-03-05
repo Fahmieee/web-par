@@ -84,5 +84,11 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('drivers/reset', 'UserController@resetpassword')->name('resetpassword');
 	Route::post('drivers/ambilwilayah', 'UserController@ambilwilayah')->name('ambilwilayah');
 	Route::get('drivers/ambilunit', 'UserController@ambilunit')->name('ambilunit');
+	Route::post('drivers/store', 'UserController@store')->name('simpandriver');
+	Route::post('drivers/docunit', 'UserController@docunit')->name('docunit');
+	Route::post('drivers/delete', 'UserController@delete')->name('deleteusers');
+	Route::post('drivers/edit', 'UserController@edit')->name('editdriver');
+	Route::post('drivers/docdriver', 'UserController@docdriver')->name('docdriver');
+	Route::post('drivers/trainingdriver', 'UserController@trainingdriver')->name('trainingdriver');
 
 });

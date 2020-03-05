@@ -57,7 +57,7 @@
                  
             },
             columns: [
-                { data: 'nik', name: 'nik' },
+                { data: 'username', name: 'username' },
                 { data: 'first_name', name: 'first_name' },
                 { data: 'unitkerja_name', name: 'unitkerja_name' },
                 { data: 'clockin_time', name: 'clockin_time' },

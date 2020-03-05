@@ -78,38 +78,4 @@ class UserController extends Controller
 
     }
 
-    public function simpanunit(Request $request)
-    {
-    	date_default_timezone_set('Asia/Jakarta');
-
-    	$noplatspasi = str_replace(' ', '', $request->nopol);
-
-    	$units = Units::where("no_police", $request->nopol)
-    	->first();
-
-    	if(!$units){
-
-	    	$saveunits = new Units();
-	        $saveunits->pemilik	 = 'PAR';
-	        $saveunits->merk = $request->merk;
-	        $saveunits->model = $request->model;
-	        $saveunits->varian = $request->varian;
-	        $saveunits->years = $request->tahun;
-	        $saveunits->mes = $request->mes;
-	        $saveunits->transmition = $request->transmisi;
-	        $saveunits->no_police = $request->nopol;
-	        $saveunits->color = $request->color;
-	        $saveunits->save();
-
-	        $data = '0';
-
-	    } else {
-
-	    	$data = '1';
-
-	    }
-
-        return response()->json($data);
-
-    }
 }

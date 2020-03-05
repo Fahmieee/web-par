@@ -31,6 +31,7 @@
                     </li>
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Answers</span></a>
                     </li>
+                    <li><a class="menu-item" href="units"><i></i><span data-i18n="nav.templates.horz.main">Unit Kendaraan</span></a>
                     <!-- <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Penilaian Pengemudi</span></a>
                         <ul class="menu-content">
                             <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.classic_menu">Type Nilai</span></a>

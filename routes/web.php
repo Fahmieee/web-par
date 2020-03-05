@@ -41,6 +41,13 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('unitkerja', 'UnitKerjaController@index');
 	Route::get('unitkerja/getdata', 'UnitKerjaController@GetData')->name('getunitkerja');
 
+	Route::get('units', 'UnitController@index');
+	Route::post('units/store', 'UnitController@store')->name('simpanunit');
+	Route::get('units/getdata', 'UnitController@GetData')->name('getunits');
+	Route::post('units/delete', 'UnitController@delete')->name('deleteunits');
+	Route::post('units/edit', 'UnitController@edit')->name('editunits');
+	Route::post('units/update', 'UnitController@update')->name('updateunits');
+
 	Route::get('wilayah', 'WilayahController@index');
 	Route::get('wilayah/getdata', 'WilayahController@GetData')->name('getwilayah');
 
@@ -77,6 +84,5 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('drivers/reset', 'UserController@resetpassword')->name('resetpassword');
 	Route::post('drivers/ambilwilayah', 'UserController@ambilwilayah')->name('ambilwilayah');
 	Route::get('drivers/ambilunit', 'UserController@ambilunit')->name('ambilunit');
-	Route::post('drivers/simpanunit', 'UserController@simpanunit')->name('simpanunit');
 
 });

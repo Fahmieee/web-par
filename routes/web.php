@@ -90,5 +90,7 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('drivers/edit', 'UserController@edit')->name('editdriver');
 	Route::post('drivers/docdriver', 'UserController@docdriver')->name('docdriver');
 	Route::post('drivers/trainingdriver', 'UserController@trainingdriver')->name('trainingdriver');
+	Route::post('drivers/editclient', 'UserController@editclient')->name('editclient');
+	Route::post('drivers/update', 'UserController@update')->name('updatedriver');
 
 });

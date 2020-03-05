@@ -686,7 +686,7 @@
                                                             <td>Nama User</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><input type="text" class="form-control" id="namaclient" placeholder="Nama Driver"></td>
+                                                            <td><input type="text" class="form-control" id="namaclientedit" placeholder="Nama Driver"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>&nbsp;</td>
@@ -695,7 +695,7 @@
                                                             <td>Email</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><input type="text" class="form-control" id="emailclient" placeholder="Alamat Email"></td>
+                                                            <td><input type="text" class="form-control" id="emailclientedit" placeholder="Alamat Email"></td>
                                                         </tr>
                                                         
                                                     </table>
@@ -707,7 +707,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <select class="form-control select2" id="jabatan">
+                                                                <select class="form-control" id="jabatanedit">
                                                                     <option value="70">Pilih Jabatan</option>
                                                                     @foreach($jabatans as $jabatan)
                                                                     <option value="{{ $jabatan->id }}">{{ $jabatan->jabatan_name }}</option>
@@ -722,7 +722,7 @@
                                                             <td>No Handphone</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><input type="text" class="form-control" id="phoneclient" placeholder="Nomor Handphone"></td>
+                                                            <td><input type="text" class="form-control" id="phoneclientedit" placeholder="Nomor Handphone"></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -745,7 +745,12 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <select class="form-control select2" id="unit">
+                                                                <select class="form-control select2" id="unitedit">
+                                                                    @foreach($units as $unit)
+
+                                                                        <option value="{{ $unit->id }}">{{ $unit->no_police }} | {{ $unit->merk }} {{ $unit->model }}</option>
+
+                                                                    @endforeach
                                                                      
                                                                 </select>
                                                             </td>
@@ -763,11 +768,11 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="text" class="form-control" value="{{ $docunit->doc_name }}" disabled>
-                                                                <input type="hidden" class="typedocunit" id="doc" value="{{ $docunit->id }}">
+                                                                <input type="hidden" class="typedocunitedit" id="doc" value="{{ $docunit->id }}">
                                                             </td>
                                                             <td>&nbsp;</td>
                                                             <td>
-                                                                <input type="date" class="form-control datedocunit" id="docunit_{{ $docunit->id }}">    
+                                                                <input type="date" class="form-control datedocunitedit" id="iddocunitedit_{{ $docunit->id }}">    
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -810,7 +815,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn grey btn-outline-danger" data-dismiss="modal">Close</button>
-                <button onclick="Simpan()" type="button" class="btn btn-outline-success">Simpan</button>
+                <button onclick="UpdateDrivers()" type="button" class="btn btn-outline-success">Update</button>
             </div>
         </div>
     </div>

@@ -491,6 +491,52 @@ function EditDriver(id){
             if(data.driver_type == '1'){
                 $('#tab-useredit').attr("style","display:block;");
                 $('#tab-unitedit').attr("style","display:block;");
+
+                $.ajax({
+                   type: 'POST',
+                   url: "{{ route('editclient') }}",
+                   data: {
+                        '_token': $('input[name=_token]').val(),
+                        'id': id
+                    },
+                   success: function(datas) {
+
+                        $('#namaclientedit').val(datas.first_name);
+                        $('#emailclientedit').val(datas.email);
+                        $('#jabatanedit').val(datas.jabatan_id);
+                        $('#phoneclientedit').val(datas.phone);
+
+                   }
+               });
+
+                $.ajax({
+                    url: "{{ route('docunit') }}",
+                    type: "POST",
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'id': data.unit_id,
+                    },
+                    success:function(data) {
+
+                        $('.datedocunit').val('');
+
+                        var no = -1;
+                        var content_data ="";
+
+                        $.each(data, function() {
+
+                            no++;
+                            var doc_id = data[no]['document_id'];
+                            var dates = data[no]['exp_date'];
+
+                            $('#iddocunitedit_'+doc_id).val(dates);
+
+                        });
+
+                    }
+
+                });
+
             } else {
                 $('#tab-useredit').attr("style","display:none;");
                 $('#tab-unitedit').attr("style","display:none;");
@@ -505,6 +551,7 @@ function EditDriver(id){
             $('#typeedit').val(data.driver_type);
             $('#alamatedit').val(data.address);
             $('#korlapedit').val(data.korlap_id);
+            $('#unitedit').val(data.unit_id);
             $('#ids').val(id);
 
 
@@ -567,10 +614,122 @@ function EditDriver(id){
 
     });
 
+
     $('#editdriver').modal('show');
 
 }
 
+function UpdateDrivers(){
+
+    var typedocdriveredit = [];
+    var datedocdriveredit = [];
+    var typedocunitedit = [];
+    var datedocunitedit = [];
+    var typetrainingedit = [];
+    var datetrainingedit = [];
+
+    $('.typedocdriveredit').each(function(){
+        typedocdriveredit.push($(this).val());
+    });
+
+    $('.datedocdriveredit').each(function(){
+        datedocdriveredit.push($(this).val());
+    });
+
+    $('.typedocunitedit').each(function(){
+        typedocunitedit.push($(this).val());
+    });
+
+    $('.datedocunitedit').each(function(){
+        datedocunitedit.push($(this).val());
+    });
+
+    $('.typetrainingedit').each(function(){
+        typetrainingedit.push($(this).val());
+    });
+
+    $('.datetrainingedit').each(function(){
+        datetrainingedit.push($(this).val());
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: "{{ route('updatedriver') }}",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $('#ids').val(),
+            'nama': $('#namaedit').val(),
+            'email': $('#emailedit').val(),
+            'phone': $('#phoneedit').val(),
+            'nik': $('#nikedit').val(),
+            'unitkerja': $('#unitkerjaedit').val(),
+            'wilayah': $('#wilayahedit').val(),
+            'type': $('#typeedit').val(),
+            'korlap': $('#korlapedit').val(),
+            'alamat': $('#alamatedit').val(),
+            'namaclient': $('#namaclientedit').val(),
+            'emailclient': $('#emailclientedit').val(),
+            'jabatan': $('#jabatanedit').val(),
+            'phoneclient': $('#phoneclientedit').val(),
+            'typedocdriver': typedocdriveredit,
+            'datedocdriver': datedocdriveredit,
+            'unit': $('#unitedit').val(),
+            'typedocunit': typedocunitedit,
+            'datedocunit': datedocunitedit,
+            'typetraining': typetrainingedit,
+            'datetraining': datetrainingedit,
+           },
+        success: function(data) {
+
+            swal({
+                title: "Berhasil!!",
+                text: "Driver Berhasil Diperbaharui!",
+                icon: "success",
+                buttons: false,
+                timer: 2000,
+            });
+
+            $('#tambahunits').modal('hide');
+
+            setTimeout(function(){ window.location.reload() }, 1500);
+
+        }
+
+    });
+
+}
+
+$('#unitedit').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('docunit') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).val(),
+        },
+        success:function(data) {
+
+            $('.datedocunitedit').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#iddocunitedit_'+doc_id).val(dates);
+
+            });
+
+        }
+
+    });
+
+});
 
 </script>
 @stop

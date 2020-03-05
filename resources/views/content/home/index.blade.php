@@ -98,6 +98,7 @@
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                     </ul>
                 </div>
+
                 @php
                     $Date1 = $awal; 
                     $Date2 = $akhir; 
@@ -109,6 +110,7 @@
                     $kps = '';
                     $mor3s = '';
                     $phkts = '';
+                    $phes = '';
                       
                     for ($currentDate = $Variable1; $currentDate <= $Variable2;  
                                                     $currentDate += (86400)) { 
@@ -147,10 +149,21 @@
                     ])
                     ->count();
 
+                    $phe = DB::table('clocks')
+                    ->leftJoin('users', 'clocks.user_id', '=', 'users.id')
+                    ->leftJoin('wilayah', 'users.wilayah_id', '=', 'wilayah.id')
+                    ->leftJoin('unit_kerja', 'wilayah.unitkerja_id', '=', 'unit_kerja.id')
+                    ->where([
+                        ['clockin_date', '=', $tanggal],
+                        ['unit_kerja.id', '=', '18'],
+                    ])
+                    ->count();
+
                     $banyak .= $Store.',';
                     $kps .= $kp.',';
                     $mor3s .= $mor3.',';
                     $phkts .= $phkt.',';
+                    $phes .= $phe.',';
                     
                     }
 
@@ -158,12 +171,13 @@
                     $hasilkp = substr($kps,0,-1);
                     $hasilmor3 = substr($mor3s,0,-1);
                     $hasilphkt = substr($phkts,0,-1);
+                    $hasilphe = substr($phes,0,-1);
                 @endphp
                 <input type="hidden" value="{{ $hasil }}" id="periode">
                 <input type="hidden" value="{{ $hasilkp }}" id="kp">
                 <input type="hidden" value="{{ $hasilmor3 }}" id="mor3">
                 <input type="hidden" value="{{ $hasilphkt }}" id="phkt">
-
+                <input type="hidden" value="{{ $hasilphe }}" id="phe">
             </div>
             <div class="card-content collapse show">
                 <div class="card-body chartjs">

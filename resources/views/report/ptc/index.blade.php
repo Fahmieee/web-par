@@ -46,12 +46,13 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-content collapse show">
+                                        <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button>
                                         <div class="card-body card-dashboard">
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered datatables">
+                                                <table class="table table-striped table-bordered datatables" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>ID</th>
+                                                            <th>Nopeg</th>
                                                             <th>Pengemudi</th>
                                                             <th>Tanggal</th>
                                                             <th>Waktu</th>
@@ -78,6 +79,20 @@
 <!--/ Zero configuration table -->
 <!-- @include('report.ptc.modal') -->
 @include('includes.footer')
+<script type="text/javascript">
+    
+    $('#excel').on('click', function () {
+
+        var dari = $('#dari').val();
+        var sampai = $('#sampai').val();
+        var unitkerja = $('#unitkerja').val();
+
+
+        setTimeout(function(){ window.location.href = '/reportptc/printexcel?dari='+dari+'&sampai='+sampai+'&unit='+unitkerja+''; }, 1500);
+
+    });
+
+</script>
 @include('scripts.reportptc')
 
 @stop

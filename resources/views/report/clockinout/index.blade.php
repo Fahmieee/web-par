@@ -47,12 +47,13 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-content collapse show">
+                                        <button class="btn btn-success" id="excel">Export Excel</button>
                                         <div class="card-body card-dashboard">
                                             <div class="table-responsive">
                                                 <table width="100%" class="table table-striped table-bordered datatables">
                                                     <thead>
                                                         <tr>
-                                                            <th>ID</th>
+                                                            <th>Nopeg</th>
                                                             <th>Pengemudi</th>
                                                             <th>Tanggal</th>
                                                             <th>Clockin</th>
@@ -81,5 +82,19 @@
 <!--/ Zero configuration table -->
 
 @include('includes.footer')
+<script type="text/javascript">
+    
+    $('#excel').on('click', function () {
+
+        var dari = $('#dari').val();
+        var sampai = $('#sampai').val();
+        var unitkerja = $('#unitkerja').val();
+
+
+        setTimeout(function(){ window.location.href = '/reportclockinout/printexcel?dari='+dari+'&sampai='+sampai+'&unit='+unitkerja+''; }, 1500);
+
+    });
+
+</script>
 @include('scripts.reportclockinout')
 @stop

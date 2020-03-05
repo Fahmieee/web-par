@@ -21,7 +21,7 @@
                 },
             },
             columns: [
-                { data: 'id', name: 'id' },
+                { data: 'username', name: 'username' },
                 { data: 'first_name', name: 'first_name' },
                 { data: 'no_police', name: 'no_police' },
                 { 

@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/content/vendors/css/tables/datatable/datatables.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/content/vendors/css/tables/extensions/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/content/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/content/vendors/css/forms/selects/select2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->

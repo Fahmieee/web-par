@@ -25,4 +25,9 @@
 <!-- -- Datatables -- -->
 <script src="/assets/content/vendors/js/tables/datatable/datatables.min.js"></script>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="/assets/content/vendors/js/forms/select/select2.full.min.js"></script>
+<script src="/assets/content/js/scripts/forms/select/form-select2.js"></script>
+
 <!-- END: Page JS-->

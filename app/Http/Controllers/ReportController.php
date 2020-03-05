@@ -14,6 +14,10 @@ use App\UnitKerja;
 use Mapper;
 use DataTables;
 use DB;
+use App\Exports\DCUExports;
+use App\Exports\PTCExports;
+use App\Exports\PTCBermasalahExports;
+use App\Exports\ClockExports;
 
 class ReportController extends Controller
 {
@@ -36,7 +40,7 @@ class ReportController extends Controller
 
         if($request->unitkerja == ''){
 
-            $ptcus = Pretrip_Check::select('pretrip_check.*', 'users.first_name', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police')
+            $ptcus = Pretrip_Check::select('pretrip_check.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police')
             ->leftJoin("users", "pretrip_check.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -47,7 +51,7 @@ class ReportController extends Controller
 
         } else {
 
-            $ptcus = Pretrip_Check::select('pretrip_check.*', 'users.first_name', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police')
+            $ptcus = Pretrip_Check::select('pretrip_check.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police')
             ->leftJoin("users", "pretrip_check.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -62,6 +66,13 @@ class ReportController extends Controller
         }
 
         return Datatables::of($ptcus)->make(true);
+
+    }
+
+    public function ptcprintexcel(Request $request)
+    {
+
+        return (new PTCExports($request->dari,$request->sampai,$request->unit))->download('ReportPTCExcel.xlsx');
 
     }
 
@@ -85,7 +96,7 @@ class ReportController extends Controller
 
         if($request->unitkerja == '' && $request->type == ''){
 
-            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
+            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
             ->leftJoin("pretrip_check", "pretrip_check_notoke.pretripcheck_id", "=", "pretrip_check.id")
             ->leftJoin("users", "pretrip_check.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
@@ -100,7 +111,7 @@ class ReportController extends Controller
 
         } else if($request->unitkerja != '' && $request->type == ''){
 
-            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
+            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
             ->leftJoin("pretrip_check", "pretrip_check_notoke.pretripcheck_id", "=", "pretrip_check.id")
             ->leftJoin("users", "pretrip_check.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
@@ -118,7 +129,7 @@ class ReportController extends Controller
 
         } else if($request->unitkerja == '' && $request->type != ''){
 
-            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
+            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
             ->leftJoin("pretrip_check", "pretrip_check_notoke.pretripcheck_id", "=", "pretrip_check.id")
             ->leftJoin("users", "pretrip_check.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
@@ -136,7 +147,7 @@ class ReportController extends Controller
 
         } else {
 
-            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
+            $ptcsalahs = PTCNotok::select('pretrip_check_notoke.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(pretrip_check.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','units.no_police','pretrip_check.time','check_answer.parameter','check_answer.level','check_detail.name as detail_name','check_types.name as type_name')
             ->leftJoin("pretrip_check", "pretrip_check_notoke.pretripcheck_id", "=", "pretrip_check.id")
             ->leftJoin("users", "pretrip_check.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
@@ -159,6 +170,13 @@ class ReportController extends Controller
 
     }
 
+    public function ptcbermasalahprintexcel(Request $request)
+    {
+
+        return (new PTCBermasalahExports($request->dari,$request->sampai,$request->unit,$request->type))->download('ReportPTCBermasalahExcel.xlsx');
+
+    }
+
     public function dcu()
     {
     	date_default_timezone_set('Asia/Jakarta');
@@ -177,7 +195,7 @@ class ReportController extends Controller
     {   
         if($request->unitkerja == ''){
 
-            $dcus = MedicalCheckup::select('medical_checkup.*', 'users.first_name', DB::raw('DATE_FORMAT(medical_checkup.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+            $dcus = MedicalCheckup::select('medical_checkup.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(medical_checkup.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
             ->leftJoin("users", "medical_checkup.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -186,7 +204,7 @@ class ReportController extends Controller
 
         } else {
 
-            $dcus = MedicalCheckup::select('medical_checkup.*', 'users.first_name', DB::raw('DATE_FORMAT(medical_checkup.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+            $dcus = MedicalCheckup::select('medical_checkup.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(medical_checkup.date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
             ->leftJoin("users", "medical_checkup.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -197,6 +215,13 @@ class ReportController extends Controller
         }
 
         return Datatables::of($dcus)->make(true);
+
+    }
+
+    public function dcuprintexcel(Request $request)
+    {
+
+        return (new DCUExports($request->dari,$request->sampai,$request->unit))->download('ReportDCUExcel.xlsx');
 
     }
 
@@ -222,7 +247,7 @@ class ReportController extends Controller
 
         if($request->unitkerja == ''){
 
-            $clocks = Clocks::select('clocks.*', 'users.first_name', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+            $clocks = Clocks::select('clocks.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
             ->leftJoin("users", "clocks.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -231,7 +256,7 @@ class ReportController extends Controller
 
         } else {
 
-            $clocks = Clocks::select('clocks.*', 'users.first_name', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+            $clocks = Clocks::select('clocks.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
             ->leftJoin("users", "clocks.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
@@ -243,6 +268,13 @@ class ReportController extends Controller
 
         return Datatables::of($clocks)->make(true);
 
+
+    }
+
+    public function clocksprintexcel(Request $request)
+    {
+
+        return (new ClockExports($request->dari,$request->sampai,$request->unit))->download('ReportClockInOutExcel.xlsx');
 
     }
 

@@ -19,11 +19,13 @@ $(window).on("load", function(){
     var kp = $('#kp').val();
     var mor3 = $('#mor3').val();
     var phkt = $('#phkt').val();
+    var phe = $('#phe').val();
 
     var arrayperiode = periode.split(",");
     var arraykp = kp.split(",");
     var arraymor3 = mor3.split(",");
     var arrayphkt = phkt.split(",");
+    var arrayphe = phe.split(",");
 
     // Chart Options
     var chartOptions = {
@@ -97,6 +99,17 @@ $(window).on("load", function(){
             fill: false,
             borderColor: "#d9534f",
             pointBorderColor: "#d9534f",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+        }, {
+            label: "PHE",
+            data: arrayphe,
+            lineTension: 0,
+            fill: false,
+            borderColor: "#428bca",
+            pointBorderColor: "#428bca",
             pointBackgroundColor: "#FFF",
             pointBorderWidth: 2,
             pointHoverBorderWidth: 2,

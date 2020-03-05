@@ -20,7 +20,7 @@
                 },
             },
             columns: [
-                { data: 'id', name: 'id' },
+                { data: 'username', name: 'username' },
                 { data: 'first_name', name: 'first_name' },
                 { data: 'dates', name: 'dates' },
                 { data: 'time', name: 'time' },

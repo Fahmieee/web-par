@@ -31,7 +31,7 @@
                     </li>
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Answers</span></a>
                     </li>
-                    <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Penilaian Pengemudi</span></a>
+                    <!-- <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Penilaian Pengemudi</span></a>
                         <ul class="menu-content">
                             <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.classic_menu">Type Nilai</span></a>
                             </li>
@@ -46,12 +46,20 @@
                             <li><a class="menu-item" href="#"><i></i><span>Detail Nilai</span></a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
             <li class="nav-item"><a href="#"><i class="la la-users"></i><span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Users</span></a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="/drivers"><i></i><span data-i18n="nav.templates.vert.classic_menu">Data Drivers</span></a>
+                            </li>
+                            <li><a class="menu-item" href="/korlaps"><i></i><span>Data Korlap</span></a>
+                            </li>
+                            <li><a class="menu-item" href="/clients"><i></i><span>Data Client</span></a>
+                            </li>
+                        </ul>
                     </li>
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Role</span></a>
                     </li>
@@ -83,7 +91,7 @@
             </li>
             <li class="nav-item"><a href="maps"><i class="la la-map-marker"></i><span class="menu-title" data-i18n="nav.dash.main">Maps Activity</span></a>
             </li>
-            <li class="nav-item open"><a href="#"><i class="la la-file-text"></i><span class="menu-title" data-i18n="nav.templates.main">Report</span></a>
+            <li class="nav-item"><a href="#"><i class="la la-file-text"></i><span class="menu-title" data-i18n="nav.templates.main">Report</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="reportptc"><i></i><span data-i18n="nav.templates.vert.main">Report PTC</span></a>
                     </li>

@@ -20,13 +20,31 @@
                 },
             },
             columns: [
-                { data: 'id', name: 'id' },
+                { data: 'username', name: 'username' },
                 { data: 'first_name', name: 'first_name' },
                 { data: 'dates', name: 'dates' },
                 { data: 'time', name: 'time' },
                 { data: 'suhu', name: 'suhu' },
                 { data: 'darah', name: 'darah' },
                 { data: 'unitkerja_name', name: 'unitkerja_name' },
+                { 
+                    render: function ( data, type, row ) {
+
+                        if(row.hasil == 3){
+
+                            var status = "Unfit";
+                            var btn = "btn-danger";
+
+                        } else {
+
+                            var status = "Fit";
+                            var btn = "btn-success";
+
+                        }
+
+                        return "<button type='button' class='btn btn-sm "+btn+"'>"+status+"</button";
+                    }
+                },
             ]
         });
 

@@ -56,16 +56,27 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('reportptc', 'ReportController@ptc');
 	Route::post('reportptc/detailptc', 'ReportController@viewdetailptc')->name('ViewDetailPTC');
 	Route::post('reportptc/getdata', 'ReportController@getptc')->name('getptc');
+	Route::get('reportptc/printexcel', 'ReportController@ptcprintexcel')->name('ptcprintexcel');
 
 	Route::get('reportptcbermasalah', 'ReportController@ptcbermasalah');
 	Route::post('reportptcbermasalah/getdata', 'ReportController@getptcbermasalah')->name('getptcbermasalah');
+	Route::get('reportptcbermasalah/printexcel', 'ReportController@ptcbermasalahprintexcel')->name('ptcbermasalahprintexcel');
 
 	Route::get('reportdcu', 'ReportController@dcu');
 	Route::post('reportdcu/getdata', 'ReportController@getdcu')->name('getdcu');
+	Route::get('reportdcu/printexcel', 'ReportController@dcuprintexcel')->name('dcuprintexcel');
 
 	Route::get('reportclockinout', 'ReportController@clockinout');
 	Route::post('reportclockinout/getdata', 'ReportController@getclockinout')->name('getclockinout');
+	Route::get('reportclockinout/printexcel', 'ReportController@clocksprintexcel')->name('clocksprintexcel');
 
 	Route::get('maps', 'MapsController@index');
+
+	Route::get('drivers', 'UserController@drivers');
+	Route::get('drivers/getdata', 'UserController@getdrivers')->name('getdrivers');
+	Route::post('drivers/reset', 'UserController@resetpassword')->name('resetpassword');
+	Route::post('drivers/ambilwilayah', 'UserController@ambilwilayah')->name('ambilwilayah');
+	Route::get('drivers/ambilunit', 'UserController@ambilunit')->name('ambilunit');
+	Route::post('drivers/simpanunit', 'UserController@simpanunit')->name('simpanunit');
 
 });

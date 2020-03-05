@@ -51,17 +51,20 @@
                     <div class="card">
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
+                                <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button>
+                                <br><br>
                                 <div class="table-responsive">
                                     <table width="100%" class="table table-striped table-bordered datatables">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>Nopeg</th>
                                                 <th>Pengemudi</th>
                                                 <th>Tanggal</th>
                                                 <th>Waktu</th>
                                                 <th>Suhu</th>
                                                 <th>T.Darah</th>
                                                 <th>U.Kerja</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,5 +83,19 @@
 <!--/ Zero configuration table -->
 
 @include('includes.footer')
+<script type="text/javascript">
+    
+    $('#excel').on('click', function () {
+
+        var dari = $('#dari').val();
+        var sampai = $('#sampai').val();
+        var unitkerja = $('#unitkerja').val();
+
+
+        setTimeout(function(){ window.location.href = '/reportdcu/printexcel?dari='+dari+'&sampai='+sampai+'&unit='+unitkerja+''; }, 1500);
+
+    });
+
+</script>
 @include('scripts.reportdcu')
 @stop

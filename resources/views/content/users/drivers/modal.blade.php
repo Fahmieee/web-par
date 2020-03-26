@@ -135,7 +135,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <select class="form-control" id="wilayah">
+                                                                <select class="form-control wilayah" id="wilayah">
                                                                     
                                                                 </select>
                                                             </td>

@@ -26,8 +26,8 @@
                                         <th>Username</th>
                                         <th>Nama Driver</th>
                                         <th>Type Driver</th>
-                                        <th>Wilayah</th>
-                                        <th>Unit kerja</th>
+                                        <th>Unit</th>
+                                        <th>Wilayah kerja</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -205,7 +205,20 @@ $(function() {
                     }
                 }
             },
-            { data: 'wilayah_name', name: 'wilayah_name' },
+            { 
+                render: function ( data, type, row ) {
+
+                    if(row.no_police == null){
+
+                        return '-';
+
+                    } else {
+
+                        return row.no_police;
+
+                    }
+                }
+            },
             { data: 'unitkerja_name', name: 'unitkerja_name' },
             { 
                 render: function ( data, type, row ) {

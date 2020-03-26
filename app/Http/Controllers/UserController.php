@@ -53,10 +53,12 @@ class UserController extends Controller
 
     public function getdrivers()
     {
-        $drives = Users::select("users.*","jabatan_name", "wilayah_name","unitkerja_name")
+        $drives = Users::select("users.*","jabatan_name", "wilayah_name","unitkerja_name","units.no_police")
         ->leftJoin("jabatan", "users.jabatan_id", "=", "jabatan.id")
         ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
         ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->leftJoin("drivers", "users.id", "=", "drivers.driver_id")
+        ->leftJoin("units", "drivers.unit_id", "=", "units.id")
         ->where("jabatan_id", "1")
         ->get();
 
@@ -86,7 +88,13 @@ class UserController extends Controller
     public function ambilunit(Request $request)
     {
 
-    	$units = Units::where("pemilik", 'PAR')
+    	$units = Units::select("units.*","drivers.unit_id")
+        ->leftJoin("drivers", "units.id", "=", "drivers.unit_id")
+        ->where("pemilik", 'PAR')
+        ->where([
+            ['unit_id', '=', null],
+            ['pemilik', '=', 'PAR'],
+        ])
     	->get();
 
     	return response()->json($units);

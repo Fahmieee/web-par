@@ -19,7 +19,7 @@
             <td>{{ $no++ }}</td>
             <td>{{ $clock->username }}</td>
             <td>{{ $clock->first_name }}</td>
-            <td>{{ date('d/m/Y', strtotime($clock->date)) }}</td>
+            <td>{{ date('d/m/Y', strtotime($clock->clockin_date)) }}</td>
             <td>{{ $clock->clockin_time }}</td>
             <td>{{ $clock->clockout_time }}</td>
             <td>{{ $clock->clockin_km }}</td>

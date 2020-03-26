@@ -16,6 +16,7 @@ use App\DocDriver;
 use App\UserRoles;
 use App\TrainingDrivers;
 use App\Drivers;
+use App\UnitDrivers;
 use DataTables;
 use View;
 use Hash;
@@ -152,6 +153,23 @@ class UserController extends Controller
 
                 $units = Units::where("id", $request->unit)
                 ->first();
+
+                $adaunit = UnitDrivers::where("unit_id",  $request->unit)
+                ->first();
+
+                if(!$adaunit){
+
+                    $saverolesclient = new UnitDrivers();
+                    $saverolesclient->user_id  = $saveuser->id;
+                    $saverolesclient->unit_id = $request->unit;
+                    $saverolesclient->save();
+
+                } else {
+
+                    $clocks = UnitDrivers::where(['unit_id'=>$request->unit])
+                ->update(['user_id'=>$saveuser->id]);
+
+                }
 
                 $noplatspasi = str_replace(' ', '', $units->no_police);
 
@@ -390,6 +408,23 @@ class UserController extends Controller
 
             $noplatspasi = str_replace(' ', '', $units->no_police);
 
+             $adaunit = UnitDrivers::where("unit_id",  $request->unit)
+                ->first();
+
+                if(!$adaunit){
+
+                    $saverolesclient = new UnitDrivers();
+                    $saverolesclient->user_id  = $saveuser->id;
+                    $saverolesclient->unit_id = $request->unit;
+                    $saverolesclient->save();
+
+                } else {
+
+                    $clocks = UnitDrivers::where(['unit_id'=>$request->unit])
+                    ->update(['user_id'=>$saveuser->id]);
+
+                }
+
             $adaclient = Users::where("username", $noplatspasi)
             ->first();
 
@@ -503,6 +538,9 @@ class UserController extends Controller
 
             $savedocunit = Drivers::where(['driver_id'=>$saveuser->id])
             ->update(['unit_id'=>null, 'user_id'=>null, 'korlap_id'=>$request->korlap]);
+
+            $clocks = UnitDrivers::where(['user_id'=>$saveuser->id])
+            ->delete();
 
         }
 

@@ -177,7 +177,6 @@
                                                                 <select class="form-control" id="korlap">
                                                                     @foreach($korlaps as $korlap)
                                                                         <option value="{{ $korlap->id }}">{{ $korlap->first_name }} - {{ $korlap->unitkerja_name }}</option>
-
                                                                     @endforeach
                                                                 </select>
                                                             </td>

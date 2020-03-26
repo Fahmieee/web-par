@@ -325,6 +325,22 @@ $('#type').on('change', function () {
 
 });
 
+$('#typeedit').on('change', function () {
+
+    if($(this).val() == '1'){
+
+        $('#tab-useredit').attr("style", "display:block;");
+        $('#tab-unitedit').attr("style", "display:block;");
+
+    } else {
+
+        $('#tab-useredit').attr("style", "display:none;");
+        $('#tab-unitedit').attr("style", "display:none;");
+
+    }
+
+});
+
 function BuatUnitBaru(){
 
     $('#modal_unit_baru').modal({backdrop: 'static', keyboard: false})

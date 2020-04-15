@@ -34,6 +34,10 @@ Route::group(['middleware' => 'auth:user'], function(){
 
 	Route::get('jabatan', 'JabatanController@index');
 	Route::get('jabatan/getdata', 'JabatanController@GetData')->name('getjabatan');
+	Route::post('jabatan/storedata', 'JabatanController@store')->name('simpanjabatan');
+	Route::post('jabatan/editdata', 'JabatanController@edit')->name('editjabatan');
+	Route::post('jabatan/updatedata', 'JabatanController@update')->name('updatejabatan');
+	Route::post('jabatan/deletedata', 'JabatanController@delete')->name('deletejabatan');
 
 	Route::get('company', 'CompanyController@index');
 	Route::get('company/getdata', 'CompanyController@GetData')->name('getcompany');
@@ -92,5 +96,9 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('drivers/trainingdriver', 'UserController@trainingdriver')->name('trainingdriver');
 	Route::post('drivers/editclient', 'UserController@editclient')->name('editclient');
 	Route::post('drivers/update', 'UserController@update')->name('updatedriver');
+
+	Route::get('korlaps', 'UserController@korlaps');
+	Route::get('korlaps/getdata', 'UserController@getkorlaps')->name('getkorlaps');
+	Route::post('korlaps/store', 'UserController@korlapstore')->name('simpankorlap');
 
 });

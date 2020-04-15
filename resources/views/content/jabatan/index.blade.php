@@ -6,7 +6,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Jabatan</h4>
+
+                    <h4 class="card-title">Jabatan</h4><br>
+                     <button class="btn btn-success" onclick="TambahJabatan();"><i class="la la-plus"></i> Tambah Jabatan</button> 
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
@@ -25,7 +27,7 @@
                                         <th>No</th>
                                         <th>Nama Jabatan</th>
                                         <th>Created At</th>
-                                        <!-- <th>Actions</th> -->
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 {{ csrf_field() }}
@@ -40,7 +42,7 @@
     </div>
 </section>
 <!--/ Zero configuration table -->
-
+@include('content.jabatan.modal')
 @include('includes.footer')
 @include('scripts.jabatan')
 @stop

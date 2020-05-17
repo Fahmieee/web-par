@@ -154,7 +154,7 @@
         var unitkerja = $('#unitkerja').val();
 
 
-        setTimeout(function(){ window.location.href = '/reporttotalkerja/printexcel?dari='+dari+'&sampai='+sampai+'&unit='+unitkerja+''; }, 1500);
+        setTimeout(function(){ window.location.href = '/reporttotalkerja/printexcel?dari='+dari+'&sampai='+sampai+'&unit='+unitkerja+''; }, 500);
 
     });
 

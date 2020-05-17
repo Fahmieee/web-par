@@ -96,17 +96,17 @@
             </li> -->
             <li class="nav-item"><a href="#"><i class="la la-file-text"></i><span class="menu-title" data-i18n="nav.templates.main">Report</span></a>
                 <ul class="menu-content">
-                    <li><a class="menu-item" href="reportptc"><i></i><span data-i18n="nav.templates.vert.main">Report PTC</span></a>
+                    <li><a class="menu-item" href="/reportptc"><i></i><span data-i18n="nav.templates.vert.main">Report PTC</span></a>
                     </li>
-                    <li><a class="menu-item" href="reportptcbermasalah"><i></i><span data-i18n="nav.templates.horz.main">Report PTC Bermasalah</span></a>
+                    <li><a class="menu-item" href="/reportptcbermasalah"><i></i><span data-i18n="nav.templates.horz.main">Report PTC Bermasalah</span></a>
                     </li>
-                    <li><a class="menu-item" href="reportdcu"><i></i><span data-i18n="nav.templates.horz.main">Report DCU</span></a>
+                    <li><a class="menu-item" href="/reportdcu"><i></i><span data-i18n="nav.templates.horz.main">Report DCU</span></a>
                     </li>
-                    <li><a class="menu-item" href="reportclockinout"><i></i><span data-i18n="nav.templates.horz.main">Report Clock In-out</span></a>
+                    <li><a class="menu-item" href="/reportclockinout"><i></i><span data-i18n="nav.templates.horz.main">Report Clock In-out</span></a>
                     </li>
-                    <li><a class="menu-item" href="reporttotalkerja"><i></i><span data-i18n="nav.templates.horz.main">Report Total Kerja</span></a>
+                    <li><a class="menu-item" href="/reporttotalkerja"><i></i><span data-i18n="nav.templates.horz.main">Report Total Kerja</span></a>
                     </li>
-                    <li><a class="menu-item" href="reporttotalkm"><i></i><span data-i18n="nav.templates.horz.main">Report Total Kilometer</span></a>
+                    <li><a class="menu-item" href="/reporttotalkm"><i></i><span data-i18n="nav.templates.horz.main">Report Total Kilometer</span></a>
                     </li>
                 </ul>
             </li>

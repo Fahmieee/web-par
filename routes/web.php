@@ -85,6 +85,10 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('reporttotalkerja/detail', 'ReportController@totalkerjadetail');
 	Route::get('reporttotalkerja/printexcel', 'ReportController@totalkerjaprintexcel')->name('totalkerjaprintexcel');
 
+	Route::get('reporttotalkm', 'ReportController@totalkm');
+	Route::get('reporttotalkm/detail', 'ReportController@totalkmdetail');
+	Route::get('reporttotalkm/printexcel', 'ReportController@totalkmprintexcel')->name('totalkmprintexcel');
+
 	Route::get('maps', 'MapsController@index');
 
 	Route::get('drivers', 'UserController@drivers');

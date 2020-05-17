@@ -11,6 +11,7 @@ use App\DetailPTC;
 use App\MedicalCheckup;
 use App\Clocks;
 use App\UnitKerja;
+use App\Units;
 use Mapper;
 use DataTables;
 use DB;
@@ -19,6 +20,7 @@ use App\Exports\PTCExports;
 use App\Exports\PTCBermasalahExports;
 use App\Exports\ClockExports;
 use App\Exports\TotalKerjaExports;
+use App\Exports\TotalKmExports;
 
 class ReportController extends Controller
 {
@@ -355,6 +357,46 @@ class ReportController extends Controller
     {
 
         return (new TotalKerjaExports($request->dari,$request->sampai,$request->unitkerja))->download('ReportTotalKerjaExcel.xlsx');
+
+    }
+
+
+    public function totalkm()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+
+        $awal = date('Y-m-01', strtotime($date));
+        $akhir = date('Y-m-t', strtotime($date));
+
+        $units = Units::where("pemilik", "PAR")
+        ->orderBy('id', 'desc')
+        ->get();
+
+        return view('report.totalkm.index', compact('date','awal','akhir','units'));
+
+    }
+
+    public function totalkmdetail(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+
+        $awal = $request->dari;
+        $akhir = $request->sampai;
+
+        $units = Units::where("pemilik", "PAR")
+        ->orderBy('id', 'desc')
+        ->get();
+
+        return view('report.totalkm.detail', compact('date','awal','akhir','units'));
+
+    }
+
+    public function totalkmprintexcel(Request $request)
+    {
+
+        return (new TotalKmExports($request->dari,$request->sampai))->download('ReportTotalKmExcel.xlsx');
 
     }
 

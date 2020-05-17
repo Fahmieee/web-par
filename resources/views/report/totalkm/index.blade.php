@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Report Total Kerja Driver</h2>
+                    <h2>Report Total Kilometer Unit</h2>
                     <div style="font-size: 14px;font-family: 'Quicksand', Georgia, 'Times New Roman', Times, serif; color: #00BCD4;" id="showdate">Tanggal : {{ date('d F Y', strtotime($awal)) }} - {{ date('d F Y', strtotime($akhir)) }}</div>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
@@ -20,22 +20,13 @@
                 <div class="card-content collapse show">
                     <div class="card-body card-dashboard">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-5">
                                 <p>Pilih Tanggal Dari :</p>
                                 <input type="date" class="form-control" value="{{ $awal }}" id="dari">
                             </div>
-                            <div class="col-3">
+                            <div class="col-5">
                                 <p>Pilih Tanggal Sampai :</p>
                                 <input type="date" class="form-control" value="{{ $akhir }}" id="sampai">
-                            </div>
-                            <div class="col-4">
-                                <p>Pilih Unit Kerja :</p>
-                                <select class="form-control select2" id="unitkerja">
-                                   <option value="">All</option>
-                                   @foreach($unitkerjas as $unitkerja)
-                                   <option value="{{ $unitkerja->id }}">{{ $unitkerja->unitkerja_name }}</option>
-                                   @endforeach
-                                </select>
                             </div>
                             <div class="col-2">
                                 <p></p>
@@ -54,67 +45,49 @@
                                             <table width="100%" class="table table-striped table-bordered datatables">
                                                 <thead>
                                                     <tr>
-                                                        <th>Nopeg</th>
-                                                        <th>Pengemudi</th>
-                                                        <th>Unit Kerja</th>
-                                                        <th>Total Kerja</th>
+                                                        <th>Merk</th>
+                                                        <th>Tahun</th>
+                                                        <th>No Police</th>
+                                                        <th>Total KM</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($clocks as $clock)
+                                                    @foreach($units as $unit)
 
                                                     @php
-                                                    $totals = DB::table('clocks')
-                                                    ->where('user_id', '=', $clock->id)
+                                                    $totals = DB::table('driving')
+                                                    ->leftJoin("clocks", "clocks.id", "=", "driving.clock_id")
+                                                    ->where('driving.unit_id', '=', $unit->id)
                                                     ->whereBetween('clockin_date', [$awal, $akhir])
                                                     ->get();
 
-                                                    $totalsemua = 0;
-                                                    $totaljam = null;
-
+                                                    $grandtotal = 0;
                                                     foreach($totals as $total){
 
-                                                        if($total->clockout_date == null){
+                                                        if($total->km_akhir == null){
 
-                                                            $clockouts = $total->clockin_date;
-                                                            $clocksouttimes = '17:00';
+                                                            $akhirs = $total->km_awal;
 
                                                         } else {
 
-                                                            if($total->clockin_date != $total->clockout_date){
-
-                                                                $clockouts = $total->clockin_date;
-                                                                $clocksouttimes = '17:00';
-
-                                                            } else {
-
-                                                                $clockouts = $total->clockout_date;
-                                                                $clocksouttimes = $total->clockout_time;
-
-                                                            }
+                                                            $akhirs = $total->km_akhir;
 
                                                         }
 
-                                                    $waktu_awal = strtotime($total->clockin_date.' '.$total->clockin_time);
-                                                    $waktu_akhir = strtotime($clockouts.' '.$clocksouttimes);
+                                                        $totalnya = $akhirs - $total->km_awal;
 
-                                                    $diff = $waktu_akhir - $waktu_awal;
-
-                                                    $totalsemua += $diff;
-
-                                                    $totaljam .= $total->clockin_date;
+                                                        $grandtotal += $totalnya;
 
                                                     }
 
-                                                    $jam = floor($totalsemua / (60 * 60));
-                                                    $menit = $totalsemua - $jam * (60 * 60);
 
                                                     @endphp
+
                                                     <tr>
-                                                        <td>{{ $clock->username }}</td>
-                                                        <td>{{ $clock->first_name }}</td>
-                                                        <td>{{ $clock->unitkerja_name }}</td>
-                                                        <td>{{ $jam }} Jam {{ floor( $menit / 60 ) }} Menit</td>
+                                                        <td>{{ $unit->merk }} {{ $unit->model }}</td>
+                                                        <td>{{ $unit->years }}</td>
+                                                        <td>{{ $unit->no_police }}</td>
+                                                        <td>{{ $grandtotal }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -139,10 +112,9 @@
 
         var dari = $('#dari').val();
         var sampai = $('#sampai').val();
-        var unitkerja = $('#unitkerja').val();
 
 
-        setTimeout(function(){ window.location.href = '/reporttotalkerja/printexcel?dari='+dari+'&sampai='+sampai+'&unitkerja='+unitkerja+''; }, 500);
+        setTimeout(function(){ window.location.href = '/reporttotalkm/printexcel?dari='+dari+'&sampai='+sampai+''; }, 500);
 
     });
 
@@ -156,9 +128,8 @@
 
         var dari = $('#dari').val();
         var sampai = $('#sampai').val();
-        var unitkerja = $('#unitkerja').val();
 
-        setTimeout(function(){ window.location.href = '/reporttotalkerja/detail?dari='+dari+'&sampai='+sampai+'&unitkerja='+unitkerja+''; }, 500);
+        setTimeout(function(){ window.location.href = '/reporttotalkm/detail?dari='+dari+'&sampai='+sampai+''; }, 500);
 
     });
     

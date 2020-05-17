@@ -46,25 +46,23 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-content collapse show">
-                                        <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button>
-                                        <div class="card-body card-dashboard">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered datatables" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nopeg</th>
-                                                            <th>Pengemudi</th>
-                                                            <th>Tanggal</th>
-                                                            <th>Waktu</th>
-                                                            <th>Unit</th>
-                                                            <th>U.Kerja</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button><br><br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered datatables" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nopeg</th>
+                                                        <th>Pengemudi</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Waktu</th>
+                                                        <th>Unit</th>
+                                                        <th>U.Kerja</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

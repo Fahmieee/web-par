@@ -18,6 +18,7 @@ use App\Exports\DCUExports;
 use App\Exports\PTCExports;
 use App\Exports\PTCBermasalahExports;
 use App\Exports\ClockExports;
+use App\Exports\TotalKerjaExports;
 
 class ReportController extends Controller
 {
@@ -285,6 +286,75 @@ class ReportController extends Controller
     	->get();
 
     	return response()->json($details);
+
+    }
+
+    public function totalkerja()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+
+        $awal = date('Y-m-01', strtotime($date));
+        $akhir = date('Y-m-t', strtotime($date));
+
+        $unitkerjas = UnitKerja::all();
+
+        $clocks = Clocks::select("users.id","users.username","users.first_name","unit_kerja.unitkerja_name")
+        ->leftJoin("users", "clocks.user_id", "=", "users.id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->whereBetween('clockin_date', [$awal, $akhir])
+        ->distinct()
+        ->get();
+
+        return view('report.totalkerja.index', compact('date','unitkerjas','awal','akhir','clocks'));
+
+    }
+
+
+    public function totalkerjadetail(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+
+        $awal = $request->dari;
+        $akhir = $request->sampai;
+
+        $unitkerjas =  UnitKerja::all();
+
+        $units = $request->unitkerja;
+
+        if($units == ''){
+
+            $clocks = Clocks::select("users.id","users.username","users.first_name","unit_kerja.unitkerja_name")
+            ->leftJoin("users", "clocks.user_id", "=", "users.id")
+            ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+            ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+            ->whereBetween('clockin_date', [$awal, $akhir])
+            ->distinct()
+            ->get();
+
+        } else {
+
+            $clocks = Clocks::select("users.id","users.username","users.first_name","unit_kerja.unitkerja_name")
+            ->leftJoin("users", "clocks.user_id", "=", "users.id")
+            ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+            ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+            ->whereBetween('clockin_date', [$awal, $akhir])
+            ->where('unit_kerja.id', $request->unitkerja)
+            ->distinct()
+            ->get();
+
+        }
+
+        return view('report.totalkerja.detail', compact('date','unitkerjas','awal','akhir','clocks','units'));
+
+    }
+
+    public function totalkerjaprintexcel(Request $request)
+    {
+
+        return (new TotalKerjaExports($request->dari,$request->sampai,$request->unitkerja))->download('ReportTotalKerjaExcel.xlsx');
 
     }
 

@@ -81,6 +81,10 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('reportclockinout/getdata', 'ReportController@getclockinout')->name('getclockinout');
 	Route::get('reportclockinout/printexcel', 'ReportController@clocksprintexcel')->name('clocksprintexcel');
 
+	Route::get('reporttotalkerja', 'ReportController@totalkerja');
+	Route::get('reporttotalkerja/detail', 'ReportController@totalkerjadetail');
+	Route::get('reporttotalkerja/printexcel', 'ReportController@totalkerjaprintexcel')->name('totalkerjaprintexcel');
+
 	Route::get('maps', 'MapsController@index');
 
 	Route::get('drivers', 'UserController@drivers');

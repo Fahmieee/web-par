@@ -55,28 +55,26 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-content collapse show">
-                                        <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button>
-                                        <div class="card-body card-dashboard">
-                                            <div class="table-responsive">
-                                                <table width="100%" class="table table-striped table-bordered datatables">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nopeg</th>
-                                                            <th>Pengemudi</th>
-                                                            <th>Unit</th>
-                                                            <th>Tanggal</th>
-                                                            <th>U.Kerja</th>
-                                                            <th>Bagian</th>
-                                                            <th>Detail</th>
-                                                            <th>Kondisi</th>
-                                                            <th>Level</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button><br><br>
+                                        <div class="table-responsive">
+                                            <table width="100%" class="table table-striped table-bordered datatables">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nopeg</th>
+                                                        <th>Pengemudi</th>
+                                                        <th>Unit</th>
+                                                        <th>Tanggal</th>
+                                                        <th>U.Kerja</th>
+                                                        <th>Bagian</th>
+                                                        <th>Detail</th>
+                                                        <th>Kondisi</th>
+                                                        <th>Level</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

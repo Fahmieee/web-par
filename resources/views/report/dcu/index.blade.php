@@ -42,41 +42,40 @@
                             </div>
                         </div>
                         <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-content collapse show">
+                                        <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button>
+                                        <br><br>
+                                        <div class="table-responsive">
+                                            <table width="100%" class="table table-striped table-bordered datatables">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nopeg</th>
+                                                        <th>Pengemudi</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Waktu</th>
+                                                        <th>Suhu</th>
+                                                        <th>T.Darah</th>
+                                                        <th>U.Kerja</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-content collapse show">
-                            <div class="card-body card-dashboard">
-                                <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button>
-                                <br><br>
-                                <div class="table-responsive">
-                                    <table width="100%" class="table table-striped table-bordered datatables">
-                                        <thead>
-                                            <tr>
-                                                <th>Nopeg</th>
-                                                <th>Pengemudi</th>
-                                                <th>Tanggal</th>
-                                                <th>Waktu</th>
-                                                <th>Suhu</th>
-                                                <th>T.Darah</th>
-                                                <th>U.Kerja</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </section>

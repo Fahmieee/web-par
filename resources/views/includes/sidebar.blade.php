@@ -66,22 +66,24 @@
                     </li>
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Permissions</span></a>
                     </li>
-                    <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">User Pairing</span></a>
-                    </li>
+                    <!-- <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">User Pairing</span></a>
+                    </li> -->
                 </ul>
             </li>
-            <li class="nav-item"><a href="#"><i class="la la-fire"></i><span class="menu-title" data-i18n="nav.templates.main">Transactions</span></a>
-                <ul class="menu-content">
-                    <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Pre-trip Checks</span></a>
+            <li class="nav-item"><a href="maps"><i class="la la-bullhorn"></i><span class="menu-title" data-i18n="nav.dash.main">Keluhan / Saran</span></a>
+            </li>
+            <!-- <li class="nav-item"><a href="#"><i class="la la-fire"></i><span class="menu-title" data-i18n="nav.templates.main">Keluhan / Saran</span></a>
+                <ul class="menu-content"> -->
+                   <!--  <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Pre-trip Checks</span></a>
                     </li>
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Daily Check-up</span></a>
                     </li>
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Clockin - Clockout</span></a>
-                    </li>
-                    <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Keluhan / Saran</span></a>
-                    </li>
-                </ul>
-            </li>
+                    </li> -->
+                    <!-- <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.horz.main">Keluhan / Saran</span></a>
+                    </li> -->
+                <!-- </ul>
+            </li> -->
             <li class="nav-item"><a href="#"><i class="la la-star"></i><span class="menu-title" data-i18n="nav.templates.main">Scored</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="#"><i></i><span data-i18n="nav.templates.vert.main">Driver</span></a>
@@ -90,8 +92,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item"><a href="maps"><i class="la la-map-marker"></i><span class="menu-title" data-i18n="nav.dash.main">Maps Activity</span></a>
-            </li>
+            <!-- <li class="nav-item"><a href="maps"><i class="la la-map-marker"></i><span class="menu-title" data-i18n="nav.dash.main">Maps Activity</span></a>
+            </li> -->
             <li class="nav-item"><a href="#"><i class="la la-file-text"></i><span class="menu-title" data-i18n="nav.templates.main">Report</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="reportptc"><i></i><span data-i18n="nav.templates.vert.main">Report PTC</span></a>
@@ -101,6 +103,10 @@
                     <li><a class="menu-item" href="reportdcu"><i></i><span data-i18n="nav.templates.horz.main">Report DCU</span></a>
                     </li>
                     <li><a class="menu-item" href="reportclockinout"><i></i><span data-i18n="nav.templates.horz.main">Report Clock In-out</span></a>
+                    </li>
+                    <li><a class="menu-item" href="reporttotalkerja"><i></i><span data-i18n="nav.templates.horz.main">Report Total Kerja</span></a>
+                    </li>
+                    <li><a class="menu-item" href="reporttotalkm"><i></i><span data-i18n="nav.templates.horz.main">Report Total Kilometer</span></a>
                     </li>
                 </ul>
             </li>

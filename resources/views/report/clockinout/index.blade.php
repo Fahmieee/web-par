@@ -48,26 +48,25 @@
                                 <div class="card">
                                     <div class="card-content collapse show">
                                         <button class="btn btn-success" id="excel">Export Excel</button>
-                                        <div class="card-body card-dashboard">
-                                            <div class="table-responsive">
-                                                <table width="100%" class="table table-striped table-bordered datatables">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nopeg</th>
-                                                            <th>Pengemudi</th>
-                                                            <th>Tanggal</th>
-                                                            <th>Clockin</th>
-                                                            <th>Clockout</th>
-                                                            <th>In Km</th>
-                                                            <th>Out Km</th>
-                                                            <th>U.Kerja</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <br><br>
+                                        <div class="table-responsive">
+                                            <table width="100%" class="table table-striped table-bordered datatables">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nopeg</th>
+                                                        <th>Pengemudi</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Clockin</th>
+                                                        <th>Clockout</th>
+                                                        <th>In Km</th>
+                                                        <th>Out Km</th>
+                                                        <th>U.Kerja</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

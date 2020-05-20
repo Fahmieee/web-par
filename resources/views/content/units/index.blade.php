@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Master Unit</h2>
+                    <h2>Master Unit Kendaraan</h2>
                     <div>Berisi Data-data kendaraan dari Driver</div>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
@@ -28,7 +28,7 @@
                                         <th>Mes</th>
                                         <th>Nopol</th>
                                         <th>Km</th>
-                                        <th>Opsi</th>
+                                        <th width="17%">Opsi</th>
                                     </tr>
                                 </thead>
                                 {{ csrf_field() }}

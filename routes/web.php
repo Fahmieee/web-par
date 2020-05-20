@@ -108,5 +108,7 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('korlaps', 'UserController@korlaps');
 	Route::get('korlaps/getdata', 'UserController@getkorlaps')->name('getkorlaps');
 	Route::post('korlaps/store', 'UserController@korlapstore')->name('simpankorlap');
+	Route::post('korlaps/edit', 'UserController@editkorlap')->name('editkorlap');
+	Route::post('korlaps/update', 'UserController@updatekorlap')->name('updatekorlap');
 
 });

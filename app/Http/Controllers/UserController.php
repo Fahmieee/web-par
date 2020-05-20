@@ -51,6 +51,46 @@ class UserController extends Controller
         return view('content.users.drivers.index', compact('unitkerjas','jabatans',"units","docunits","docdrivers","trains","korlaps","wilayahs"));
     }
 
+    public function korlaps()
+    {
+        $unitkerjas = UnitKerja::all();
+        $jabatans = Jabatan::all();
+
+        $korlaps = Users::select("users.*", "wilayah_name","unitkerja_name")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->where("users_roles.role_id","5")
+        ->get();
+
+        $units = Units::where("pemilik", "PAR")
+        ->get();
+
+        $docunits = Documents::where("type", "2")
+        ->get();
+
+        $docdrivers = Documents::where("type", "1")
+        ->get();
+
+        $wilayahs = Wilayah::all();
+
+        $trains = Trainings::all();
+
+        return view('content.users.korlap.index', compact('unitkerjas','jabatans',"units","docunits","docdrivers","trains","korlaps","wilayahs"));
+    }
+
+    public function getkorlaps()
+    {
+        $korlaps = Users::select("users.*", "wilayah_name","unitkerja_name")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->where("users_roles.role_id","5")
+        ->get();
+
+        return Datatables::of($korlaps)->make(true);
+    }
+
     public function getdrivers()
     {
         $drives = Users::select("users.*","jabatan_name", "wilayah_name","unitkerja_name","units.no_police")
@@ -305,6 +345,63 @@ class UserController extends Controller
 
     }
 
+    public function korlapstore(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+
+        $users = Users::where("username", $request->nik)
+        ->first();
+
+        $wilayah = Wilayah::where("unitkerja_id", $request->unitkerja)
+        ->first();
+
+        if(!$users){
+
+            $saveuser = new Users();
+            $saveuser->jabatan_id  = '2';
+            $saveuser->company_id = '1';
+            $saveuser->wilayah_id = $wilayah->id;
+            $saveuser->username = $request->nik;
+            $saveuser->password = Hash::make($request->password);
+            $saveuser->email = $request->email;
+            $saveuser->first_name = $request->nama;
+            $saveuser->phone = $request->phone;
+            $saveuser->address = $request->alamat;
+            $saveuser->nik = $request->nik;
+            $saveuser->flag_pass = '0';
+            $saveuser->flag_prof = '0';
+            $saveuser->save();
+
+            $saveroles = new UserRoles();
+            $saveroles->user_id  = $saveuser->id;
+            $saveroles->role_id = '5';
+            $saveroles->save();
+
+            $unitkerjas = Drivers::select("drivers.*")
+            ->leftJoin("users", "drivers.driver_id", "=", "users.id")
+            ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+            ->where("unitkerja_id", $request->unitkerja)
+            ->get();
+
+            foreach($unitkerjas as $unitkerja){
+
+                $updates = Drivers::where(['id'=>$unitkerja->id])
+                ->update(['korlap_id'=>$saveuser->id]);
+
+            }
+
+            $data = '0'; 
+
+        } else {
+
+            $data = '1'; 
+
+        }
+
+        return response()->json($data);
+
+    }
+
     public function delete(Request $request)
     {
         $users = Users::findOrFail($request->id);
@@ -323,6 +420,39 @@ class UserController extends Controller
         ->first();
 
         return response()->json($users);
+    }
+
+    public function editkorlap(Request $request)
+    {
+        $users = Users::select("users.*","drivers.driver_id")
+        ->leftJoin("drivers", "users.id", "=", "drivers.korlap_id")
+        ->where('users.id',$request->id)
+        ->first();
+
+
+        $drivers = Users::select('wilayah.unitkerja_id')
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->where('users.id',$users->driver_id)
+        ->first();
+
+        if($users->driver_id == null){
+            $unitkerjas = '';
+        } else {
+            $unitkerjas = $drivers->unitkerja_id;
+        }
+
+
+        $transactionz = array(     
+            'first_name' => $users->first_name,
+            'email' => $users->email,
+            'username' => $users->username,
+            'phone' => $users->phone,
+            'address' => $users->address,
+            'id' => $users->id,
+            'unitkerja' => $unitkerjas,
+        );
+
+        return response()->json($transactionz);
     }
 
     public function docdriver(Request $request)
@@ -554,6 +684,44 @@ class UserController extends Controller
 
 
         return response()->json($users);
+
+    }
+
+
+    public function updatekorlap(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+
+        $wilayah = Wilayah::where("unitkerja_id", $request->unitkerja)
+        ->first();
+
+        $saveuser = Users::findOrFail($request->id);
+        $saveuser->jabatan_id  = '2';
+        $saveuser->company_id = '1';
+        $saveuser->wilayah_id = $wilayah->id;
+        $saveuser->username = $request->nik;
+        $saveuser->email = $request->email;
+        $saveuser->first_name = $request->nama;
+        $saveuser->phone = $request->phone;
+        $saveuser->address = $request->alamat;
+        $saveuser->nik = $request->nik;
+        $saveuser->save();
+
+
+        $unitkerjas = Drivers::select("drivers.*")
+        ->leftJoin("users", "drivers.driver_id", "=", "users.id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->where("unitkerja_id", $request->unitkerja)
+        ->get();
+
+        foreach($unitkerjas as $unitkerja){
+
+            $updates = Drivers::where(['id'=>$unitkerja->id])
+            ->update(['korlap_id'=>$saveuser->id]);
+
+        }
+
+
 
     }
 

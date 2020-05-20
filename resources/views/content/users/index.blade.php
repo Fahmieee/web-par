@@ -40,7 +40,7 @@
     </div>
 </section>
 <!--/ Zero configuration table -->
-
+@include('content.users.korlap.modal')
 @include('includes.footer')
 <script type="text/javascript">
 var table

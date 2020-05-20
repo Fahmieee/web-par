@@ -26,12 +26,18 @@ $(function() {
             { data: 'mileage', name: 'mileage' },
             { 
                     render: function ( data, type, row ) {
-                        return '<button class="btn btn-sm btn-danger" onclick="HapusUnits('+row.id+')" type="button"><i class="la la-trash"></i></button> <button class="btn btn-sm btn-primary" onclick="EditUnits('+row.id+')" type="button"><i class="la la-pencil"></i></button>';
+                        return '<button class="btn btn-sm btn-danger" onclick="HapusUnits('+row.id+')" type="button"><i class="la la-trash"></i></button> <button class="btn btn-sm btn-primary" onclick="EditUnits('+row.id+')" type="button"><i class="la la-pencil"></i></button> <button class="btn btn-sm btn-success" onclick="ResetUnits('+row.id+')" type="button"><i class="la la-car"></i></button>';
                     }
                 },
         ]
     });
 });
+
+function ResetUnits(id){
+
+
+
+}
 
 function Tambah(){
 

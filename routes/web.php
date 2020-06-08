@@ -76,10 +76,12 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('reportdcu', 'ReportController@dcu');
 	Route::post('reportdcu/getdata', 'ReportController@getdcu')->name('getdcu');
 	Route::get('reportdcu/printexcel', 'ReportController@dcuprintexcel')->name('dcuprintexcel');
+	Route::post('reportdcu/lihatdcu', 'ReportController@lihatdcu')->name('lihatdcu');
 
 	Route::get('reportclockinout', 'ReportController@clockinout');
 	Route::post('reportclockinout/getdata', 'ReportController@getclockinout')->name('getclockinout');
 	Route::get('reportclockinout/printexcel', 'ReportController@clocksprintexcel')->name('clocksprintexcel');
+	Route::post('reportclockinout/lihatperdin', 'ReportController@lihatperdin')->name('lihatperdin');
 
 	Route::get('reporttotalkerja', 'ReportController@totalkerja');
 	Route::get('reporttotalkerja/detail', 'ReportController@totalkerjadetail');
@@ -110,5 +112,6 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('korlaps/store', 'UserController@korlapstore')->name('simpankorlap');
 	Route::post('korlaps/edit', 'UserController@editkorlap')->name('editkorlap');
 	Route::post('korlaps/update', 'UserController@updatekorlap')->name('updatekorlap');
+	Route::post('korlaps/getdriver', 'UserController@getdriversforkorlap')->name('korlaps.getdriver');
 
 });

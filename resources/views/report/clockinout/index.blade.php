@@ -61,6 +61,8 @@
                                                         <th>In Km</th>
                                                         <th>Out Km</th>
                                                         <th>U.Kerja</th>
+                                                        <th>Perdin?</th>
+                                                        <th>Doc</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -79,7 +81,7 @@
     </div>
 </section>
 <!--/ Zero configuration table -->
-
+@include('report.clockinout.modal')
 @include('includes.footer')
 <script type="text/javascript">
     

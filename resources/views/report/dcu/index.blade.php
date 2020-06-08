@@ -60,6 +60,7 @@
                                                         <th>T.Darah</th>
                                                         <th>U.Kerja</th>
                                                         <th>Status</th>
+                                                        <th>Doc</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -80,7 +81,7 @@
     </div>
 </section>
 <!--/ Zero configuration table -->
-
+@include('report.dcu.modal')
 @include('includes.footer')
 <script type="text/javascript">
     

@@ -61,6 +61,7 @@ class UserController extends Controller
         ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
         ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
         ->where("users_roles.role_id","5")
+        ->orderBy("users.id","desc")
         ->get();
 
         $units = Units::where("pemilik", "PAR")
@@ -101,6 +102,40 @@ class UserController extends Controller
         ->leftJoin("units", "drivers.unit_id", "=", "units.id")
         ->where("jabatan_id", "1")
         ->get();
+
+        return Datatables::of($drives)->make(true);
+    }
+
+    public function getdriversforkorlap(Request $request)
+    {
+        if($request->unitkerja == ''){
+
+            $drives = Users::select("users.*","jabatan_name", "wilayah_name","unitkerja_name","units.no_police")
+            ->leftJoin("jabatan", "users.jabatan_id", "=", "jabatan.id")
+            ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+            ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+            ->leftJoin("drivers", "users.id", "=", "drivers.driver_id")
+            ->leftJoin("units", "drivers.unit_id", "=", "units.id")
+            ->where("jabatan_id", "1")
+            ->get();
+
+        } else {
+
+            $drives = Users::select("users.*", "wilayah_name","unitkerja_name","units.no_police")
+            ->leftJoin("jabatan", "users.jabatan_id", "=", "jabatan.id")
+            ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+            ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+            ->leftJoin("drivers", "users.id", "=", "drivers.driver_id")
+            ->leftJoin("units", "drivers.unit_id", "=", "units.id")
+            ->where("jabatan_id", "1")
+            ->where([
+                ['jabatan_id', '=', "1"],
+                ['unit_kerja.id', '=', $request->unitkerja],
+            ])
+            ->get();
+
+        }
+        
 
         return Datatables::of($drives)->make(true);
     }
@@ -352,6 +387,22 @@ class UserController extends Controller
         $users = Users::where("username", $request->nik)
         ->first();
 
+        $adawilayah = Wilayah::where("unitkerja_id", $request->unitkerja)
+        ->first();
+
+        if(!$adawilayah){
+
+            $unitkerja = UnitKerja::where("id", $request->unitkerja)
+            ->first();
+
+            $savewilayah = new Wilayah();
+            $savewilayah->unitkerja_id  = $unitkerja->id;
+            $savewilayah->wilayah_name = $unitkerja->unitkerja_name;
+            $savewilayah->save();
+
+
+        }
+
         $wilayah = Wilayah::where("unitkerja_id", $request->unitkerja)
         ->first();
 
@@ -377,18 +428,18 @@ class UserController extends Controller
             $saveroles->role_id = '5';
             $saveroles->save();
 
-            $unitkerjas = Drivers::select("drivers.*")
-            ->leftJoin("users", "drivers.driver_id", "=", "users.id")
-            ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
-            ->where("unitkerja_id", $request->unitkerja)
-            ->get();
+            // $unitkerjas = Drivers::select("drivers.*")
+            // ->leftJoin("users", "drivers.driver_id", "=", "users.id")
+            // ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+            // ->where("unitkerja_id", $request->unitkerja)
+            // ->get();
 
-            foreach($unitkerjas as $unitkerja){
+            // foreach($unitkerjas as $unitkerja){
 
-                $updates = Drivers::where(['id'=>$unitkerja->id])
-                ->update(['korlap_id'=>$saveuser->id]);
+            //     $updates = Drivers::where(['id'=>$unitkerja->id])
+            //     ->update(['korlap_id'=>$saveuser->id]);
 
-            }
+            // }
 
             $data = '0'; 
 
@@ -424,22 +475,24 @@ class UserController extends Controller
 
     public function editkorlap(Request $request)
     {
-        $users = Users::select("users.*","drivers.driver_id")
+        $users = Users::select("users.*","drivers.driver_id","wilayah.unitkerja_id")
         ->leftJoin("drivers", "users.id", "=", "drivers.korlap_id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
         ->where('users.id',$request->id)
         ->first();
 
 
-        $drivers = Users::select('wilayah.unitkerja_id')
-        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
-        ->where('users.id',$users->driver_id)
-        ->first();
 
-        if($users->driver_id == null){
-            $unitkerjas = '';
-        } else {
-            $unitkerjas = $drivers->unitkerja_id;
-        }
+        // $drivers = Users::select('wilayah.unitkerja_id')
+        // ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        // ->where('users.id',$users->driver_id)
+        // ->first();
+
+        // if($users->driver_id == null){
+        //     $unitkerjas = '';
+        // } else {
+        //     $unitkerjas = $drivers->unitkerja_id;
+        // }
 
 
         $transactionz = array(     
@@ -449,7 +502,7 @@ class UserController extends Controller
             'phone' => $users->phone,
             'address' => $users->address,
             'id' => $users->id,
-            'unitkerja' => $unitkerjas,
+            'unitkerja' => $users->unitkerja_id,
         );
 
         return response()->json($transactionz);
@@ -708,18 +761,18 @@ class UserController extends Controller
         $saveuser->save();
 
 
-        $unitkerjas = Drivers::select("drivers.*")
-        ->leftJoin("users", "drivers.driver_id", "=", "users.id")
-        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
-        ->where("unitkerja_id", $request->unitkerja)
-        ->get();
+        // $unitkerjas = Drivers::select("drivers.*")
+        // ->leftJoin("users", "drivers.driver_id", "=", "users.id")
+        // ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        // ->where("unitkerja_id", $request->unitkerja)
+        // ->get();
 
-        foreach($unitkerjas as $unitkerja){
+        // foreach($unitkerjas as $unitkerja){
 
-            $updates = Drivers::where(['id'=>$unitkerja->id])
-            ->update(['korlap_id'=>$saveuser->id]);
+        //     $updates = Drivers::where(['id'=>$unitkerja->id])
+        //     ->update(['korlap_id'=>$saveuser->id]);
 
-        }
+        // }
 
 
 

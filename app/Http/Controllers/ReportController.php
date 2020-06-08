@@ -221,6 +221,15 @@ class ReportController extends Controller
 
     }
 
+    public function lihatdcu(Request $request){
+
+        $lihat = MedicalCheckup::where("id", $request->id)
+        ->first();
+
+        return response()->json($lihat);
+
+    }
+
     public function dcuprintexcel(Request $request)
     {
 
@@ -250,19 +259,21 @@ class ReportController extends Controller
 
         if($request->unitkerja == ''){
 
-            $clocks = Clocks::select('clocks.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+            $clocks = Clocks::select('clocks.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','perdin.doc')
             ->leftJoin("users", "clocks.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+            ->leftJoin("perdin", "clocks.id", "=", "perdin.clock_id")
             ->whereBetween('clocks.clockin_date', [$request->awal, $request->akhir])
             ->get();
 
         } else {
 
-            $clocks = Clocks::select('clocks.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name')
+            $clocks = Clocks::select('clocks.*', 'users.first_name', 'users.username', DB::raw('DATE_FORMAT(clocks.clockin_date, "%d %b %Y") as dates'), 'unit_kerja.unitkerja_name','perdin.doc')
             ->leftJoin("users", "clocks.user_id", "=", "users.id")
             ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
             ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+            ->leftJoin("perdin", "clocks.id", "=", "perdin.clock_id")
             ->whereBetween('clocks.clockin_date', [$request->awal, $request->akhir])
             ->where('unit_kerja.id', $request->unitkerja)
             ->get();
@@ -271,6 +282,17 @@ class ReportController extends Controller
 
         return Datatables::of($clocks)->make(true);
 
+
+    }
+
+    public function lihatperdin(Request $request){
+
+        $lihat = Clocks::select("perdin.doc")
+        ->leftJoin("perdin", "clocks.id", "=", "perdin.clock_id")
+        ->where("clocks.id", $request->id)
+        ->first();
+
+        return response()->json($lihat);
 
     }
 

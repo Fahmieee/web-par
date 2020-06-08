@@ -35,7 +35,14 @@ class HomeController extends Controller
         ->where('role_id','2')
         ->count();
 
-    	return view('content.home.index', compact('activities','check','suara','unitkerjas','date','users','dcu','awal','akhir'));
+        $clocks = Clocks::select('clocks.*', 'users.first_name', 'unit_kerja.unitkerja_name','users.last_name','users.username')
+        ->leftJoin("users", "clocks.user_id", "=", "users.id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->where('clocks.clockin_date', '2020-03-01')
+        ->get();        
+
+    	return view('content.home.index', compact('activities','check','suara','unitkerjas','date','users','dcu','awal','akhir','clocks'));
 
     }
 

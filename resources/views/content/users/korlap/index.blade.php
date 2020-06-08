@@ -10,16 +10,19 @@
 
     #customers td, #customers th {
       border: 1px solid #ddd;
-      padding: 8px;
+      padding-bottom: 0px;
+      padding-top: 0px;
+      padding-left: 10px;
+      padding-right: 8px;
     }
 
     #customers tr:nth-child(even){background-color: #f2f2f2;}
 
     #customers th {
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding-top: 9px;
+      padding-bottom: 9px;
       text-align: left;
-      background-color: #4CAF50;
+      background-color: #1E9FF2;
       color: white;
     }
 </style>
@@ -102,6 +105,57 @@ function Reset(id){
     $('#modal_reset').modal('show');
 
 }
+
+// var table = "";
+//     $(function() {
+//     table = $('.datatables2').DataTable({
+//         pageLength: 10,
+//         processing: true,
+//         serverSide: true,
+//         order: [[ 2, 'asc' ]],
+//         ajax:{
+//              url: "{{ route('korlaps.getdriver') }}",
+//              dataType: "json",
+//              type: "POST",  
+//              headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+//              data: function (d) {
+//                 d.unitkerja = $('#unitkerja').val();
+                
+//             },
+//         },
+//         columns: [
+//             { 
+//                 render: function ( data, type, row ) {
+
+//                     return "<input type='checkbox' class='form-control'>";
+//                 }
+//             },
+//             { data: 'username', name: 'username' },
+//             { data: 'first_name', name: 'first_name' },
+//             { data: 'unitkerja_name', name: 'unitkerja_name' },
+//             { data: 'wilayah_name', name: 'wilayah_name' },
+//             { 
+//                 render: function ( data, type, row ) {
+
+//                     if(row.driver_type == '1'){
+//                         var type = 'Dedicated';
+//                     } else {
+//                         var type = 'Pool';
+//                     }
+
+//                     return ""+type+"";
+//                 }
+//             },
+//         ]
+//     });
+
+// });
+
+// $('#unitkerja').on('change', function () {
+
+//     table.ajax.reload();
+
+// });
 
 
 function ResetNow(){

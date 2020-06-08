@@ -6,7 +6,7 @@
             pageLength: 20,
             processing: true,
             serverSide: true,
-            order: [[ 2, 'asc' ]],
+            order: [[ 2, 'desc' ]],
             ajax:{
                  url: "{{ route('getdcu') }}",
                  dataType: "json",
@@ -43,6 +43,12 @@
                         }
 
                         return "<button type='button' class='btn btn-sm "+btn+"'>"+status+"</button";
+                    }
+                },
+                { 
+                    render: function ( data, type, row ) {
+
+                        return "<button type='button' class='btn btn-sm btn-info' onclick='LihatDCU("+row.id+")'><i class='la la-eye'></i></button>";
                     }
                 },
             ]
@@ -93,5 +99,28 @@
         table.ajax.reload();
 
     });
+
+    function LihatDCU(id){
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('lihatdcu') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': id,
+                },
+            success: function(data) {
+
+                var content_data = '<img width="60%" src="https://mobile-par.ndt-dev.com/assets/img_dcu/'+data.img+'">';
+
+                $('#photodcu').html(content_data);
+
+            }
+
+        });
+
+        $('#lihat').modal('show');
+
+    }
 
 </script>

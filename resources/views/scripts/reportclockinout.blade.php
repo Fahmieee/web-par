@@ -6,7 +6,7 @@
             pageLength: 20,
             processing: true,
             serverSide: true,
-            order: [[ 2, 'asc' ]],
+            order: [[ 2, 'desc' ]],
             ajax:{
                  url: "{{ route('getclockinout') }}",
                  dataType: "json",
@@ -28,6 +28,33 @@
                 { data: 'clockin_km', name: 'clockin_km' },
                 { data: 'clockout_km', name: 'clockout_km' },
                 { data: 'unitkerja_name', name: 'unitkerja_name' },
+                { data: 'perdin', name: 'perdin' },
+                { 
+                    render: function ( data, type, row ) {
+
+                        if(row.perdin == 'No'){
+
+                            return "-";
+
+                        } else {
+
+                            if(row.doc == null){
+
+                                return "<button type='button' class='btn btn-sm btn-black'><i class='la la-eye'></i></button>";
+
+                            } else {
+
+                                return "<button type='button' class='btn btn-sm btn-info' onclick='LihatPerdin("+row.id+")'><i class='la la-eye'></i></button>";
+
+                            }
+
+                            
+
+                        }
+
+                        
+                    }
+                },
             ]
         });
 
@@ -77,5 +104,29 @@
         table.ajax.reload();
 
     });
+
+    function LihatPerdin(id){
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('lihatperdin') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': id,
+                },
+            success: function(data) {
+
+                var content_data = '<img width="60%" src="https://mobile-par.ndt-dev.com/assets/img_spd/'+data.doc+'">';
+
+                $('#photodcu').html(content_data);
+
+            }
+
+        });
+
+        $('#lihat').modal('show');
+
+    }
+
 
 </script>

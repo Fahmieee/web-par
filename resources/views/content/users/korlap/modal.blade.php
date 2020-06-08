@@ -131,7 +131,7 @@
                                         </div>
                                         <hr>
                                         <br>
-                                        <h3>Bertanggung Jawab pada Unit Kerja Berikut <span style="font-size: 14px;" class="text-danger">*</span> :</h3><hr>
+                                        <h3>Wilayah Korlap : <span style="font-size: 14px;" class="text-danger">*</span> :</h3><hr>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <table width="100%">
@@ -146,6 +146,22 @@
                                                         </td>
                                                     </tr>
                                                 </table>
+                                                <!-- <hr>
+                                                <table width="100%" id="customers" class="datatables2"> 
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Pilih</th>
+                                                            <th>Nopeg</th>
+                                                            <th>Nama Driver</th>
+                                                            <th>Unit Kerja</th>
+                                                            <th>Wilayah</th>
+                                                            <th>Type</th>
+                                                        </tr> 
+                                                    </thead>
+                                                   <tbody>
+                                                       
+                                                   </tbody>
+                                                </table> -->
                                             </div>
                                         </div>
                                         <br>
@@ -285,9 +301,9 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <hr>
+                                        <!-- <hr> -->
                                         <br>
-                                        <h3>Bertanggung Jawab pada Unit Kerja Berikut <span style="font-size: 14px;" class="text-danger">*</span> :</h3><hr>
+                                        <h3>Wilayah Korlap : <span style="font-size: 14px;" class="text-danger">*</span> :</h3><hr>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <table width="100%">

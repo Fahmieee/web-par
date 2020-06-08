@@ -205,7 +205,7 @@
 
                 <hr>
                 <div class="table-responsive">
-                    <table width="100%" class="table table-striped table-bordered datatables">
+                    <table width="100%" class="table table-striped table-bordered datatables2">
                         <thead>
                             <tr>
                                 <th>Nopeg</th>
@@ -215,9 +215,35 @@
                                 <th>Km in</th>
                                 <th>Clockout</th>
                                 <th>Km Out</th>
+                                <th>Lokasi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($clocks as $clock)
+
+                            @php
+                                $kordinats = DB::table('koordinat')
+                                ->where([
+                                    ['type', '=', 'clockin'],
+                                    ['action_id', '=', $clock->id],
+                                ])
+                                ->first();
+
+                                
+
+
+                            @endphp
+                            <tr>
+                                <td>{{ $clock->username }}</td>
+                                <td>{{ $clock->first_name }}</td>
+                                <td>{{ $clock->unitkerja_name }}</td>
+                                <td>{{ $clock->clockin_time }}</td>
+                                <td>{{ $clock->clockin_km }}</td>
+                                <td>{{ $clock->clockout_time }}</td>
+                                <td>{{ $clock->clockout_km }}</td>
+                                <td></td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -230,5 +256,134 @@
 @include('includes.footer')
 @include('scripts.home')
 <script src="/assets/content/vendors/js/charts/chart.min.js"></script>
-<script src="/assets/content/js/scripts/charts/chartjs/line/line.js"></script>
+
+<script type="text/javascript">
+    
+    $(function() {
+
+        $('.datatables2').DataTable();
+
+    });
+
+$(window).on("load", function(){
+
+    //Get the context of the Chart canvas element we want to select
+    var ctx = $("#line-chart");
+
+    var periode = $('#periode').val();
+    var kp = $('#kp').val();
+    var mor3 = $('#mor3').val();
+    var phkt = $('#phkt').val();
+    var phe = $('#phe').val();
+
+    var arrayperiode = periode.split(",");
+    var arraykp = kp.split(",");
+    var arraymor3 = mor3.split(",");
+    var arrayphkt = phkt.split(",");
+    var arrayphe = phe.split(",");
+
+    // Chart Options
+    var chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            position: 'bottom',
+        },
+        hover: {
+            mode: 'label'
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                gridLines: {
+                    color: "#f3f3f3",
+                    drawTicks: false,
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Tanggal'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                gridLines: {
+                    color: "#f3f3f3",
+                    drawTicks: false,
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Value'
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: 'Actif Clockin-Out'
+        }
+    };
+
+    // Chart Data
+    var chartData = {
+        labels: arrayperiode,
+        datasets: [{
+            label: "KP",
+            data: arraykp,
+            lineTension: 0,
+            fill: false,
+            borderColor: "#9C27B0",
+            pointBorderColor: "#9C27B0",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+        }, {
+            label: "MOR 3",
+            data: arraymor3,
+            lineTension: 0,
+            fill: false,
+            borderColor: "#FF7D4D",
+            pointBorderColor: "#FF7D4D",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+        }, {
+            label: "PHKT",
+            data: arrayphkt,
+            lineTension: 0,
+            fill: false,
+            borderColor: "#d9534f",
+            pointBorderColor: "#d9534f",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+        }, {
+            label: "PHE",
+            data: arrayphe,
+            lineTension: 0,
+            fill: false,
+            borderColor: "#428bca",
+            pointBorderColor: "#428bca",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+        }]
+    };
+
+    var config = {
+        type: 'line',
+
+        // Chart Options
+        options : chartOptions,
+
+        data : chartData
+    };
+
+    // Create the chart
+    var lineChart = new Chart(ctx, config);
+});
+
+</script>
 @stop

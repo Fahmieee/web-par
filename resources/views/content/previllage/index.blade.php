@@ -52,7 +52,7 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                           <button class="btn btn-sm btn-info"><i class="la la-edit"></i> Edit</button>
+                                           <a href="/previllage/edit?id={{ $previllage->id }}"><button class="btn btn-sm btn-info"><i class="la la-edit"></i> Edit</button></a>
                                            <button class="btn btn-sm btn-danger" onclick="Delete({{ $previllage->id }})"><i class="la la-remove"></i> Hapus</button>
                                         </td>
                                     </tr> 

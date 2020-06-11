@@ -7,6 +7,7 @@
     ->leftJoin('previllages', 'menus.id', '=', 'previllages.menu_id')
     ->leftJoin('users_roles', 'previllages.role_id', '=', 'users_roles.role_id')
     ->where('users_roles.user_id', $myuser)
+    ->orderBy("menus.id","asc")
     ->get();
     
 @endphp

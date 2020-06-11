@@ -120,7 +120,7 @@ session_start();
                 cache: false,
                 success: function (data)
                 {
-                    if (data.role == 1 && data.status == 'success'){
+                    if (data.status == 'success'){
 
                         swal("Sign In Success!", {
                             icon: "success",

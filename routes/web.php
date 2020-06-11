@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('previllage', 'PrevillageController@index');
 	Route::post('previllage/store', 'PrevillageController@store')->name('simpanprevillage');
 	Route::post('previllage/delete', 'PrevillageController@delete')->name('deleteprevillage');
+	Route::get('previllage/edit', 'PrevillageController@edit');
+	Route::post('previllage/update', 'PrevillageController@update')->name('updateprevillage');
 
 	Route::get('users-web', 'UserController@userweb');
 	Route::get('users-web/getdata', 'UserController@userwebgetdata')->name('getuserweb');
@@ -61,6 +63,9 @@ Route::group(['middleware' => 'auth:user'], function(){
 
 	Route::get('unitkerja', 'UnitKerjaController@index');
 	Route::get('unitkerja/getdata', 'UnitKerjaController@GetData')->name('getunitkerja');
+
+	Route::get('ganti-pass', 'UserController@gantipass');
+	Route::post('ganti-pass/update', 'UserController@gantipassupdate')->name('gantipassword');
 
 	Route::get('units', 'UnitController@index');
 	Route::post('units/store', 'UnitController@store')->name('simpanunit');

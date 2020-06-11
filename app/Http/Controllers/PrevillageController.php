@@ -67,4 +67,37 @@ class PrevillageController extends Controller
         return response()->json($previllagess);
     }
 
+    public function edit(Request $request)
+    {
+
+    	$rolenow = Roles::where("id", $request->id)
+    	->first();
+
+    	$menuxs = Menus::all();
+
+    	$roles = Roles::where("device","web")
+    	->get();
+
+        return view('content.previllage.edit', compact('previllages','menuxs','roles','rolenow'));
+
+    }
+
+    public function update(Request $request) {
+
+        $previllagess = Previllages::where('role_id', $request->role)
+        ->delete();
+
+        $count = count($request->menu);
+
+        for($i=0; $i < $count; $i++){
+
+            $details = new Previllages();
+            $details->role_id = $request->role;
+            $details->menu_id= $request->menu[$i];
+            $details->save();
+        }
+
+        return response()->json($previllagess);
+    }
+
 }

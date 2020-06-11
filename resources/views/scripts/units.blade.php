@@ -190,7 +190,7 @@ function Update(){
 
                 $('#editunits').modal('hide');
 
-                setTimeout(function(){ window.location.reload() }, 1500);
+                setTimeout(function(){ window.location.href = '/home'; }, 1500);
 
                
             }

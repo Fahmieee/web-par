@@ -27,8 +27,10 @@
                     </ul>
                     <ul class="nav navbar-nav float-right">
                         
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">Super Admin</span><span class="avatar avatar-online"><img src="/assets/content/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="login/logout"><i class="ft-power"></i> Logout</a>
+                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">{{ Auth::user()->first_name }}</span><span class="avatar avatar-online"><img src="/assets/content/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="/ganti-pass"><i class="ft-lock"></i> Ganti Password</a>
+                                <a class="dropdown-item" href="login/logout"><i class="ft-power"></i> Logout</a>
                             </div>
                         </li>
                     </ul>

@@ -21,6 +21,7 @@ use App\Roles;
 use DataTables;
 use View;
 use Hash;
+use Auth;
 
 class UserController extends Controller
 {
@@ -863,6 +864,26 @@ class UserController extends Controller
         ->update(['role_id'=>$request->role]);
 
         return response()->json($saveuser);
+
+    }
+
+    public function gantipass()
+    {
+        
+        return view('content.gantipass.index');
+    }
+
+    public function gantipassupdate(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+
+        $user = Auth::user();
+
+        $update = Users::findOrFail($user->id);
+        $update->password = Hash::make($request->password);
+        $update->save();
+
+        return response()->json($update);
 
     }
 

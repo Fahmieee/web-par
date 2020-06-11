@@ -42,6 +42,23 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('company', 'CompanyController@index');
 	Route::get('company/getdata', 'CompanyController@GetData')->name('getcompany');
 
+	Route::get('role', 'RoleController@index');
+	Route::get('role/getdata', 'RoleController@getdata')->name('getroles');
+	Route::post('role/store', 'RoleController@store')->name('simpanrole');
+	Route::post('role/edit', 'RoleController@edit')->name('editrole');
+	Route::post('role/update', 'RoleController@update')->name('updaterole');
+	Route::post('role/delete', 'RoleController@delete')->name('deleterole');
+
+	Route::get('previllage', 'PrevillageController@index');
+	Route::post('previllage/store', 'PrevillageController@store')->name('simpanprevillage');
+	Route::post('previllage/delete', 'PrevillageController@delete')->name('deleteprevillage');
+
+	Route::get('users-web', 'UserController@userweb');
+	Route::get('users-web/getdata', 'UserController@userwebgetdata')->name('getuserweb');
+	Route::post('users-web/store', 'UserController@simpanuserweb')->name('simpanuserweb');
+	Route::post('users-web/edit', 'UserController@edituserweb')->name('edituserweb');
+	Route::post('users-web/update', 'UserController@updateuserweb')->name('updateuserweb');
+
 	Route::get('unitkerja', 'UnitKerjaController@index');
 	Route::get('unitkerja/getdata', 'UnitKerjaController@GetData')->name('getunitkerja');
 

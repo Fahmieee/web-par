@@ -17,6 +17,7 @@ use App\UserRoles;
 use App\TrainingDrivers;
 use App\Drivers;
 use App\UnitDrivers;
+use App\Roles;
 use DataTables;
 use View;
 use Hash;
@@ -775,6 +776,93 @@ class UserController extends Controller
         // }
 
 
+
+    }
+
+    public function userweb()
+    {
+            
+        $roles = Roles::where("device","web")
+        ->get();
+
+        return view('content.user-web.index', compact('roles'));
+    }
+
+    public function userwebgetdata()
+    {
+        $users = Users::select("users.*","role.name as role_name")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->leftJoin("role", "users_roles.role_id", "=", "role.id")
+        ->where("role.device", "web")
+        ->get();
+
+        return Datatables::of($users)->make(true);
+    }
+
+    public function simpanuserweb(Request $request)
+    {   
+        date_default_timezone_set('Asia/Jakarta');
+
+        $ada = Users::where("username", $request->username)
+        ->first();
+
+            if(!$ada) {
+
+                $data = "0";
+
+                $save = new Users();
+                $save->username = $request->username;
+                $save->password = Hash::make($request->password);
+                $save->email = $request->email;
+                $save->first_name = $request->nama;
+                $save->driver_type = '0';
+                $save->nik = '0';
+                $save->flag_pass = '0';
+                $save->flag_prof = '0';
+                $save->save();
+
+                $saveroles = new UserRoles();
+                $saveroles->user_id  = $save->id;
+                $saveroles->role_id = $request->role;
+                $saveroles->save();
+
+            } else {
+
+                $data = "1";
+
+            }
+
+        return response()->json($data);
+
+    }
+
+    public function edituserweb(Request $request)
+    {
+
+        $users = Users::select("users.*","users_roles.role_id")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->where("users.id",$request->id)
+        ->first();
+
+        return response()->json($users);
+
+    }
+
+    public function updateuserweb(Request $request)
+    {
+
+        date_default_timezone_set('Asia/Jakarta');
+
+        $saveuser = Users::findOrFail($request->id);
+        $saveuser->username = $request->username;
+        $saveuser->email = $request->email;
+        $saveuser->first_name = $request->nama;
+        $saveuser->save();
+
+        $previllages = UserRoles::where(['user_id'=>$request->id])
+        ->update(['role_id'=>$request->role]);
+
+        return response()->json($saveuser);
 
     }
 

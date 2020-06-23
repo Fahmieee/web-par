@@ -61,6 +61,16 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('users-web/edit', 'UserController@edituserweb')->name('edituserweb');
 	Route::post('users-web/update', 'UserController@updateuserweb')->name('updateuserweb');
 
+	Route::get('asmen', 'UserController@asmen');
+	Route::post('asmen/store', 'UserController@simpanasmen')->name('simpanasmen');
+	Route::get('asmen/edit', 'UserController@editasmen');
+	Route::post('asmen/update', 'UserController@updateasmen')->name('updateasmen');
+
+	Route::get('manager', 'UserController@manager');
+	Route::post('manager/store', 'UserController@simpanmanager')->name('simpanmanager');
+	Route::get('manager/edit', 'UserController@editmanager');
+	Route::post('manager/update', 'UserController@updatemanager')->name('updatemanager');
+
 	Route::get('unitkerja', 'UnitKerjaController@index');
 	Route::get('unitkerja/getdata', 'UnitKerjaController@GetData')->name('getunitkerja');
 

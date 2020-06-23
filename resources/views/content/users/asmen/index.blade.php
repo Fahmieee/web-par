@@ -6,8 +6,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Data Manager</h4><br>
-                    <button class="btn btn-success" onclick="TambahManager();"><i class="la la-plus"></i> Tambah Manager</button> 
+                    <h4 class="card-title">Data Assisten Manager</h4><br>
+                    <button class="btn btn-success" onclick="TambahAsmen();"><i class="la la-plus"></i> Tambah Assisten Manager</button> 
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
@@ -26,7 +26,7 @@
                                         <th>Username</th>
                                         <th>Nama Pengguna</th>
                                         <th>Email</th>
-                                        <th>Banyak Asmen</th>
+                                        <th>Banyak Korlap</th>
                                         <th width="20%">Actions</th>
                                     </tr>
                                 </thead>
@@ -34,27 +34,24 @@
                                     @php
                                     $no = 0;
                                     @endphp
-                                    @foreach($managers as $manager)
+                                    @foreach($asmens as $asmen)
                                     @php
                                         $no++;
-                                        $asmenx = DB::table('drivers')
-                                        ->select('asmen_id')
-                                        ->where([
-                                            ['manager_id', '=', $manager->id],
-                                            ['asmen_id', '!=', null],
-                                        ])
+                                        $korlaps = DB::table('drivers')
+                                        ->select('korlap_id')
+                                        ->where('asmen_id', $asmen->id)
                                         ->distinct()
                                         ->get();
                                     @endphp
 
                                         <tr>
                                             <td>{{ $no }}</td>
-                                            <td>{{ $manager->username }}</td>
-                                            <td>{{ $manager->first_name }}</td>
-                                            <td>{{ $manager->email }}</td>
-                                            <td>{{ $asmenx->count() }} Asmen</td>
+                                            <td>{{ $asmen->username }}</td>
+                                            <td>{{ $asmen->first_name }}</td>
+                                            <td>{{ $asmen->email }}</td>
+                                            <td>{{ $korlaps->count() }} Korlap</td>
                                             <td>
-                                                <a href="/manager/edit?id={{ $manager->id }}"><button class="btn btn-sm btn-success" type="button"><i class="la la-edit"></i></button></a> <button class="btn btn-sm btn-danger" onclick="Delete({{ $manager->id }})" type="button"><i class="la la-trash"></i></button> <button class="btn btn-sm btn-info" onclick="Reset({{ $manager->id }})" type="button"><i class="la la-key"></i></button>
+                                                <a href="/asmen/edit?id={{ $asmen->id }}"><button class="btn btn-sm btn-success" type="button"><i class="la la-edit"></i></button></a> <button class="btn btn-sm btn-danger" onclick="Delete({{ $asmen->id }})" type="button"><i class="la la-trash"></i></button> <button class="btn btn-sm btn-info" onclick="Reset({{ $asmen->id }})" type="button"><i class="la la-key"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,7 +65,7 @@
     </div>
 </section>
 <!--/ Zero configuration table -->
-@include('content.users.manager.modal')
+@include('content.users.asmen.modal')
 @include('includes.footer')
 <script type="text/javascript">
 
@@ -114,7 +111,7 @@ function ResetNow(){
 
 }
 
-function TambahManager(){
+function TambahAsmen(){
 
     $('#modal_tambah').modal('show');
 
@@ -141,15 +138,15 @@ function Simpan(){
 
     } else {
 
-        var asmen = [];
+        var korlaps = [];
 
-        $('.asmen:checked').each(function(){
-            asmen.push($(this).val());
+        $('.korlaps:checked').each(function(){
+            korlaps.push($(this).val());
         });
 
         $.ajax({
             type: 'POST',
-            url: "{{ route('simpanmanager') }}",
+            url: "{{ route('simpanasmen') }}",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'nama': $('#nama').val(),
@@ -157,7 +154,7 @@ function Simpan(){
                 'wilayah': $('#wilayah').val(),
                 'username': $('#username').val(),
                 'password': $('#pass').val(),
-                'asmen': asmen,
+                'korlaps': korlaps,
                },
             success: function(data) {
 
@@ -165,7 +162,7 @@ function Simpan(){
 
                     swal({
                         title: "Berhasil!!",
-                        text: "Data Diri Manager Berhasil Tersimpan!",
+                        text: "Data Diri Asmen Berhasil Tersimpan!",
                         icon: "success",
                         buttons: false,
                         timer: 2000,

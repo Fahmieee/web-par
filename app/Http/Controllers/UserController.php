@@ -887,4 +887,196 @@ class UserController extends Controller
 
     }
 
+    public function asmen()
+    {
+
+        $asmens = Users::select("users.*")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->where("role_id", "6")
+        ->get();
+
+        $wilayahs = Wilayah::select("wilayah.*","unit_kerja.unitkerja_name")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->get();
+
+        $kors = Users::select("users.*","unit_kerja.unitkerja_name")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->where("role_id", "5")
+        ->get();
+
+        return view('content.users.asmen.index', compact('asmens','wilayahs','kors'));
+    }
+
+    public function simpanasmen(Request $request)
+    {   
+        date_default_timezone_set('Asia/Jakarta');
+
+        $ada = Users::where("username", $request->username)
+        ->first();
+
+            if(!$ada) {
+
+                $data = "0";
+
+                $save = new Users();
+                $save->jabatan_id = '42';
+                $save->company_id = '1';
+                $save->wilayah_id = $request->wilayah;
+                $save->username = $request->username;
+                $save->password = Hash::make($request->password);
+                $save->email = $request->email;
+                $save->first_name = $request->nama;
+                $save->driver_type = '0';
+                $save->nik = '0';
+                $save->flag_pass = '0';
+                $save->flag_prof = '0';
+                $save->save();
+
+                $saveroles = new UserRoles();
+                $saveroles->user_id  = $save->id;
+                $saveroles->role_id = "6";
+                $saveroles->save();
+
+                $counts = count($request->korlaps);
+
+                for($i=0; $i < $counts; $i++){
+
+                    $drivers = Drivers::where(['korlap_id'=>$request->korlaps[$i]])
+                    ->update(['asmen_id'=>$save->id]);
+
+                }
+
+            } else {
+
+                $data = "1";
+
+            }
+
+        return response()->json($data);
+
+    }
+
+    public function editasmen(Request $request)
+    {
+
+        $users = Users::select("users.*","users_roles.role_id")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->where("users.id",$request->id)
+        ->first();
+
+        $wilayahs = Wilayah::select("wilayah.*","unit_kerja.unitkerja_name")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->get();
+
+        $kors = Users::select("users.*","unit_kerja.unitkerja_name")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->where("role_id", "5")
+        ->get();
+
+        return view('content.users.asmen.edit', compact('users','wilayahs','kors'));
+
+    }
+
+    public function updateasmen(Request $request)
+    {
+
+        date_default_timezone_set('Asia/Jakarta');
+
+        $saveuser = Users::findOrFail($request->id);
+        $saveuser->username = $request->username;
+        $saveuser->email = $request->email;
+        $saveuser->first_name = $request->nama;
+        $saveuser->wilayah_id = $request->wilayah;
+        $saveuser->save();
+
+        $hapus = Drivers::where(['asmen_id'=>$request->id])
+        ->update(['asmen_id'=>NULL]);
+
+        $counts = count($request->korlaps);
+        for($i=0; $i < $counts; $i++){
+
+            $drivers = Drivers::where(['korlap_id'=>$request->korlaps[$i]])
+            ->update(['asmen_id'=>$request->id]);
+
+        }
+
+        return response()->json($saveuser);
+
+    }
+
+    public function manager()
+    {
+
+        $managers = Users::select("users.*")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->where("role_id", "7")
+        ->get();
+
+        $wilayahs = Wilayah::select("wilayah.*","unit_kerja.unitkerja_name")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->get();
+
+        $asmens = Users::select("users.*","unit_kerja.unitkerja_name")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
+        ->where("role_id", "6")
+        ->get();
+
+        return view('content.users.manager.index', compact('asmens','wilayahs','managers'));
+    }
+
+    public function simpanmanager(Request $request)
+    {   
+        date_default_timezone_set('Asia/Jakarta');
+
+        $ada = Users::where("username", $request->username)
+        ->first();
+
+            if(!$ada) {
+
+                $data = "0";
+
+                $save = new Users();
+                $save->jabatan_id = '43';
+                $save->company_id = '1';
+                $save->wilayah_id = $request->wilayah;
+                $save->username = $request->username;
+                $save->password = Hash::make($request->password);
+                $save->email = $request->email;
+                $save->first_name = $request->nama;
+                $save->driver_type = '0';
+                $save->nik = '0';
+                $save->flag_pass = '0';
+                $save->flag_prof = '0';
+                $save->save();
+
+                $saveroles = new UserRoles();
+                $saveroles->user_id  = $save->id;
+                $saveroles->role_id = "7";
+                $saveroles->save();
+
+                $counts = count($request->asmen);
+
+                for($i=0; $i < $counts; $i++){
+
+                    $drivers = Drivers::where(['asmen_id'=>$request->asmen[$i]])
+                    ->update(['manager_id'=>$save->id]);
+
+                }
+
+            } else {
+
+                $data = "1";
+
+            }
+
+        return response()->json($data);
+
+    }
+
 }

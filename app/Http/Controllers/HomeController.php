@@ -39,7 +39,7 @@ class HomeController extends Controller
         ->leftJoin("users", "clocks.user_id", "=", "users.id")
         ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
         ->leftJoin("unit_kerja", "wilayah.unitkerja_id", "=", "unit_kerja.id")
-        ->where('clocks.clockin_date', '2020-03-01')
+        ->where('clocks.clockin_date', $date)
         ->get();        
 
     	return view('content.home.index', compact('activities','check','suara','unitkerjas','date','users','dcu','awal','akhir','clocks'));

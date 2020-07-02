@@ -71,6 +71,8 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::get('manager/edit', 'UserController@editmanager');
 	Route::post('manager/update', 'UserController@updatemanager')->name('updatemanager');
 
+	Route::get('clients', 'UserController@client');
+
 	Route::get('unitkerja', 'UnitKerjaController@index');
 	Route::get('unitkerja/getdata', 'UnitKerjaController@GetData')->name('getunitkerja');
 

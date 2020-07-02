@@ -1079,4 +1079,17 @@ class UserController extends Controller
 
     }
 
+    public function client()
+    {
+
+        $clients = Users::select("users.*","jabatan_name","wilayah_name")
+        ->leftJoin("users_roles", "users.id", "=", "users_roles.user_id")
+        ->leftJoin("jabatan", "users.jabatan_id", "=", "jabatan.id")
+        ->leftJoin("wilayah", "users.wilayah_id", "=", "wilayah.id")
+        ->where("role_id", "3")
+        ->get();
+
+        return view('content.users.client.index', compact('clients'));
+    }
+
 }

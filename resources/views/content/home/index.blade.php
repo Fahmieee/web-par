@@ -222,15 +222,13 @@
                             @foreach($clocks as $clock)
 
                             @php
+                            
                                 $kordinats = DB::table('koordinat')
                                 ->where([
                                     ['type', '=', 'clockin'],
                                     ['action_id', '=', $clock->id],
                                 ])
                                 ->first();
-
-                                
-
 
                             @endphp
                             <tr>

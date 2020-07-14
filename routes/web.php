@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth:user'], function(){
 	Route::post('jabatan/updatedata', 'JabatanController@update')->name('updatejabatan');
 	Route::post('jabatan/deletedata', 'JabatanController@delete')->name('deletejabatan');
 
+	Route::get('keluhan', 'KeluhanController@index');
+
 	Route::get('company', 'CompanyController@index');
 	Route::get('company/getdata', 'CompanyController@GetData')->name('getcompany');
 

@@ -1,6 +1,15 @@
 @extends('layouts.content')
 @section('content')
 <!-- Zero configuration table -->
+<style type="text/css">
+    .example-table {
+    }
+
+    .example-table th,
+    .example-table td {
+        white-space: nowrap;
+    }
+</style>
 <section id="configuration">
     <div class="row">
         <div class="col-12">
@@ -50,14 +59,16 @@
                                         <button class="btn btn-success" id="excel">Export Excel</button>
                                         <br><br>
                                         <div class="table-responsive">
-                                            <table width="100%" class="table table-striped table-bordered datatables">
+                                            <table width="100%" class="table table-striped table-bordered datatables example-table">
                                                 <thead>
                                                     <tr>
                                                         <th>Nopeg</th>
                                                         <th>Pengemudi</th>
                                                         <th>Tanggal</th>
                                                         <th>Clockin</th>
+                                                        <th>Clockin Status</th>
                                                         <th>Clockout</th>
+                                                        <th>Clockout Status</th>
                                                         <th>In Km</th>
                                                         <th>Out Km</th>
                                                         <th>U.Kerja</th>

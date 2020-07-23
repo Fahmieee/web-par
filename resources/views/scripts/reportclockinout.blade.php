@@ -24,7 +24,29 @@
                 { data: 'first_name', name: 'first_name' },
                 { data: 'dates', name: 'dates' },
                 { data: 'clockin_time', name: 'clockin_time' },
+                { 
+                    render: function ( data, type, row ) {
+
+                        if(row.clockin_status == 'APPROVED'){
+                            return "<div class='badge badge-success'>APPROVED</div>";
+                        } else {
+                            return "<div class='badge badge-danger'>NOT APPROVED</div>";
+                        }
+
+                    }
+                },
                 { data: 'clockout_time', name: 'clockout_time' },
+                { 
+                    render: function ( data, type, row ) {
+
+                        if(row.clockout_status == 'APPROVED'){
+                            return "<div class='badge badge-success'>APPROVED</div>";
+                        } else {
+                            return "<div class='badge badge-danger'>NOT APPROVED</div>";
+                        }
+
+                    }
+                },
                 { data: 'clockin_km', name: 'clockin_km' },
                 { data: 'clockout_km', name: 'clockout_km' },
                 { data: 'unitkerja_name', name: 'unitkerja_name' },

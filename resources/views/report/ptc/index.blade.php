@@ -1,6 +1,15 @@
 @extends('layouts.content')
 @section('content')
 <!-- Zero configuration table -->
+<style type="text/css">
+    .example-table {
+    }
+
+    .example-table th,
+    .example-table td {
+        white-space: nowrap;
+    }
+</style>
 <section id="configuration">
     <div class="row">
         <div class="col-12">
@@ -48,7 +57,7 @@
                                     <div class="card-content collapse show">
                                         <button class="btn btn-success" id="excel">Export Excel</button> <button class="btn btn-danger">Export PDF</button><br><br>
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered datatables" width="100%">
+                                            <table class="table table-striped table-bordered datatables example-table" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Nopeg</th>

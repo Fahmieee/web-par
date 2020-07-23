@@ -277,7 +277,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <select class="form-control select2" id="unit">
+                                                                <select class="form-control select2 mandatory" id="unit">
                                                                      
                                                                 </select>
                                                             </td>
@@ -287,7 +287,7 @@
                                             </div>
                                             <hr>
                                             <br>
-                                            <h3>Dokument Unit</h3><hr>
+                                            <h3>Dokumen Unit</h3><hr>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <table width="100%">
@@ -342,7 +342,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn grey btn-outline-danger" data-dismiss="modal">Close</button>
-                <button onclick="Simpan()" type="button" class="btn btn-outline-success">Simpan</button>
+                <button onclick="SimpanDriver()" type="button" class="btn btn-outline-success">Simpan</button>
             </div>
         </div>
     </div>

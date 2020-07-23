@@ -41,6 +41,12 @@ Route::group(['middleware' => 'auth:user'], function(){
 
 	Route::get('keluhan', 'KeluhanController@index');
 
+	Route::get('score-period', 'ScoringController@period');
+	Route::post('score-period/store', 'ScoringController@storeperiod')->name('simpanperiod');
+	Route::post('score-period/delete', 'ScoringController@deleteperiod')->name('deleteperiod');
+	Route::post('score-period/edit', 'ScoringController@editperiod')->name('editperiod');
+	Route::post('score-period/update', 'ScoringController@updateperiod')->name('updateperiod');
+
 	Route::get('company', 'CompanyController@index');
 	Route::get('company/getdata', 'CompanyController@GetData')->name('getcompany');
 

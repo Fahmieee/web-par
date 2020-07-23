@@ -530,8 +530,9 @@ class UserController extends Controller
 
     }
 
-    public function editclient(Request $request)
+    public function ©(Request $request)
     {
+
 
         $clients = Drivers::where("driver_id" ,$request->id)
         ->first();
@@ -601,7 +602,7 @@ class UserController extends Controller
 
             $noplatspasi = str_replace(' ', '', $units->no_police);
 
-             $adaunit = UnitDrivers::where("unit_id",  $request->unit)
+            $adaunit = UnitDrivers::where("unit_id",  $request->unit)
                 ->first();
 
                 if(!$adaunit){

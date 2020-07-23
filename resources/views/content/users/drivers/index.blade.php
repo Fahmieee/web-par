@@ -364,7 +364,7 @@ function BuatUnitBaru(){
 
 }
 
-function Simpan(){
+function SimpanDriver(){
 
     var empty = false;
     $('input.mandatory').each(function() {

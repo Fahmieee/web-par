@@ -23,7 +23,17 @@
                 { data: 'username', name: 'username' },
                 { data: 'first_name', name: 'first_name' },
                 { data: 'dates', name: 'dates' },
-                { data: 'clockin_time', name: 'clockin_time' },
+                { 
+                    render: function ( data, type, row ) {
+
+                        if(row.clockin_actual == null){
+                            return row.clockin_time;
+                        } else {
+                            return row.clockin_actual;
+                        }
+
+                    }
+                },
                 { 
                     render: function ( data, type, row ) {
 
@@ -35,7 +45,17 @@
 
                     }
                 },
-                { data: 'clockout_time', name: 'clockout_time' },
+                { 
+                    render: function ( data, type, row ) {
+
+                        if(row.clockout_actual == null){
+                            return row.clockout_time;
+                        } else {
+                            return row.clockout_actual;
+                        }
+
+                    }
+                },
                 { 
                     render: function ( data, type, row ) {
 

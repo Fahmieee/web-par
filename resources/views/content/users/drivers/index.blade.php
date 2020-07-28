@@ -6,7 +6,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Data DRIVER</h4><br>
+                    <h2>Data Driver</h2>
+                    <div>Berisi Data-data Lengkap dari Driver</div><br>
                     <button class="btn btn-success" onclick="TambahDriver();"><i class="la la-plus"></i> Tambah Driver</button> 
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
@@ -262,33 +263,6 @@ $('#unitkerja').on('change', function () {
 
 });
 
-$.ajax({
-    url: "{{ route('ambilunit') }}",
-    type: "GET",
-    success:function(data) {
-
-        var no = -1;
-        var content_data ="";
-
-        content_data += "<option value=''>Pilih Unit Kendaraan</option>";
-
-        $.each(data, function() {
-
-            no++;
-            var merk = data[no]['merk'];
-            var model = data[no]['model'];
-            var no_police = data[no]['no_police'];
-            var id = data[no]['id'];
-
-            content_data += "<option value="+id+">"+no_police+" | "+merk+" "+model+"</option>";
-
-        });
-
-        $('#unit').html(content_data);
-
-    }
-
-});
 
 $('#unit').on('change', function () {
 
@@ -315,11 +289,66 @@ $('#unit').on('change', function () {
                 $('#docunit_'+doc_id).val(dates);
 
             });
-
         }
-
     });
+});
 
+$('#unitganjil').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('docunit') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).val(),
+        },
+        success:function(data) {
+
+            $('.datedocunitganjil').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#docunitganjil_'+doc_id).val(dates);
+
+            });
+        }
+    });
+});
+
+$('#unitgenap').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('docunit') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).val(),
+        },
+        success:function(data) {
+
+            $('.datedocunitgenap').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#docunitgenap_'+doc_id).val(dates);
+
+            });
+        }
+    });
 });
 
 $('#type').on('change', function () {
@@ -384,10 +413,23 @@ function SimpanDriver(){
 
     } else {
 
+        var gangen = $('#gangen').val();
+
         var typedocdriver = [];
         var datedocdriver = [];
-        var typedocunit = [];
-        var datedocunit = [];
+
+        if(gangen == 'no'){
+            var typedocunit = [];
+            var datedocunit = [];
+        } else {
+            var typedocunitganjil = [];
+            var datedocunitganjil = [];
+
+            var typedocunitgenap = [];
+            var datedocunitgenap = [];
+        }
+        
+        
         var typetraining = [];
         var datetraining = [];
 
@@ -399,13 +441,35 @@ function SimpanDriver(){
             datedocdriver.push($(this).val());
         });
 
-        $('.typedocunit').each(function(){
-            typedocunit.push($(this).val());
-        });
+        if(gangen == 'no'){
 
-        $('.datedocunit').each(function(){
-            datedocunit.push($(this).val());
-        });
+            $('.typedocunit').each(function(){
+                typedocunit.push($(this).val());
+            });
+
+            $('.datedocunit').each(function(){
+                datedocunit.push($(this).val());
+            });
+
+        } else {
+
+            $('.typedocunitganjil').each(function(){
+                typedocunitganjil.push($(this).val());
+            });
+
+            $('.datedocunitganjil').each(function(){
+                datedocunitganjil.push($(this).val());
+            });
+
+            $('.typedocunitgenap').each(function(){
+                typedocunitgenap.push($(this).val());
+            });
+
+            $('.datedocunitgenap').each(function(){
+                datedocunitgenap.push($(this).val());
+            });
+
+        }
 
         $('.typetraining').each(function(){
             typetraining.push($(this).val());
@@ -415,64 +479,134 @@ function SimpanDriver(){
             datetraining.push($(this).val());
         });
 
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('simpandriver') }}",
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'nama': $('#nama').val(),
-                'email': $('#email').val(),
-                'phone': $('#phone').val(),
-                'nik': $('#nik').val(),
-                'unitkerja': $('#unitkerja').val(),
-                'wilayah': $('#wilayah').val(),
-                'type': $('#type').val(),
-                'korlap': $('#korlap').val(),
-                'alamat': $('#alamat').val(),
-                'namaclient': $('#namaclient').val(),
-                'emailclient': $('#emailclient').val(),
-                'jabatan': $('#jabatan').val(),
-                'phoneclient': $('#phoneclient').val(),
-                'typedocdriver': typedocdriver,
-                'datedocdriver': datedocdriver,
-                'unit': $('#unit').val(),
-                'typedocunit': typedocunit,
-                'datedocunit': datedocunit,
-                'typetraining': typetraining,
-                'datetraining': datetraining,
-               },
-            success: function(data) {
+        if(gangen == 'no'){
 
-                if(data == '0'){
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('simpandriver') }}",
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'nama': $('#nama').val(),
+                    'email': $('#email').val(),
+                    'phone': $('#phone').val(),
+                    'nik': $('#nik').val(),
+                    'unitkerja': $('#unitkerja').val(),
+                    'wilayah': $('#wilayah').val(),
+                    'type': $('#type').val(),
+                    'korlap': $('#korlap').val(),
+                    'alamat': $('#alamat').val(),
+                    'namaclient': $('#namaclient').val(),
+                    'emailclient': $('#emailclient').val(),
+                    'jabatan': $('#jabatan').val(),
+                    'phoneclient': $('#phoneclient').val(),
+                    'typedocdriver': typedocdriver,
+                    'datedocdriver': datedocdriver,
+                    'unit': $('#unit').val(),
+                    'typedocunit': typedocunit,
+                    'datedocunit': datedocunit,
+                    'typetraining': typetraining,
+                    'datetraining': datetraining,
+                    'gangen': gangen,
+                   },
+                success: function(data) {
 
-                    swal({
-                        title: "Berhasil!!",
-                        text: "Driver Berhasil Tersimpan!",
-                        icon: "success",
-                        buttons: false,
-                        timer: 2000,
-                    });
+                    if(data == '0'){
 
-                    $('#tambahunits').modal('hide');
+                        swal({
+                            title: "Berhasil!!",
+                            text: "Driver Berhasil Tersimpan!",
+                            icon: "success",
+                            buttons: false,
+                            timer: 2000,
+                        });
 
-                    setTimeout(function(){ window.location.reload() }, 1500);
+                        $('#modal_tambah').modal('hide');
 
-                } else {
+                        setTimeout(function(){ window.location.reload() }, 1500);
 
-                    swal({
-                        title: "Warning!!",
-                        text: "Data Sudah ada di Sistem kami!",
-                        icon: "warning",
-                        buttons: false,
-                        timer: 2000,
-                    });
+                    } else {
+
+                        swal({
+                            title: "Warning!!",
+                            text: "Data Sudah ada di Sistem kami!",
+                            icon: "warning",
+                            buttons: false,
+                            timer: 2000,
+                        });
+
+                    }
+                    
 
                 }
-                
 
-            }
+            });
 
-        });
+        } else {
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('simpandriver') }}",
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'nama': $('#nama').val(),
+                    'email': $('#email').val(),
+                    'phone': $('#phone').val(),
+                    'nik': $('#nik').val(),
+                    'unitkerja': $('#unitkerja').val(),
+                    'wilayah': $('#wilayah').val(),
+                    'type': $('#type').val(),
+                    'korlap': $('#korlap').val(),
+                    'alamat': $('#alamat').val(),
+                    'namaclient': $('#namaclient').val(),
+                    'emailclient': $('#emailclient').val(),
+                    'jabatan': $('#jabatan').val(),
+                    'phoneclient': $('#phoneclient').val(),
+                    'typedocdriver': typedocdriver,
+                    'datedocdriver': datedocdriver,
+                    'unitganjil': $('#unitganjil').val(),
+                    'unitgenap': $('#unitgenap').val(),
+                    'typedocunitganjil': typedocunitganjil,
+                    'datedocunitganjil': datedocunitganjil,
+                    'typedocunitgenap': typedocunitgenap,
+                    'datedocunitgenap': datedocunitgenap,
+                    'typetraining': typetraining,
+                    'datetraining': datetraining,
+                    'gangen': gangen,
+                   },
+                success: function(data) {
+
+                    if(data == '0'){
+
+                        swal({
+                            title: "Berhasil!!",
+                            text: "Driver Berhasil Tersimpan!",
+                            icon: "success",
+                            buttons: false,
+                            timer: 2000,
+                        });
+
+                        $('#modal_tambah').modal('hide');
+
+                        setTimeout(function(){ window.location.reload() }, 1500);
+
+                    } else {
+
+                        swal({
+                            title: "Warning!!",
+                            text: "Data Sudah ada di Sistem kami!",
+                            icon: "warning",
+                            buttons: false,
+                            timer: 2000,
+                        });
+
+                    }
+                    
+
+                }
+
+            });
+
+        }
 
     }
 
@@ -757,6 +891,32 @@ $('#unitedit').on('change', function () {
         }
 
     });
+
+});
+
+$('#gangen').on('change', function () {
+
+    var isi = $(this).val();
+
+    if(isi == 'no'){
+
+        $('#noganap').attr("style","display: block;");
+        $('#yesganap').attr("style","display: none;");
+
+
+    } else if(isi == 'yes') {
+
+        $('#noganap').attr("style","display: none;");
+        $('#yesganap').attr("style","display: block;");
+
+
+    } else {
+
+        $('#noganap').attr("style","display: none;");
+        $('#yesganap').attr("style","display: none;");
+
+
+    }
 
 });
 

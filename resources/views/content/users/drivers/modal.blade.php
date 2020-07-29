@@ -174,7 +174,7 @@
                                                     <table width="100%">
                                                         <tr>
                                                             <td>
-                                                                <select class="form-control" id="korlap">
+                                                                <select class="form-control select2" id="korlap">
                                                                     @foreach($korlaps as $korlap)
                                                                         <option value="{{ $korlap->id }}">{{ $korlap->first_name }} - {{ $korlap->unitkerja_name }}</option>
                                                                     @endforeach
@@ -297,7 +297,6 @@
                                                             <tr>
                                                                 <td>
                                                                     <select class="form-control select2" id="unit">
-                                                                        <option value=""></option> 
                                                                         @foreach($kendaraans as $kendaraan)
                                                                         <option value="{{ $kendaraan->id }}"> {{ $kendaraan->no_police }} | {{ $kendaraan->merk }} {{ $kendaraan->model }}</option>
                                                                         @endforeach
@@ -346,7 +345,6 @@
                                                             <tr>
                                                                 <td>
                                                                     <select class="form-control select2" id="unitganjil">
-                                                                        <option value=""></option> 
                                                                         @foreach($kendaraans as $kendaraan)
                                                                         <option value="{{ $kendaraan->id }}"> {{ $kendaraan->no_police }} | {{ $kendaraan->merk }} {{ $kendaraan->model }}</option>
                                                                         @endforeach
@@ -395,7 +393,6 @@
                                                             <tr>
                                                                 <td>
                                                                     <select class="form-control select2" id="unitgenap">
-                                                                        <option value=""></option> 
                                                                         @foreach($kendaraans as $kendaraan)
                                                                         <option value="{{ $kendaraan->id }}"> {{ $kendaraan->no_police }} | {{ $kendaraan->merk }} {{ $kendaraan->model }}</option>
                                                                         @endforeach
@@ -826,7 +823,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <select class="form-control" id="jabatanedit">
+                                                                <select class="form-control select2" id="jabatanedit">
                                                                     <option value="70">Pilih Jabatan</option>
                                                                     @foreach($jabatans as $jabatan)
                                                                     <option value="{{ $jabatan->id }}">{{ $jabatan->jabatan_name }}</option>
@@ -851,53 +848,176 @@
                                             <br>
                                             <table width="100%">
                                                 <tr>
-                                                    <td align="left"><h3>Pilih Unit </h3></td>
-                                                    <td align="right"><!-- <button class="btn btn-success" onclick="BuatUnitBaru()"><i class="la la-plus"></i> Buat Unit Baru</button> --></td>
+                                                    <td>
+                                                        <h4>Apakah Driver mengunakan Mobil Ganjil dan Genap? <span style="font-size: 16px;" class="text-danger">*</span></h4>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control" id="gangenedit">
+                                                            <option value="yes">Ya</option>
+                                                            <option value="no">Tidak</option>
+                                                        </select>
+                                                    </td>
                                                 </tr>
                                             </table>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table width="100%">
-                                                        <tr>
-                                                            <td>Pilih Unit <span style="font-size: 14px;" class="text-danger">*</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <select class="form-control select2" id="unitedit">
-                                                                    @foreach($units as $unit)
+                                            <br>
 
-                                                                        <option value="{{ $unit->id }}">{{ $unit->no_police }} | {{ $unit->merk }} {{ $unit->model }}</option>
-
-                                                                    @endforeach
-                                                                     
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                            <div id="noganapedit" style="display: none;">
                                             <hr>
                                             <br>
-                                            <h3>Dokument Unit</h3><hr>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table width="100%">
-                                                        @foreach($docunits as $docunit)
-                                                        <tr>
-                                                            <td>
-                                                                <input type="text" class="form-control" value="{{ $docunit->doc_name }}" disabled>
-                                                                <input type="hidden" class="typedocunitedit" id="doc" value="{{ $docunit->id }}">
-                                                            </td>
-                                                            <td>&nbsp;</td>
-                                                            <td>
-                                                                <input type="date" class="form-control datedocunitedit" id="iddocunitedit_{{ $docunit->id }}">    
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </table>
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td align="left">
+                                                            <h4>Pilih Unit <span style="font-size: 16px;" class="text-danger">*</span></h4>
+                                                        </td>
+                                                        <td align="right"></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control select2" id="unitedit">
+                                                                        <option value="">Pilih Unit</option>
+                                                                        @foreach($units as $unit)
+
+                                                                            <option value="{{ $unit->id }}">{{ $unit->no_police }} | {{ $unit->merk }} {{ $unit->model }}</option>
+
+                                                                        @endforeach
+                                                                         
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <br><br>
+                                                <h4>Dokumen Unit</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table width="100%">
+                                                            @foreach($docunits as $docunit)
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control" value="{{ $docunit->doc_name }}" disabled>
+                                                                    <input type="hidden" class="typedocunitedit" id="doc" value="{{ $docunit->id }}">
+                                                                </td>
+                                                                <td>&nbsp;</td>
+                                                                <td>
+                                                                    <input type="date" class="form-control datedocunitedit" id="iddocunitedit_{{ $docunit->id }}">    
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <div id="yesganapedit" style="display: none;">
+                                            <hr>
+                                            <br>
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td align="left">
+                                                            <h4>Pilih Unit Ganjil<span style="font-size: 16px;" class="text-danger">*</span></h4>
+                                                        </td>
+                                                        <td align="right"></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control select2" id="unitganjiledit">
+                                                                        <option value="">Pilih Unit</option>
+
+                                                                        @foreach($units as $unit)
+
+                                                                            <option value="{{ $unit->id }}">{{ $unit->no_police }} | {{ $unit->merk }} {{ $unit->model }}</option>
+
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <h4>Dokumen Unit Ganjil</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table width="100%">
+                                                            @foreach($docunits as $docunit)
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control" value="{{ $docunit->doc_name }}" disabled>
+                                                                    <input type="hidden" class="typedocunitganjiledit" id="doc" value="{{ $docunit->id }}">
+                                                                </td>
+                                                                <td>&nbsp;</td>
+                                                                <td>
+                                                                    <input type="date" class="form-control datedocunitganjiledit" id="docunitganjiledit_{{ $docunit->id }}">    
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+                                                <hr>
+                                                <br>
+
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td align="left">
+                                                            <h4>Pilih Unit Genap<span style="font-size: 16px;" class="text-danger">*</span></h4>
+                                                        </td>
+                                                        <td align="right"></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control select2" id="unitgenapedit">
+                                                                        <option value="">Pilih Unit</option>
+                                                                        @foreach($units as $unit)
+
+                                                                            <option value="{{ $unit->id }}">{{ $unit->no_police }} | {{ $unit->merk }} {{ $unit->model }}</option>
+
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <h4>Dokumen Unit Genap</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table width="100%">
+                                                            @foreach($docunits as $docunit)
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control" value="{{ $docunit->doc_name }}" disabled>
+                                                                    <input type="hidden" class="typedocunitgenapedit" id="doc" value="{{ $docunit->id }}">
+                                                                </td>
+                                                                <td>&nbsp;</td>
+                                                                <td>
+                                                                    <input type="date" class="form-control datedocunitgenapedit" id="docunitgenapedit_{{ $docunit->id }}">    
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <br>
                                             <span style="font-size: 14px;" class="text-danger"><i>* Form yang Wajib diisi</i></span>
                                         </div>

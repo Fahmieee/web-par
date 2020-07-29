@@ -652,6 +652,7 @@ function EditDriver(id){
        success: function(data) {
 
             if(data.driver_type == '1'){
+
                 $('#tab-useredit').attr("style","display:block;");
                 $('#tab-unitedit').attr("style","display:block;");
 
@@ -672,37 +673,121 @@ function EditDriver(id){
                    }
                });
 
-                $.ajax({
-                    url: "{{ route('docunit') }}",
-                    type: "POST",
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'id': data.unit_id,
-                    },
-                    success:function(data) {
 
-                        $('.datedocunit').val('');
+                if(data.gangen > 1){
 
-                        var no = -1;
-                        var content_data ="";
+                    $('#gangenedit').val('yes');
 
-                        $.each(data, function() {
+                    $("#unitganjiledit").select2();
+                    $("#unitganjiledit").val(data.unitganjil).trigger("change");
 
-                            no++;
-                            var doc_id = data[no]['document_id'];
-                            var dates = data[no]['exp_date'];
+                    $("#unitgenapedit").select2();
+                    $("#unitgenapedit").val(data.unitgenap).trigger("change");
 
-                            $('#iddocunitedit_'+doc_id).val(dates);
+                    $('#yesganapedit').attr("style","display:block;");
+                    $('#noganapedit').attr("style","display:none;");
 
-                        });
+                    $.ajax({
+                        url: "{{ route('docunit') }}",
+                        type: "POST",
+                        data: {
+                            '_token': $('input[name=_token]').val(),
+                            'id': data.unitganjil,
+                        },
+                        success:function(datac) {
 
-                    }
+                            $('.datedocunitganjiledit').val('');
 
-                });
+                            var no = -1;
+                            var content_data ="";
+
+                            $.each(datac, function() {
+
+                                no++;
+                                var doc_id = datac[no]['document_id'];
+                                var dates = datac[no]['exp_date'];
+
+                                $('#docunitganjiledit_'+doc_id).val(dates);
+
+                            });
+
+                        }
+
+                    });
+
+                    $.ajax({
+                        url: "{{ route('docunit') }}",
+                        type: "POST",
+                        data: {
+                            '_token': $('input[name=_token]').val(),
+                            'id': data.unitgenap,
+                        },
+                        success:function(datac) {
+
+                            $('.datedocunitgenapedit').val('');
+
+                            var no = -1;
+                            var content_data ="";
+
+                            $.each(datac, function() {
+
+                                no++;
+                                var doc_id = datac[no]['document_id'];
+                                var dates = datac[no]['exp_date'];
+
+                                $('#docunitgenapedit_'+doc_id).val(dates);
+
+                            });
+
+                        }
+
+                    });
+
+                } else{
+
+                    $('#gangenedit').val('no');
+
+                    $("#unitedit").select2();
+                    $("#unitedit").val(data.unit_id).trigger("change");
+
+                    $('#yesganapedit').attr("style","display:none;");
+                    $('#noganapedit').attr("style","display:block;");
+
+                    $.ajax({
+                        url: "{{ route('docunit') }}",
+                        type: "POST",
+                        data: {
+                            '_token': $('input[name=_token]').val(),
+                            'id': data.unit_id,
+                        },
+                        success:function(datac) {
+
+                            $('.datedocunit').val('');
+
+                            var no = -1;
+                            var content_data ="";
+
+                            $.each(datac, function() {
+
+                                no++;
+                                var doc_id = datac[no]['document_id'];
+                                var dates = datac[no]['exp_date'];
+
+                                $('#iddocunitedit_'+doc_id).val(dates);
+
+                            });
+
+                        }
+
+                    });
+                }
+
 
             } else {
+
                 $('#tab-useredit').attr("style","display:none;");
                 $('#tab-unitedit').attr("style","display:none;");
+
             }
 
             $('#namaedit').val(data.first_name);
@@ -713,8 +798,10 @@ function EditDriver(id){
             $('#wilayahedit').val(data.wilayah_id);
             $('#typeedit').val(data.driver_type);
             $('#alamatedit').val(data.address);
-            $('#korlapedit').val(data.korlap_id);
-            $('#unitedit').val(data.unit_id);
+
+            $("#korlapedit").select2();
+            $("#korlapedit").val(data.korlap_id).trigger("change");
+            
             $('#ids').val(id);
 
 
@@ -784,10 +871,24 @@ function EditDriver(id){
 
 function UpdateDrivers(){
 
+    var gangenedit = $('#gangenedit').val();
+
     var typedocdriveredit = [];
     var datedocdriveredit = [];
-    var typedocunitedit = [];
-    var datedocunitedit = [];
+    if(gangenedit == 'no'){
+
+        var typedocunitedit = [];
+        var datedocunitedit = [];
+
+    } else {
+
+        var typedocunitganjiledit = [];
+        var datedocunitganjiledit = [];
+        var typedocunitgenapedit = [];
+        var datedocunitgenapedit = [];
+
+    }
+    
     var typetrainingedit = [];
     var datetrainingedit = [];
 
@@ -799,13 +900,35 @@ function UpdateDrivers(){
         datedocdriveredit.push($(this).val());
     });
 
-    $('.typedocunitedit').each(function(){
-        typedocunitedit.push($(this).val());
-    });
+    if(gangenedit == 'no'){
 
-    $('.datedocunitedit').each(function(){
-        datedocunitedit.push($(this).val());
-    });
+        $('.typedocunitedit').each(function(){
+            typedocunitedit.push($(this).val());
+        });
+
+        $('.datedocunitedit').each(function(){
+            datedocunitedit.push($(this).val());
+        });
+
+    } else {
+
+        $('.typedocunitganjiledit').each(function(){
+            typedocunitganjiledit.push($(this).val());
+        });
+
+        $('.datedocunitganjiledit').each(function(){
+            datedocunitganjiledit.push($(this).val());
+        });
+
+        $('.typedocunitgenapedit').each(function(){
+            typedocunitgenapedit.push($(this).val());
+        });
+
+        $('.datedocunitgenapedit').each(function(){
+            datedocunitgenapedit.push($(this).val());
+        });
+
+    }
 
     $('.typetrainingedit').each(function(){
         typetrainingedit.push($(this).val());
@@ -815,50 +938,106 @@ function UpdateDrivers(){
         datetrainingedit.push($(this).val());
     });
 
-    $.ajax({
-        type: 'POST',
-        url: "{{ route('updatedriver') }}",
-        data: {
-            '_token': $('input[name=_token]').val(),
-            'id': $('#ids').val(),
-            'nama': $('#namaedit').val(),
-            'email': $('#emailedit').val(),
-            'phone': $('#phoneedit').val(),
-            'nik': $('#nikedit').val(),
-            'unitkerja': $('#unitkerjaedit').val(),
-            'wilayah': $('#wilayahedit').val(),
-            'type': $('#typeedit').val(),
-            'korlap': $('#korlapedit').val(),
-            'alamat': $('#alamatedit').val(),
-            'namaclient': $('#namaclientedit').val(),
-            'emailclient': $('#emailclientedit').val(),
-            'jabatan': $('#jabatanedit').val(),
-            'phoneclient': $('#phoneclientedit').val(),
-            'typedocdriver': typedocdriveredit,
-            'datedocdriver': datedocdriveredit,
-            'unit': $('#unitedit').val(),
-            'typedocunit': typedocunitedit,
-            'datedocunit': datedocunitedit,
-            'typetraining': typetrainingedit,
-            'datetraining': datetrainingedit,
-           },
-        success: function(data) {
+    if(gangenedit == 'no'){
 
-            swal({
-                title: "Berhasil!!",
-                text: "Driver Berhasil Diperbaharui!",
-                icon: "success",
-                buttons: false,
-                timer: 2000,
-            });
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('updatedriver') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': $('#ids').val(),
+                'nama': $('#namaedit').val(),
+                'email': $('#emailedit').val(),
+                'phone': $('#phoneedit').val(),
+                'nik': $('#nikedit').val(),
+                'unitkerja': $('#unitkerjaedit').val(),
+                'wilayah': $('#wilayahedit').val(),
+                'type': $('#typeedit').val(),
+                'korlap': $('#korlapedit').val(),
+                'alamat': $('#alamatedit').val(),
+                'namaclient': $('#namaclientedit').val(),
+                'emailclient': $('#emailclientedit').val(),
+                'jabatan': $('#jabatanedit').val(),
+                'phoneclient': $('#phoneclientedit').val(),
+                'typedocdriver': typedocdriveredit,
+                'datedocdriver': datedocdriveredit,
+                'unit': $('#unitedit').val(),
+                'typedocunit': typedocunitedit,
+                'datedocunit': datedocunitedit,
+                'typetraining': typetrainingedit,
+                'datetraining': datetrainingedit,
+                'gangen': gangenedit,
+               },
+            success: function(data) {
 
-            $('#tambahunits').modal('hide');
+                swal({
+                    title: "Berhasil!!",
+                    text: "Driver Berhasil Diperbaharui!",
+                    icon: "success",
+                    buttons: false,
+                    timer: 2000,
+                });
 
-            setTimeout(function(){ window.location.reload() }, 1500);
+                $('#tambahunits').modal('hide');
 
-        }
+                setTimeout(function(){ window.location.reload() }, 1500);
 
-    });
+            }
+
+        });
+
+    } else {
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('updatedriver') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': $('#ids').val(),
+                'nama': $('#namaedit').val(),
+                'email': $('#emailedit').val(),
+                'phone': $('#phoneedit').val(),
+                'nik': $('#nikedit').val(),
+                'unitkerja': $('#unitkerjaedit').val(),
+                'wilayah': $('#wilayahedit').val(),
+                'type': $('#typeedit').val(),
+                'korlap': $('#korlapedit').val(),
+                'alamat': $('#alamatedit').val(),
+                'namaclient': $('#namaclientedit').val(),
+                'emailclient': $('#emailclientedit').val(),
+                'jabatan': $('#jabatanedit').val(),
+                'phoneclient': $('#phoneclientedit').val(),
+                'typedocdriver': typedocdriveredit,
+                'datedocdriver': datedocdriveredit,
+                'unitganjil': $('#unitganjiledit').val(),
+                'unitgenap': $('#unitgenapedit').val(),
+                'typedocunitganjil': typedocunitganjiledit,
+                'datedocunitganjil': datedocunitganjiledit,
+                'typedocunitgenap': typedocunitgenapedit,
+                'datedocunitgenap': datedocunitgenapedit,
+                'typetraining': typetrainingedit,
+                'datetraining': datetrainingedit,
+                'gangen': gangenedit,
+               },
+            success: function(data) {
+
+                swal({
+                    title: "Berhasil!!",
+                    text: "Driver Berhasil Diperbaharui!",
+                    icon: "success",
+                    buttons: false,
+                    timer: 2000,
+                });
+
+                $('#tambahunits').modal('hide');
+
+                setTimeout(function(){ window.location.reload() }, 1500);
+
+            }
+
+        });
+
+    }
 
 }
 
@@ -894,6 +1073,70 @@ $('#unitedit').on('change', function () {
 
 });
 
+$('#unitganjiledit').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('docunit') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).val(),
+        },
+        success:function(data) {
+
+            $('.datedocunitganjiledit').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#docunitganjiledit_'+doc_id).val(dates);
+
+            });
+
+        }
+
+    });
+
+});
+
+$('#unitgenapedit').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('docunit') }}",
+        type: "POST",
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).val(),
+        },
+        success:function(data) {
+
+            $('.datedocunitgenapedit').val('');
+
+            var no = -1;
+            var content_data ="";
+
+            $.each(data, function() {
+
+                no++;
+                var doc_id = data[no]['document_id'];
+                var dates = data[no]['exp_date'];
+
+                $('#docunitgenapedit_'+doc_id).val(dates);
+
+            });
+
+        }
+
+    });
+
+});
+
 $('#gangen').on('change', function () {
 
     var isi = $(this).val();
@@ -915,10 +1158,30 @@ $('#gangen').on('change', function () {
         $('#noganap').attr("style","display: none;");
         $('#yesganap').attr("style","display: none;");
 
+    }
+
+});
+
+$('#gangenedit').on('change', function () {
+
+    var isi = $(this).val();
+
+    if(isi == 'no'){
+
+        $('#noganapedit').attr("style","display: block;");
+        $('#yesganapedit').attr("style","display: none;");
+
+
+    } else {
+
+        $('#noganapedit').attr("style","display: none;");
+        $('#yesganapedit').attr("style","display: block;");
+
 
     }
 
 });
+
 
 </script>
 @stop

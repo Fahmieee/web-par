@@ -606,7 +606,54 @@ class UserController extends Controller
         ->where('users.id',$request->id)
         ->first();
 
-        return response()->json($users);
+        $unitdrivers = UnitDrivers::where("user_id", $request->id)
+        ->get();
+
+        if($unitdrivers->count() > 1){
+
+            $ganjil = $unitdrivers = UnitDrivers::orderBy("id","asc")
+            ->where("user_id", $request->id)
+            ->first();
+
+            $genap = $unitdrivers = UnitDrivers::orderBy("id","desc")
+            ->where("user_id", $request->id)
+            ->first();
+
+            $transactionz = array(     
+                'unitkerja_id' => $users->unitkerja_id,
+                'korlap_id' => $users->korlap_id,
+                'unitganjil' => $ganjil->unit_id,
+                'unitgenap' => $genap->unit_id,
+                'first_name' => $users->first_name,
+                'email' => $users->email,
+                'phone' => $users->phone,
+                'username' => $users->username,
+                'wilayah_id' => $users->wilayah_id,
+                'driver_type' => $users->driver_type,
+                'address' => $users->address,
+                'gangen' => $unitdrivers->count(),
+            );
+
+        } else {
+
+            $transactionz = array(     
+                'unitkerja_id' => $users->unitkerja_id,
+                'korlap_id' => $users->korlap_id,
+                'unit_id' => $users->unit_id,
+                'first_name' => $users->first_name,
+                'email' => $users->email,
+                'phone' => $users->phone,
+                'username' => $users->username,
+                'wilayah_id' => $users->wilayah_id,
+                'driver_type' => $users->driver_type,
+                'address' => $users->address,
+                'gangen' => $unitdrivers->count(),
+            );
+
+        }
+
+
+        return response()->json($transactionz);
     }
 
     public function editkorlap(Request $request)
@@ -664,7 +711,7 @@ class UserController extends Controller
 
     }
 
-    public function ©(Request $request)
+    public function editclient(Request $request)
     {
 
 
@@ -731,29 +778,10 @@ class UserController extends Controller
 
         if($request->type == '1'){
 
-            $units = Units::where("id", $request->unit)
+            $drivers = Drivers::where("driver_id", $request->id)
             ->first();
 
-            $noplatspasi = str_replace(' ', '', $units->no_police);
-
-            $adaunit = UnitDrivers::where("unit_id",  $request->unit)
-                ->first();
-
-                if(!$adaunit){
-
-                    $saverolesclient = new UnitDrivers();
-                    $saverolesclient->user_id  = $saveuser->id;
-                    $saverolesclient->unit_id = $request->unit;
-                    $saverolesclient->save();
-
-                } else {
-
-                    $clocks = UnitDrivers::where(['unit_id'=>$request->unit])
-                    ->update(['user_id'=>$saveuser->id]);
-
-                }
-
-            $adaclient = Users::where("username", $noplatspasi)
+            $adaclient = Users::where("id", $drivers->user_id)
             ->first();
 
             if(!$adaclient) {
@@ -762,7 +790,7 @@ class UserController extends Controller
                 $saveclient->jabatan_id  = $request->jabatan;
                 $saveclient->company_id = '1';
                 $saveclient->wilayah_id = $request->wilayah;
-                $saveclient->username = $noplatspasi;
+                $saveclient->username = $adaclient->username;
                 $saveclient->password = Hash::make('123');
                 $saveclient->email = $request->emailclient;
                 $saveclient->first_name = $request->namaclient;
@@ -785,7 +813,7 @@ class UserController extends Controller
                 $saveclient->jabatan_id  = $request->jabatan;
                 $saveclient->company_id = '1';
                 $saveclient->wilayah_id = $request->wilayah;
-                $saveclient->username = $noplatspasi;
+                $saveclient->username = $adaclient->username;
                 $saveclient->email = $request->emailclient;
                 $saveclient->first_name = $request->namaclient;
                 $saveclient->phone = $request->phoneclient;
@@ -794,36 +822,156 @@ class UserController extends Controller
 
             }
 
+            if($request->gangen == 'no'){
 
-            $countdocunit = count($request->datedocunit);
+                $deleteunit = UnitDrivers::leftJoin("units", "unit_drivers.unit_id", "=", "units.id")
+                ->where([
+                    ['unit_drivers.user_id', '=', $request->id],
+                    ['units.pemilik', '=', 'PAR'],
+                ])
+                ->delete();
 
-            for($i=0; $i < $countdocunit; $i++){
+                $saverolesclient = new UnitDrivers();
+                $saverolesclient->user_id  = $saveuser->id;
+                $saverolesclient->unit_id = $request->unit;
+                $saverolesclient->save();
 
-                if($request->datedocunit[$i] != ''){
+                $countdocunit = count($request->datedocunit);
 
-                    $docunits = DocUnit::where([
-                        ['document_id', '=', $request->typedocunit[$i]],
-                        ['unit_id', '=', $request->unit],
-                    ])
-                    ->first();
+                for($i=0; $i < $countdocunit; $i++){
 
-                    if(!$docunits){
+                    if($request->datedocunit[$i] != ''){
 
-                        $savedocunit = new DocUnit();
-                        $savedocunit->document_id  = $request->typedocunit[$i];
-                        $savedocunit->unit_id = $request->unit;
-                        $savedocunit->exp_date = $request->datedocunit[$i];
-                        $savedocunit->save();
+                        $docunits = DocUnit::where([
+                            ['document_id', '=', $request->typedocunit[$i]],
+                            ['unit_id', '=', $request->unit],
+                        ])
+                        ->first();
 
-                    } else {
+                        if(!$docunits){
 
-                        $savedocunit = DocUnit::where(['document_id'=>$request->typedocunit[$i],'unit_id'=>$request->unit])
-                        ->update(['exp_date'=>$request->datedocunit[$i]]);
+                            $savedocunit = new DocUnit();
+                            $savedocunit->document_id  = $request->typedocunit[$i];
+                            $savedocunit->unit_id = $request->unit;
+                            $savedocunit->exp_date = $request->datedocunit[$i];
+                            $savedocunit->save();
 
+                        } else {
+
+                            $savedocunit = DocUnit::where(['document_id'=>$request->typedocunit[$i],'unit_id'=>$request->unit])
+                            ->update(['exp_date'=>$request->datedocunit[$i]]);
+
+                        }
                     }
+
+                }
+
+            } else {
+
+                $deleteunit = UnitDrivers::leftJoin("units", "unit_drivers.unit_id", "=", "units.id")
+                ->where([
+                    ['unit_drivers.user_id', '=', $request->id],
+                    ['units.pemilik', '=', 'PAR'],
+                ])
+                ->delete();
+
+                $saveganjil = new UnitDrivers();
+                $saveganjil->user_id  = $saveuser->id;
+                $saveganjil->unit_id = $request->unitganjil;
+                $saveganjil->save();
+
+                $savegenap = new UnitDrivers();
+                $savegenap->user_id  = $saveuser->id;
+                $savegenap->unit_id = $request->unitgenap;
+                $savegenap->save();
+
+                // ======== GANJIL =========
+
+                $countdocunitganjil = count($request->datedocunitganjil);
+
+                for($i=0; $i < $countdocunitganjil; $i++){
+
+                    if($request->datedocunitganjil[$i] != ''){
+
+                        $docunitganjil = DocUnit::where([
+                            ['document_id', '=', $request->typedocunitganjil[$i]],
+                            ['unit_id', '=', $request->unitganjil],
+                        ])
+                        ->first();
+
+                        if(!$docunitganjil){
+
+                            $savedocunit = new DocUnit();
+                            $savedocunit->document_id  = $request->typedocunitganjil[$i];
+                            $savedocunit->unit_id = $request->unitganjil;
+                            $savedocunit->exp_date = $request->datedocunitganjil[$i];
+                            $savedocunit->save();
+
+                        } else {
+
+                            $savedocunit = DocUnit::where(['document_id'=>$request->typedocunitganjil[$i],'unit_id'=>$request->unitganjil])
+                            ->update(['exp_date'=>$request->datedocunitganjil[$i]]);
+
+                        }
+                    }
+
+                }
+
+                // ========== GENAP ===========
+
+                $countdocunitgenap = count($request->datedocunitgenap);
+
+                for($i=0; $i < $countdocunitgenap; $i++){
+
+                    if($request->datedocunitgenap[$i] != ''){
+
+                        $docunitgenap = DocUnit::where([
+                            ['document_id', '=', $request->typedocunitgenap[$i]],
+                            ['unit_id', '=', $request->unitgenap],
+                        ])
+                        ->first();
+
+                        if(!$docunitgenap){
+
+                            $savedocunit = new DocUnit();
+                            $savedocunit->document_id  = $request->typedocunitgenap[$i];
+                            $savedocunit->unit_id = $request->unitgenap;
+                            $savedocunit->exp_date = $request->datedocunitgenap[$i];
+                            $savedocunit->save();
+
+                        } else {
+
+                            $savedocunit = DocUnit::where(['document_id'=>$request->typedocunitgenap[$i],'unit_id'=>$request->unitgenap])
+                            ->update(['exp_date'=>$request->datedocunitgenap[$i]]);
+
+                        }
+                    }
+
                 }
 
             }
+
+            // $units = Units::where("id", $request->unit)
+            // ->first();
+
+            // $adaunit = UnitDrivers::where("unit_id",  $request->unit)
+            // ->first();
+
+            // if(!$adaunit){
+
+            //     $saverolesclient = new UnitDrivers();
+            //     $saverolesclient->user_id  = $saveuser->id;
+            //     $saverolesclient->unit_id = $request->unit;
+            //     $saverolesclient->save();
+
+            // } else {
+
+            //     $clocks = UnitDrivers::where(['unit_id'=>$request->unit])
+            //     ->update(['user_id'=>$saveuser->id]);
+
+            // }
+
+            
         }
 
         $counttraining = count($request->datetraining);
@@ -859,8 +1007,19 @@ class UserController extends Controller
 
         if($request->type == '1'){
 
-            $savedocunit = Drivers::where(['driver_id'=>$saveuser->id])
-            ->update(['unit_id'=>$request->unit, 'user_id'=>$saveclient->id, 'korlap_id'=>$request->korlap]);
+            if($request->gangen == 'no'){
+
+                $savedocunit = Drivers::where(['driver_id'=>$saveuser->id])
+                ->update(['unit_id'=>$request->unit, 'user_id'=>$saveclient->id, 'korlap_id'=>$request->korlap]);
+
+            } else {
+
+                $savedocunit = Drivers::where(['driver_id'=>$saveuser->id])
+                ->update(['unit_id'=>$request->unitganjil, 'user_id'=>$saveclient->id, 'korlap_id'=>$request->korlap]);
+
+            }
+
+            
 
         } else {
 
